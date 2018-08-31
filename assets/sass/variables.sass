@@ -1,0 +1,109 @@
+$black: #272727
+$white: #fff
+
+$mp-a: 5px
+$mp-b: 10px
+$mp-c: 20px
+$mp-d: 30px
+
+$lh-s: 19.5px
+
+@mixin fs-s()
+  font-size: 15.5px
+  line-height: $lh-s
+
+$lh-m: 24px
+
+@mixin fs-m()
+  font-size: 21px
+  line-height: $lh-m
+
+@mixin left()
+  text-align: left
+
+.left
+  @include left()
+
+@mixin center()
+  text-align: center
+
+.center
+  @include center()
+
+@mixin right()
+  text-align: right
+
+.right
+  @include right()
+
+@mixin nobr() 
+  white-space: nowrap 
+
+.nobr 
+  @include nobr()
+
+@mixin hidden()
+  display: none
+
+.hidden
+  @include hidden()
+
+@mixin transparent()
+  opacity: 0
+  z-index: -1
+  user-select: none
+  pointer-events: none
+
+.transparent
+  @include transparent()
+
+@mixin white()
+  color: $white
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+
+@mixin black()
+  color: $black
+  -webkit-font-smoothing: subpixel-antialiased
+  -moz-osx-font-smoothing: normal
+
+@mixin underline()
+  text-decoration: underline
+  text-decoration-skip-ink: auto
+
+.underline
+  @include underline()
+
+@mixin italic()
+  font-style: italic
+
+.italic
+  @include italic()
+
+@mixin pointer()
+  cursor: pointer
+
+@mixin zoom()
+  cursor: zoom-in
+
+@mixin default()
+  cursor: default
+
+@mixin noscroll()
+  overflow-y: hidden!important
+
+@mixin comma()
+  display: inline!important
+  &:after
+    content: ",\0020"
+  &:last-child:after
+    content: ""
+
+.comma
+  @include comma()
+
+
+
+
+
+
