@@ -1,7 +1,7 @@
 {
   "name": "cmyb-frontend",
   "version": "1.0.0",
-  "description": "Website frontend for photographer Conny Mirbach",
+  "description": "Nuxt.js powered frontend for Conny Mirbach’s portfolio",
   "author": "Studio Scholz <„dev@studioscholz.info“>",
   "private": true,
   "scripts": {

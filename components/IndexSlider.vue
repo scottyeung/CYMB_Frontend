@@ -52,6 +52,7 @@ export default {
         this.currentNumber = 0
       }
       this.preloadImages([this.nextImgUrl, this.prevImgUrl])
+      this.$emit('colorChange', this.indexImages[this.currentNumber].content.color);
     },
     onSwipeRight () {
       if (this.currentNumber === 0) {
@@ -60,6 +61,7 @@ export default {
         this.currentNumber -= 1
       }
       this.preloadImages([this.nextImgUrl, this.prevImgUrl])
+      this.$emit('colorChange', this.indexImages[this.currentNumber].content.color);
     },
   }
 }

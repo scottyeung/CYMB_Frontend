@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <Menu></Menu>
-    <IndexSlider></IndexSlider>
+    <Menu :color="color"></Menu>
+    <IndexSlider  v-on:colorChange="menuColor"></IndexSlider>
   </div>
 </template>
 
@@ -11,9 +11,19 @@ import Menu from '~/components/Menu.vue'
 
 export default {
   name: 'Home',
+  data () {
+    return {
+      color: 'black'
+    }
+  },
   components: {
     IndexSlider,
     Menu
+  },
+  methods: {
+    menuColor (color) {
+      this.color = color
+    }
   }
 }
 </script>
