@@ -40,7 +40,7 @@ export default {
       width: 100vw
       margin: $mp-c 0
       padding: 0 $mp-d
-      @include center
+      @include center()
       z-index: 90
       position: fixed
       span
