@@ -25,7 +25,10 @@ module.exports = {
     ],
   },
   loading: false,
-  plugins: [],
+  plugins: [
+    {src: '~/plugins/VuePackery.js', ssr: false },
+    {src: '~/plugins/VueSwiper.js', ssr: false }
+  ],
   modules: [
     '@nuxtjs/axios',
   ],
@@ -34,14 +37,12 @@ module.exports = {
   },
   css: [
     '~/assets/sass/global.sass',
+    'swiper/dist/css/swiper.css'
   ],
   env: {
     baseUrl: process.env.BASE_URL || 'http://localhost:8080'
   },
   build: {
-    /*
-    ** Run ESLint on save
-    */
     extend (config, { isDev }) {
       if (isDev && process.client) {
         config.module.rules.push({
@@ -54,6 +55,10 @@ module.exports = {
     },
     plugins: [
       new webpack.ProvidePlugin({
+        // '_orderBy': ['lodash', 'orderBy'],
+        // '_find': ['lodash', 'find'],
+        // '_sample': ['lodash', 'sample'],
+        // '_reverse': ['lodash', 'flip'],
         '_': 'lodash'
       })
     ]

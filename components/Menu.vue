@@ -1,30 +1,33 @@
 <template>
     <nav class="menu__wrapper" :class="color">
-      <span @mouseenter="changeMenu()" @mouseleave="changeMenu()">
-        <ol class="menu__list" v-if="!showMenu">
-          <li><nuxt-link to="/">Conny Mirbach</nuxt-link></li>
+      <span @mouseover="changeMenu(true)" @mouseleave="changeMenu(false)">
+        <ol class="menu__list" v-if="!$store.state.showMenu">
+          <li>Conny Mirbach</li>
         </ol>
-        <ol class="menu__list" v-else-if="showMenu">
-        <li><nuxt-link to="/projects">Projects</nuxt-link>,</li>
-        <li><nuxt-link to="/information">Information</nuxt-link></li>
+        <ol class="menu__list" v-else-if="$store.state.showMenu">
+          <li>Conny Mirbach</li>
+          <li><nuxt-link to="/projects">Projects</nuxt-link></li>
+          <li><nuxt-link to="/information">Information</nuxt-link></li>
         </ol>
       </span>
     </nav>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
   name: 'Menu',
-  props: ['color'],
+  props: ['color', 'background'],
   data () {
     return {
       showMenu: false
     }
   },
   methods: {
-    changeMenu () {
-      this.showMenu = !this.showMenu
-    }
+    ...mapMutations([
+      'changeMenu'
+    ])
   }
 }
 </script>
@@ -35,20 +38,23 @@ export default {
   .menu
     &__wrapper
       width: 100vw
-      margin: $mp-b 0
+      margin: $mp-c 0
+      padding: 0 $mp-d
       @include center
       z-index: 90
-      position: absolute
+      position: fixed
       span
         display: inline-block;
       &.white
-        color: $white
-      &.black
-        color: $black
+        @include white()
     &__list
       display: block
       list-stlye: none
       li
-        display: inline-block
+        display: inline
+        &:after
+          content: ", "
+        &:last-child:after
+          content: ""
 </style>
 
