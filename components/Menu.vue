@@ -2,10 +2,10 @@
     <nav class="menu__wrapper" :class="color">
       <span @mouseover="changeMenu(true)" @mouseleave="changeMenu(false)">
         <ol class="menu__list" v-if="!$store.state.showMenu">
-          <li>Conny Mirbach</li>
+          <li>Constantin Mirbach</li>
         </ol>
         <ol class="menu__list" v-else-if="$store.state.showMenu">
-          <li>Conny Mirbach</li>
+          <li>Constantin Mirbach</li>
           <li><nuxt-link to="/projects">Projects</nuxt-link></li>
           <li><nuxt-link to="/information">Information</nuxt-link></li>
         </ol>
