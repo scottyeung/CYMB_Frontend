@@ -2,32 +2,21 @@
   <div class="container project">
 
     <ProjectSlider :layouts="this.project.content.layouts" :images="images" @layoutsChanged="changeLayouts"></ProjectSlider>
+    <ProjectScroll :layouts="this.project.content.layouts" :images="images" @layoutsChanged="changeLayouts"></ProjectScroll>
 
-    <!-- <div class="project__minislider">
-      <div class="project__minislider--w">
-        <div class="project__minislide" v-for="(layout, index) in layouts" :key="index">
-          <div class="project__minislide--inner" :class="layout.sizing">
-            <div class="project__minislide--img" v-if="layout.image1" :class="[layout.sizing, {'solo': !layout.image2}]">
-              <div :style="{backgroundImage: 'url(' + findImage(layout.image1) + ')'}"></div>
-            </div>
-            <div class="project__minislide--img" v-if="layout.image2" :class="[layout.sizing, {'solo': !layout.image2}]">
-              <div :style="{backgroundImage: 'url(' + findImage(layout.image2) + ')'}"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
   </div>
 </template>
 
 <script>
   import axios from '~/node_modules/axios'
   import ProjectSlider from '~/components/ProjectSlider'
+  import ProjectScroll from '~/components/ProjectScroll'
 
   export default {
     name: "Project",
     components: {
-      ProjectSlider
+      ProjectSlider,
+      ProjectScroll
     },
     data () {
       return {
@@ -60,6 +49,7 @@
         return img.url
       },
       changeLayouts (layouts) {
+        console.log(layouts)
         this.layouts= layouts
       }
     }
@@ -113,6 +103,6 @@
         &:first-child
           padding: 8px 6px 8px 6px
         &:nth-child(2)
-          padding: 8px 12px 8px 6px
+          padding: 8px 6px 8px 6px
 
 </style>
