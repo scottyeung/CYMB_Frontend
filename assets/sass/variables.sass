@@ -7,10 +7,10 @@ $mp-b: 10px
 $mp-c: 20px
 $mp-d: 30px
 
-$lh-s: 17px
+$lh-s: 16px
 
 @mixin fs-s()
-  font-size: 15px
+  font-size: 14px
   line-height: $lh-s
 
 $lh-m: 21px
@@ -68,25 +68,15 @@ $lh-m: 21px
   -webkit-font-smoothing: subpixel-antialiased
   -moz-osx-font-smoothing: normal
 
-@mixin underline()
-  text-decoration: underline
-  text-decoration-skip-ink: auto
-
-.underline
-  @include underline()
-
 @mixin italic()
   font-style: italic
 
-.italic
+.italic, .nuxt-link-exact-active
   @include italic()
   font-family: 'BodoniSixITC-BookItal'
 
 @mixin pointer()
   cursor: pointer
-
-@mixin zoom()
-  cursor: zoom-in
 
 @mixin default()
   cursor: default
@@ -94,15 +84,6 @@ $lh-m: 21px
 @mixin noscroll()
   overflow-y: hidden!important
 
-@mixin comma()
-  display: inline!important
-  &:after
-    content: ",\0020"
-  &:last-child:after
-    content: ""
-
-.comma
-  @include comma()
 
 
 

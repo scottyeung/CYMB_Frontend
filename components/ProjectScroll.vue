@@ -95,20 +95,21 @@
     width: 100vw
     z-index: 99
     bottom: 0
-    overflow: hidden;
+    overflow: hidden
+    background: $white
     &--inner 
       height: 100%
       width: 1000vw
       display: flex
       flex-wrap: no-wrap
       justify-content: flex-start
-      overflow: hidden;
+      overflow: hidden
   &__spread
-    background: $grey
+    background: $white
     margin: 0 $mp-a
     width: 125px
     height: 100%
-    opacity: 0.5
+    // opacity: 0.5
     &:first-child
       opacity: 1
     &:hover

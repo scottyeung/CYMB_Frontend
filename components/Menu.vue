@@ -1,10 +1,11 @@
 <template>
     <nav class="menu__wrapper" :class="color">
-      <span @mouseover="changeMenu(true)" @mouseleave="changeMenu(false)">
-        <ol class="menu__list" v-if="!$store.state.showMenu">
+      <!-- <span @mouseover="changeMenu(true)" @mouseleave="changeMenu(false)"> -->
+        <span>
+        <!-- <ol class="menu__list" v-if="!$store.state.showMenu">
           <li>Constantin Mirbach</li>
-        </ol>
-        <ol class="menu__list" v-else-if="$store.state.showMenu">
+        </ol> -->
+        <ol class="menu__list" v-if="!$store.state.showMenu">
           <li>Constantin Mirbach</li>
           <li><nuxt-link to="/projects">Projects</nuxt-link></li>
           <li><nuxt-link to="/information">Information</nuxt-link></li>
@@ -44,16 +45,21 @@ export default {
       z-index: 90
       position: fixed
       span
-        display: inline-block;
+        display: block;
       &.white
         @include white()
     &__list
-      display: block
+      // display: flex
+      // justify-content: center
       list-stlye: none
+      width: 100%
       li
+        width: calc(100% / 3)
         display: inline
         &:after
           content: ", "
+        &:first-child:after
+          content: " — "
         &:last-child:after
           content: ""
 </style>

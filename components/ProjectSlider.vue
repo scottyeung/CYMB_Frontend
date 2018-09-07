@@ -75,6 +75,7 @@
     background: $white
     width: 100%
     height: 100%
+    include pointer()
     &--inner
       display: flex
       align-items: center

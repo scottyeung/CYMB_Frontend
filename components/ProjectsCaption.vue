@@ -2,7 +2,7 @@
   <div class="projects__caption">
     <nuxt-link :to="project.id">
       <span class="projects__c__title">{{ projectTitle }}</span>
-      <br><span class="nobr italic">{{ projectSecondary }}</span>
+      <span class="nobr italic">{{ projectSecondary }}</span>
     </nuxt-link>
   </div>
 </template>
@@ -29,11 +29,11 @@ export default {
   @import "../assets/sass/variables.sass"
 
   .projects__caption
-    @include center
-    @include fs-s
+    @include center()
+    @include fs-s()
     padding: 0
     span
-      display: inline;
+      display: block;
 
   .projects__c__title 
     padding-right: 10px
