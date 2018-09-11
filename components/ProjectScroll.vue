@@ -3,17 +3,26 @@
     <div class="project__scroll--inner" ref="scrollContainer" :style="{width: containerWidth + 'px'}">
       <div 
         class="project__spread" 
-        v-for="(layout, index) in layouts" 
+        v-for="(layout, index) in sortedLayouts"
         :key="layout.image1 + ' ' + layout.image2"
         :style="{width: slideWidth + 'px'}"
+        ref="projectSpread"
         @click="select(index)"
       >
         <div class="project__spread--inner" :class="layout.sizing">
-          <div class="project__spread--img" v-if="layout.image1" :class="[layout.sizing, {'solo': !layout.image2}]">
-            <div :style="{backgroundImage: 'url(' + findImage(layout.image1) + ')'}"></div>
+          <div 
+            class="project__spread--img" 
+            v-if="layout.image1" 
+            :class="[{'solo': !layout.image2}]"
+          >
+            <div :style="{backgroundImage: 'url(' + findImage(layout.image1) + ')'}"/>
           </div>
-          <div class="project__spread--img" v-if="layout.image2" :class="[layout.sizing, {'solo': !layout.image2}]">
-            <div :style="{backgroundImage: 'url(' + findImage(layout.image2) + ')'}"></div>
+          <div 
+            class="project__spread--img" 
+            v-if="layout.image2" 
+            :class="[{'solo': !layout.image1}]"
+          >
+            <div :style="{backgroundImage: 'url(' + findImage(layout.image2) + ')'}"/>
           </div>
         </div>
       </div>
@@ -24,19 +33,22 @@
 <script>
   export default {
     name: 'ProjectScroll',
-    props: ['layouts', 'images'],
+    props: ['layouts', 'images', 'number'],
     data () {
       return {
-        scrollLayouts: this.layouts,
-        slideWidth: 0,
+        slideWidth: 50,
         containerWidth: 0,
       }
     },
-    // computed: {
-    //   scrollLayouts () {
-    //     return this.layouts
-    //   }
-    // },
+    computed: {
+      sortedLayouts () {
+        const firstHalf = this.layouts.slice(this.number)
+        const secondHalf = this.layouts.slice(0, this.number)
+        const newLayouts = firstHalf.concat(secondHalf)
+
+        return newLayouts
+      }
+    },
     methods: {
       findImage (id) {
         const self = this
@@ -44,9 +56,15 @@
         return img.url
       },
       select (index) {
-          let restLayouts = this.layouts.splice(index)
-          const newLayouts = restLayouts.concat(this.layouts)
-          this.$emit('layoutsChanged', newLayouts)
+        // let restLayouts = this.layouts.splice(index)
+        // const newLayouts = restLayouts.concat(this.layouts)
+        // this.$emit('layoutsChanged', newLayouts)
+        if(index < this.layouts.length - this.number) {
+          this.$emit('numberChanged', index + this.number)
+        } else {
+          const actualNumber = Math.abs(this.layouts.length - this.number - index)
+          this.$emit('numberChanged', actualNumber)
+        }
       },
       setWidth () {
         if(process.browser) {
@@ -57,10 +75,18 @@
 
           this.slideWidth = containerHeight * ratio
           this.containerWidth = ((containerHeight * ratio) + 10) * this.layouts.length
-
-          console.log(ratio)
-          console.log(containerHeight)
         }
+      },
+      moveScroll () {
+        const self = this
+        const spreads = this.$refs.projectSpread
+        const distance = ((self.slideWidth + 10) * self.layoutNumber) * -1
+
+        // Move
+        spreads.forEach(function(spread) {
+          spread.style.transition = 'all 0.3s'
+          spread.style.webkitTransform = 'translate3D(' + distance + 'px, 0, 0)'
+        })
       }
     },
     mounted () {
@@ -70,15 +96,6 @@
     destroyed () {
       window.removeEventListener('resize', this.setWidth)
     }
-    // watch: {
-    //   layouts () {
-    //     console.log(this.layouts)
-    //     // console.log(newLayouts)
-    //     setTimeout( () => {
-    //       this.scrollLayouts = this.layouts
-    //     }, 250)
-    //   }
-    // }
   }
 </script>
 
@@ -109,11 +126,6 @@
     margin: 0 $mp-a
     width: 125px
     height: 100%
-    // opacity: 0.5
-    &:first-child
-      opacity: 1
-    &:hover
-      opacity: 1
     &--inner
       display: flex
       align-items: center
@@ -121,8 +133,9 @@
       width: 100%
       height: 100%
     &--img
-      height: 100%;
-      width: 50%;
+      height: 100%
+      width: 50%
+      @include pointer()
       div
         height: 100%;
         width: 100%;

@@ -13,7 +13,6 @@
       class="projects" 
       @layoutComplete="showLayout()"
       >
-      <!-- <div class="projects"> -->
         <div 
         v-packery-item
         class="projects__block" 
@@ -23,12 +22,12 @@
           project.orientation, {transparent: !loaded} 
         ]" 
         v-for="(project, index) of projects">
-          <nuxt-link :to="project.id">
+          <nuxt-link :to="{path: '/' + project.id }">
           <img 
             v-if="project.randomImage"
             class="projects__img" 
             :src="project.randomImage.url"
-            ></img>
+          ></img>
           </nuxt-link>
           <ProjectsCaption :project="project"></ProjectsCaption>
         </div>

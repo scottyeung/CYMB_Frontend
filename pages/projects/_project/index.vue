@@ -1,8 +1,17 @@
 <template>
   <div class="container project">
-
-    <ProjectSlider :layouts="this.project.content.layouts" :images="images" @layoutsChanged="changeLayouts"></ProjectSlider>
-    <ProjectScroll :layouts="this.project.content.layouts" :images="images" @layoutsChanged="changeLayouts"></ProjectScroll>
+    <ProjectSlider 
+      :layouts="layouts" 
+      :images="images"
+      :number="number"
+      @numberChanged="changeNumber"
+    />
+    <ProjectScroll 
+      :layouts="layouts" 
+      :images="images"
+      :number="number" 
+      @numberChanged="changeNumber"
+      />
 
   </div>
 </template>
@@ -20,7 +29,7 @@
     },
     data () {
       return {
-
+        number: 0
       }
     },
     async asyncData ({ params }) {
@@ -33,13 +42,8 @@
         let proj = _.find(this.$store.state.projects.data, function(e) { return e.slug === self.$route.params.project })
         return proj
       },
-      layouts: {
-        get: function() {
-          return this.project.content.layouts
-        },
-        set: function(newLayouts) {
-          this.project.content.layouts = newLayouts
-        }
+      layouts () {
+        return this.project.content.layouts
       }
     },
     methods: {
@@ -49,9 +53,17 @@
         return img.url
       },
       changeLayouts (layouts) {
-        console.log(layouts)
-        this.layouts= layouts
+        this.layouts = layouts
+      },
+      changeNumber (number) {
+        this.number = number
+      },
+      resetLayouts () {
+        this.layouts = this.project.content.layouts
       }
+    },
+    mounted () {
+      this.resetLayouts ()
     }
   }
 </script>
