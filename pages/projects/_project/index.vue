@@ -1,5 +1,11 @@
 <template>
   <div class="container project">
+    <nuxt-link to="/projects" class="project__close">Close</nuxt-link>
+    <ProjectInfo
+      :project="project"
+      :showInfo="showInfo"
+      @infoChanged="changeInfo"
+    />
     <ProjectSlider 
       :layouts="layouts" 
       :images="images"
@@ -9,8 +15,11 @@
     <ProjectScroll 
       :layouts="layouts" 
       :images="images"
-      :number="number" 
+      :number="number"
+      :scrollPosition="scrollPosition" 
       @numberChanged="changeNumber"
+      @infoChanged="changeInfo"
+      @scrollChanged="changeScroll"
       />
 
   </div>
@@ -20,16 +29,20 @@
   import axios from '~/node_modules/axios'
   import ProjectSlider from '~/components/ProjectSlider'
   import ProjectScroll from '~/components/ProjectScroll'
+  import ProjectInfo from '~/components/ProjectInfo'
 
   export default {
     name: "Project",
     components: {
       ProjectSlider,
-      ProjectScroll
+      ProjectScroll,
+      ProjectInfo
     },
     data () {
       return {
-        number: 0
+        number: 0,
+        showInfo: true,
+        scrollPosition: 0
       }
     },
     async asyncData ({ params }) {
@@ -57,13 +70,14 @@
       },
       changeNumber (number) {
         this.number = number
+        this.scrollPosition = 0
       },
-      resetLayouts () {
-        this.layouts = this.project.content.layouts
+      changeInfo (boolean) {
+        this.showInfo = boolean
+      },
+      changeScroll (number) {
+        this.scrollPosition = number
       }
-    },
-    mounted () {
-      this.resetLayouts ()
     }
   }
 </script>
@@ -73,48 +87,22 @@
 
 .project
   height: 100vh
-
-  &__minislider
-    height: 75px
-    width: 100%
+  &__close
     position: fixed
+    bottom: 10vh
+    right: 0
     z-index: 99
-    bottom: 0
-    margin: $mp-a 0
-    &--w
-      width: 1500px
-      height: 100%
-  &__minislide
-    width: 150px
-    height: 100%
-    display: inline-block
-    &--inner
-      display: flex
-      align-items: center
-      justify-content: space-evenly
-      flex-wrap: wrap
-      width: 100%
-      height: 100%
-    &--img
-      height: 100%
-      width: 50%
-      div
-        height: 100%
-        width: 100%;
-        background-size: contain
-        background-repeat: no-repeat
-      &:first-child div
-        background-position: center right
-      &:nth-child(2) div
-        background-position: center left
-      &.solo
-        width: 100%
-        div
-          background-position: center
-      &.large
-        &:first-child
-          padding: 8px 6px 8px 6px
-        &:nth-child(2)
-          padding: 8px 6px 8px 6px
+    height: 50px
+    width: 50px
+    display: flex
+    align-items: center
+    justify-content: center
+    margin: $mp-b
+    background: $grey
+    border-radius: 50%;
+    @include fs-s()
+    line-height: 1
+    transform: rotate(20deg)
+  
 
 </style>

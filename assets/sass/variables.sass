@@ -1,6 +1,6 @@
 $black: #121212
 $white: #fff
-$grey: #fafafa
+$grey: rgb(240,240,240)
 
 $mp-a: 5px
 $mp-b: 10px
@@ -16,8 +16,14 @@ $lh-s: 16px
 $lh-m: 21px
 
 @mixin fs-m()
-  font-size: 21px
+  font-size: 18px
   line-height: $lh-m
+
+$lh-l: 24px
+
+@mixin fs-l()
+  font-size: 21px
+  line-height: $lh-l
 
 @mixin left()
   text-align: left
@@ -73,7 +79,6 @@ $lh-m: 21px
 
 .italic, .nuxt-link-exact-active
   @include italic()
-  font-family: 'BodoniSixITC-BookItal'
 
 @mixin pointer()
   cursor: pointer

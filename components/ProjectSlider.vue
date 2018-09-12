@@ -45,9 +45,6 @@
         } else {
           this.$emit('numberChanged', 0)
         }
-        // const first = this.layouts.shift()
-        // const newLayouts = this.layouts.concat(first)
-        // this.$emit('layoutsChanged', newLayouts)
       },
       prev () {
         if(this.number > 0) {
@@ -55,9 +52,6 @@
         } else {
           this.$emit('numberChanged', this.layouts.length - 1)
         }
-        // const last = this.layouts.pop()
-        // const newLayouts = [last].concat(this.layouts)
-        // this.$emit('layoutsChanged', newLayouts)
       },
       keyListener (key) {
         if (key.keyCode === 27) {
@@ -124,15 +118,15 @@
         background-size: contain
         background-repeat: no-repeat
       &:first-child 
-        padding: $mp-d*2 $mp-d*1.5 50px $mp-d*3
+        padding: $mp-d*3 $mp-d*1.5 80px $mp-d*3
         div
           background-position: center right
       &:nth-child(2) 
-        padding: $mp-d*2 $mp-d*3 50px $mp-d*1.5
+        padding: $mp-d*3 $mp-d*3 80px $mp-d*1.5
         div
           background-position: center left
       &.solo
-        padding: $mp-d*2 $mp-d*3 50px $mp-d*3
+        padding: $mp-d*3 $mp-d*3 80px $mp-d*3
         width: 100%;
         div
           background-position: center
