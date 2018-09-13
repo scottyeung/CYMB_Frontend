@@ -20,7 +20,7 @@
 
 #__nuxt
   font-family: 'BodoniSixITC-Book', 'CourierNewPSMT', Times, serif
-  letter-spacing: -0.01em
+  letter-spacing: 0.01em
 
 body
   @include fs-m()
@@ -33,6 +33,9 @@ h1, h2, h3, h4, h5, h6
 a
   text-decoration: none
   color: inherit
+  outline: 0
+  &:active, &:hover
+  	outline: 0
 
 button:focus
     outline: none

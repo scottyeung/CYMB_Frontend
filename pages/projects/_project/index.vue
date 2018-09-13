@@ -1,18 +1,22 @@
 <template>
   <div class="container project">
-    <nuxt-link to="/projects" class="project__close">Close</nuxt-link>
-    <ProjectInfo
+    <ProjectMenu
+      :project="project"  
+    />
+<!--     <nuxt-link to="/projects" class="project__close">Close</nuxt-link>
+ -->
+    <!-- <ProjectInfo
       :project="project"
       :showInfo="showInfo"
       @infoChanged="changeInfo"
-    />
+    /> -->
     <ProjectSlider 
       :layouts="layouts" 
       :images="images"
       :number="number"
       @numberChanged="changeNumber"
     />
-    <ProjectScroll 
+    <!-- <ProjectScroll 
       :layouts="layouts" 
       :images="images"
       :number="number"
@@ -21,7 +25,7 @@
       @infoChanged="changeInfo"
       @scrollChanged="changeScroll"
       />
-
+ -->
   </div>
 </template>
 
@@ -30,13 +34,15 @@
   import ProjectSlider from '~/components/ProjectSlider'
   import ProjectScroll from '~/components/ProjectScroll'
   import ProjectInfo from '~/components/ProjectInfo'
+  import ProjectMenu from '~/components/ProjectMenu'
 
   export default {
     name: "Project",
     components: {
       ProjectSlider,
       ProjectScroll,
-      ProjectInfo
+      ProjectInfo,
+      ProjectMenu
     },
     data () {
       return {
@@ -86,7 +92,7 @@
 @import "../../../assets/sass/variables.sass"
 
 .project
-  height: 100vh
+  user-select: none
   &__close
     position: fixed
     bottom: 10vh

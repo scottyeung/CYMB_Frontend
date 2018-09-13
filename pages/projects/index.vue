@@ -18,7 +18,6 @@
         class="projects__block" 
         :class="[
           widthClasses[index%widthClasses.length], 
-          alignmentClasses[index%alignmentClasses.length],
           project.orientation, {transparent: !loaded} 
         ]" 
         v-for="(project, index) of projects">
@@ -48,8 +47,7 @@ export default {
   },
   data () {
     return {
-      widthClasses: ['small', 'medium', 'medium', 'large'],
-      alignmentClasses: ['flexEnd', 'flexEnd', 'flexStart', 'flexStart', 'center' ],
+      widthClasses: ['small', 'small', 'medium', 'large'],
       loaded: false,
       orientations: []
     }
@@ -62,7 +60,6 @@ export default {
   methods: {
     shuffleClasses () {
       this.widthClasses = _.shuffle(this.widthClasses)
-      this.alignmentClasses = _.shuffle(this.alignmentClasses)
     },
     randomImage () {
       if(process.browser) { 
@@ -117,13 +114,13 @@ export default {
     vertical-align: bottom
     width: 37.5%
     &.small, &.portrait
-      width: 20%
+      width: 22.5%
     &.medium.portrait
       width: 25%
     &.large.portrait
       width: 30%
     &.small.landscape, &.small.square
-      width: 35%
+      width: 30%
     &.medium.landscape, &.medium.square
       width: 40%
     &.large.landscape, &.large.square

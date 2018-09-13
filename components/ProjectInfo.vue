@@ -47,7 +47,7 @@
       // background: $white
       padding: 0 $mp-a
   &__description
-    max-width: 600px
+    max-width: 450px
     display: inline-block
     // background: $white
     margin: $lh-m 0 0 0
@@ -55,6 +55,7 @@
     // height: 100%
     // display: flex
     // align-items: center
+    @include center()
     @include fs-m()
 
 </style>

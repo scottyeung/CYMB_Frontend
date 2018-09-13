@@ -12,7 +12,7 @@
     />
     <div 
       class="project__scroll--inner" 
-      ref="scrollContainer" 
+      ref="scrollContainer"
       :style="{width: containerWidth + 'px', left: scrollPosition + 'px'}"
     >
       <div 
@@ -20,6 +20,7 @@
         v-for="(layout, index) in sortedLayouts"
         :key="layout.image1 + ' ' + layout.image2"
         :style="{width: slideWidth + 'px'}"
+        :class="{'triple': layout.image1 && layout.image2 && layout.image3}"
         ref="projectSpread"
         @click="select(index)"
       >
@@ -27,16 +28,32 @@
           <div 
             class="project__spread--img" 
             v-if="layout.image1" 
-            :class="[{'solo': !layout.image2}]"
+            :class="[{
+              'solo': !layout.image2 && !layout.image3,
+              'triple': layout.image1 && layout.image2 && layout.image3
+            }]"
           >
             <div :style="{backgroundImage: 'url(' + findImage(layout.image1) + ')'}"/>
           </div>
           <div 
             class="project__spread--img" 
             v-if="layout.image2" 
-            :class="[{'solo': !layout.image1}]"
+            :class="[{
+              'solo': !layout.image1 && !layout.image3,
+              'triple': layout.image1 && layout.image2 && layout.image3
+            }]"
           >
             <div :style="{backgroundImage: 'url(' + findImage(layout.image2) + ')'}"/>
+          </div>
+          <div 
+            class="project__spread--img" 
+            v-if="layout.image3" 
+            :class="[{
+              'solo': !layout.image1 && !layout.image2,
+              'triple': layout.image1 && layout.image2 && layout.image3
+            }]"
+          >
+            <div :style="{backgroundImage: 'url(' + findImage(layout.image3) + ')'}"/>
           </div>
         </div>
       </div>
@@ -188,6 +205,8 @@
       justify-content: space-evenly
       width: 100%
       height: 100%
+      &.triple
+        padding: 0 4.5px
     &--img
       height: 100%
       width: 50%
@@ -208,6 +227,11 @@
       &.solo
         width: 100%;
         padding: 9px
+        div
+          background-position: center
+      &.triple
+        width: 100%
+        padding: 9px 4.5px
         div
           background-position: center
 

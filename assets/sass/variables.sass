@@ -7,16 +7,16 @@ $mp-b: 10px
 $mp-c: 20px
 $mp-d: 30px
 
-$lh-s: 16px
+$lh-s: 15px
 
 @mixin fs-s()
-  font-size: 14px
+  font-size: 13.5px
   line-height: $lh-s
 
-$lh-m: 21px
+$lh-m: 20px
 
 @mixin fs-m()
-  font-size: 18px
+  font-size: 17px
   line-height: $lh-m
 
 $lh-l: 24px
@@ -76,8 +76,9 @@ $lh-l: 24px
 
 @mixin italic()
   font-style: italic
+  // transform: skewX(-40deg)
 
-.italic, .nuxt-link-exact-active
+.italic
   @include italic()
 
 @mixin pointer()
@@ -88,6 +89,9 @@ $lh-l: 24px
 
 @mixin noscroll()
   overflow-y: hidden!important
+
+.nuxt-link-exact-active
+  @include italic()
 
 
 
