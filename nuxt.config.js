@@ -5,7 +5,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: '📷 Constantin Mirbach',
+    title: 'Constantin Mirbach',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -26,8 +26,7 @@ module.exports = {
   },
   loading: false,
   plugins: [
-    {src: '~/plugins/VuePackery.js', ssr: false },
-    {src: '~/plugins/VueSwiper.js', ssr: false }
+    {src: '~/plugins/VuePackery.js', ssr: false }
   ],
   modules: [
     '@nuxtjs/axios',
@@ -36,8 +35,7 @@ module.exports = {
     proxy: true
   },
   css: [
-    '~/assets/sass/global.sass',
-    'swiper/dist/css/swiper.css'
+    '~/assets/sass/global.sass'
   ],
   env: {
     baseUrl: process.env.BASE_URL || 'http://localhost:8080'

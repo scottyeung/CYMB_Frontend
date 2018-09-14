@@ -32,16 +32,16 @@
 <script>
   import axios from '~/node_modules/axios'
   import ProjectSlider from '~/components/ProjectSlider'
-  import ProjectScroll from '~/components/ProjectScroll'
-  import ProjectInfo from '~/components/ProjectInfo'
+  // import ProjectScroll from '~/components/ProjectScroll'
+  // import ProjectInfo from '~/components/ProjectInfo'
   import ProjectMenu from '~/components/ProjectMenu'
 
   export default {
     name: "Project",
     components: {
       ProjectSlider,
-      ProjectScroll,
-      ProjectInfo,
+      // ProjectScroll,
+      // ProjectInfo,
       ProjectMenu
     },
     data () {
@@ -52,7 +52,9 @@
       }
     },
     async asyncData ({ params }) {
-      let { data } = await axios.get('http://127.0.0.1:8888/rest/pages/projects+' + params.project + '/files')
+      let { data } = await axios.get(
+        'http://127.0.0.1:8888/rest/pages/projects+' + params.project + '/files'
+      )
       return { images: data }
     },
     computed: {
@@ -92,23 +94,23 @@
 @import "../../../assets/sass/variables.sass"
 
 .project
-  user-select: none
-  &__close
-    position: fixed
-    bottom: 10vh
-    right: 0
-    z-index: 99
-    height: 50px
-    width: 50px
-    display: flex
-    align-items: center
-    justify-content: center
-    margin: $mp-b
-    background: $grey
-    border-radius: 50%;
-    @include fs-s()
-    line-height: 1
-    transform: rotate(20deg)
+  // user-select: none
+  // &__close
+  //   position: fixed
+  //   bottom: 10vh
+  //   right: 0
+  //   z-index: 99
+  //   height: 50px
+  //   width: 50px
+  //   display: flex
+  //   align-items: center
+  //   justify-content: center
+  //   margin: $mp-b
+  //   background: $grey
+  //   border-radius: 50%;
+  //   @include fs-s()
+  //   line-height: 1
+  //   transform: rotate(20deg)
   
 
 </style>

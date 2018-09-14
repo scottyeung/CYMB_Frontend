@@ -102,14 +102,15 @@ export default {
 
 .projects
   @include center
-  padding: $mp-c*3 0
+  padding: $mp-d 0
   display: flex
   align-items: flex-end
   justify-content: center
   flex-wrap: wrap
-  width: 100vw
+  width: calc(100vw + 30px)
+  margin-left: $mp-c/2 * -1
   &__block
-    padding: $mp-d
+    padding: $mp-c
     display: inline-block
     vertical-align: bottom
     width: 37.5%

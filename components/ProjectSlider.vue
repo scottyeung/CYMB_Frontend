@@ -56,6 +56,7 @@
     props: ['layouts', 'images', 'number'],
     data () {
       return {
+        nextSlide: 1,
         currentSlide: 0
       }
     },
@@ -66,34 +67,52 @@
         return img.url
       },
       scrollToNext (index) {
+        if(index < this.layouts.length - 1) {
+          this.nextSlide = index + 1
+          this.currentSlide = index
+        } else {
+          this.nextSlide = 0
+          this.currentSlide = this.layouts.length - 1
+        }
         if(process.browser) {
-          if(index < this.layouts.length - 1) {
-            this.currentSlide = index + 1
-          } else {
-            this.currentSlide = 0
-          }
-          const element = document.getElementById(this.currentSlide)
-          element.scrollIntoView(true)
+          const current = document.getElementById(this.currentSlide)
+          const next = document.getElementById(this.nextSlide)
+          current.style.opacity = 0
+          next.style.opacity = 0
+          setTimeout( () => { 
+            next.scrollIntoView(true)
+            next.style.opacity = 1
+            current.style.opacity = 1
+          }, 350)
         }
       },
       scrollToPrev (index) {
+        if(index > 0) {
+          this.nextSlide = index - 1
+          this.curentSlide = index
+        } else {
+          this.nextSlide = this.layouts.length -  1
+          this.currentSlide = 0
+        }
         if(process.browser) {
-          if(index > 1) {
-            this.currentSlide = index - 1
-          } else {
-            this.currentSlide = this.layouts.length -  1
-          }
-          const element = document.getElementById(this.currentSlide)
-          element.scrollIntoView(true)
+          const current = document.getElementById(this.currentSlide)
+          const next = document.getElementById(this.nextSlide)
+          current.style.opacity = 0
+          next.style.opacity = 0
+          setTimeout( () => { 
+            next.scrollIntoView(true)
+            next.style.opacity = 1
+            current.style.opacity = 1
+          }, 350)
         }
       },
       keyListener (key) {
         if (key.keyCode === 27) {
           this.$router.push({path: '/projects'})
         } else if (key.keyCode === 39) {
-          this.scrollToNext (this.currentSlide)
+          this.scrollToNext (this.nextSlide)
         } else if (key.keyCode === 37) {
-          this.scrollToPrev (this.currentSlide)
+          this.scrollToPrev (this.nextSlide)
         }
       }
     },
@@ -134,6 +153,7 @@
     width: 100%
     height: 100vh
     @include pointer()
+    transition: opacity 0.35s
     &--inner
       display: flex
       align-items: center
@@ -141,8 +161,9 @@
       user-select: none
       width: 100vw
       height: 100%
+      padding: $mp-c
       &.triple
-        padding: 0 $mp-d*1.5
+        padding: $mp-c 35px
     &--img
       height: 100%;
       width: 50%;
@@ -152,20 +173,20 @@
         background-size: contain
         background-repeat: no-repeat
       &:first-child 
-        padding: $mp-d*3 $mp-d*1.5 $mp-d*3 $mp-d*3
+        padding: $mp-d 35px $mp-d $mp-d
         div
           background-position: center right
       &:nth-child(2) 
-        padding: $mp-d*3 $mp-d*3 $mp-d*3 $mp-d*1.5
+        padding: $mp-d $mp-d $mp-d 35px
         div
           background-position: center left
       &.solo
-        padding: $mp-d*3 $mp-d*3 $mp-d*3 $mp-d*3
+        padding: $mp-d $mp-d $mp-d $mp-d
         width: 100%;
         div
           background-position: center
       &.triple
-        padding: $mp-d*3 $mp-d*1.5 $mp-d*3 $mp-d*1.5
+        padding: $mp-d 35px $mp-d 35px
         div
           background-position: center
 </style>

@@ -1,12 +1,12 @@
 <template>
     <nav class="menu__wrapper" v-if="menuActive">
         <ol class="menu__list" v-if="!info">
-          <li class="menu__project">
-            <span>{{project.title}}</span><template v-if="project.content.client">, </template>
-            <span v-if="project.content.client">{{project.content.client}}</span>
+          <li class="menu__title italic" @click="showInfo(true)">
+            <span>{{project.title}}</span><template v-if="project.content.client"></template>
+            <span v-if="project.content.client">({{project.content.client}})</span>
           </li>
-          <!-- <li><a @click="showInfo(true)">(Project Info)</a></li>
-          <li><nuxt-link to="/projects">(Close)</nuxt-link></li> -->
+          <li><nuxt-link to="/projects">Projects</nuxt-link></li>
+          <li><nuxt-link to="/information">Info & Contact</nuxt-link></li>
         </ol>
         <ol class="menu__list" v-if="info" @mouseleave="showMenu(false), showInfo(false)">
           <li class="menu__project-info" @click="showInfo(false)">{{project.content.description}}</li>
@@ -41,9 +41,9 @@ export default {
 
       // Hide and show menu
       if (this.scrollTop > this.lastScroll) {
-        this.menuActive = false
+        // this.menuActive = false
       } else if (this.scrollTop < this.lastScroll) {
-        this.menuActive = true
+        // this.menuActive = true
       }
 
       //Save last scroll
@@ -65,23 +65,21 @@ export default {
   .menu
     &__wrapper
       width: 100vw
-      padding: $mp-b
-      @include fs-m()    
+      padding: $mp-a $mp-c*2
       z-index: 99
       position: fixed
-      top: 0
-      display: flex
-      align-items: center
-      justify-content: center
     &__list
       list-style: none
       li 
         display: inline
-        margin: 0 $mp-c/2
-    &__project
-
+        &:nth-child(2)
+          @include pointer()
+          &:after
+            content: ", "
+    &__title
+      margin-right: $mp-b
+      cursor: help
     &__project-info
-      @include center()
       @include pointer()
       
       
