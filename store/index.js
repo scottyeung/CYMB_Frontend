@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 const createStore = () => {
   return new Vuex.Store({
     state: {
-      indexImages: [],
+      siteInfo: [],
       projects: [],
       showMenu: false
     },
@@ -16,9 +16,9 @@ const createStore = () => {
     actions: {
 
       // Get Index Files
-      async getIndexFiles ({ commit }) {
-        const files = await this.$axios.$get('http://localhost:8888/rest/pages/home/files')
-        commit('setIndexFiles', files)
+      async getSiteInfo ({ commit }) {
+        const info = await this.$axios.$get('http://localhost:8888/rest/site')
+        commit('setSiteInfo', info)
       },
 
       async getProjectDetails({ commit, state }) {
@@ -39,14 +39,14 @@ const createStore = () => {
       
       //Nuxt Server Init
       async nuxtServerInit ({ commit, dispatch }) {
-        await dispatch ('getIndexFiles')
+        await dispatch ('getSiteInfo')
         await dispatch ('getProjects')
       }
     },
     mutations: {
       // Set Index files
-      setIndexFiles: (state, files) => {
-        state.indexImages = files
+      setSiteInfo: (state, info) => {
+        state.siteInfo = info.data
       },
       // Set Projects
       setProjects: (state, projects) => {
