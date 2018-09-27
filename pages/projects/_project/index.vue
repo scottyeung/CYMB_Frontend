@@ -3,45 +3,22 @@
     <ProjectMenu
       :project="project"  
     />
-<!--     <nuxt-link to="/projects" class="project__close">Close</nuxt-link>
- -->
-    <!-- <ProjectInfo
-      :project="project"
-      :showInfo="showInfo"
-      @infoChanged="changeInfo"
-    /> -->
     <ProjectSlider 
       :layouts="layouts" 
       :images="images"
-      :number="number"
-      @numberChanged="changeNumber"
     />
-    <!-- <ProjectScroll 
-      :layouts="layouts" 
-      :images="images"
-      :number="number"
-      :scrollPosition="scrollPosition" 
-      @numberChanged="changeNumber"
-      @infoChanged="changeInfo"
-      @scrollChanged="changeScroll"
-      />
- -->
   </div>
 </template>
 
 <script>
   import axios from '~/node_modules/axios'
   import ProjectSlider from '~/components/ProjectSlider'
-  // import ProjectScroll from '~/components/ProjectScroll'
-  // import ProjectInfo from '~/components/ProjectInfo'
   import ProjectMenu from '~/components/ProjectMenu'
 
   export default {
     name: "Project",
     components: {
       ProjectSlider,
-      // ProjectScroll,
-      // ProjectInfo,
       ProjectMenu
     },
     data () {
@@ -66,26 +43,6 @@
       layouts () {
         return this.project.content.layouts
       }
-    },
-    methods: {
-      findImage (id) {
-        const self = this
-        let img = _.find(this.images.data, function(e) { return e.id === id })
-        return img.url
-      },
-      changeLayouts (layouts) {
-        this.layouts = layouts
-      },
-      changeNumber (number) {
-        this.number = number
-        this.scrollPosition = 0
-      },
-      changeInfo (boolean) {
-        this.showInfo = boolean
-      },
-      changeScroll (number) {
-        this.scrollPosition = number
-      }
     }
   }
 </script>
@@ -93,24 +50,5 @@
 <style lang="sass">
 @import "../../../assets/sass/variables.sass"
 
-.project
-  // user-select: none
-  // &__close
-  //   position: fixed
-  //   bottom: 10vh
-  //   right: 0
-  //   z-index: 99
-  //   height: 50px
-  //   width: 50px
-  //   display: flex
-  //   align-items: center
-  //   justify-content: center
-  //   margin: $mp-b
-  //   background: $grey
-  //   border-radius: 50%;
-  //   @include fs-s()
-  //   line-height: 1
-  //   transform: rotate(20deg)
-  
 
 </style>

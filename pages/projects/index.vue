@@ -49,7 +49,6 @@ export default {
     return {
       widthClasses: ['small', 'small', 'medium', 'large'],
       loaded: false,
-      orientations: []
     }
   },
   computed: {
@@ -107,8 +106,8 @@ export default {
   align-items: flex-end
   justify-content: center
   flex-wrap: wrap
-  width: calc(100vw + 30px)
-  margin-left: $mp-c/2 * -1
+  width: calc(100vw + 20px)
+  margin-left: $mp-a * -1
   &__block
     padding: $mp-c
     display: inline-block

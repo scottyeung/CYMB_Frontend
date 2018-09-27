@@ -53,10 +53,9 @@ module.exports = {
     },
     plugins: [
       new webpack.ProvidePlugin({
-        // '_orderBy': ['lodash', 'orderBy'],
         // '_find': ['lodash', 'find'],
         // '_sample': ['lodash', 'sample'],
-        // '_reverse': ['lodash', 'flip'],
+        // '_reverse': ['lodash', 'reverse'],
         '_': 'lodash'
       })
     ]

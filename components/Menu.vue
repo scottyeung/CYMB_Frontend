@@ -33,7 +33,7 @@ export default {
   .menu
     &__wrapper
       width: 100vw
-      padding: $mp-a $mp-c*2
+      padding: $mp-a $mp-b
       z-index: 99
       position: fixed
     &__list

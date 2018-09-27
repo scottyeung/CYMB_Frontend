@@ -23,9 +23,7 @@ export default {
   },
   computed: {
     indexImages () { 
-      const images = this.$store.state.indexImages.data
-      const orderedImages = _.orderBy(images, function(e) { return parseInt(e.content.sort)}, ['asc'])
-      return orderedImages
+      return this.$store.state.indexImages.data
     },
     nextImgUrl () {
       if (this.indexImages[this.currentNumber + 1]) {

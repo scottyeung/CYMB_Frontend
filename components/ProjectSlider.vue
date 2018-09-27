@@ -3,45 +3,21 @@
     <!-- <div class="project__next" @click="next(1)"/> -->
 <!--     <div class="project__prev" @click="prev(2)"/> -->
     <a @click="scrollToNext(index)" v-for="(layout, index) in layouts">
-      <div class="project__slide" :id="index">
+      <div class="project__slide" :id="index" ref="slide">
         <div 
           class="project__slide--inner"
-          :class="{'triple': layout.image1 && layout.image2 && layout.image3}"
+          :class="{'triple': layout.images.length === 3}"
         >
           <div 
+            v-for="image in layout.images"
             class="project__slide--img" 
-            v-if="layout.image1" 
             :class="[{
-              'solo': !layout.image2 && !layout.image3, 
-              'triple': layout.image1 && layout.image2 && layout.image3
+              'solo': layout.images.length === 1, 
+              'triple': layout.images.length === 3
             }]"
           >
             <div 
-              :style="{backgroundImage: 'url(' + findImage(layout.image1) + ')'}"
-            />
-          </div>
-          <div 
-            class="project__slide--img" 
-            v-if="layout.image2" 
-            :class="[{
-              'solo': !layout.image1 && !layout.image3,
-              'triple': layout.image1 && layout.image2 && layout.image3
-            }]"
-          >
-            <div 
-              :style="{backgroundImage: 'url(' + findImage(layout.image2) + ')'}"
-            />
-          </div>
-          <div 
-            class="project__slide--img" 
-            v-if="layout.image3" 
-            :class="[{
-              'solo': !layout.image1 && !layout.image2,
-              'triple': layout.image1 && layout.image2 && layout.image3
-            }]"
-          >
-            <div 
-              :style="{backgroundImage: 'url(' + findImage(layout.image3) + ')'}"
+              :style="{backgroundImage: 'url(' + image.url + ')'}"
             />
           </div>
         </div>
@@ -56,8 +32,14 @@
     props: ['layouts', 'images', 'number'],
     data () {
       return {
-        nextSlide: 1,
-        currentSlide: 0
+        currentSlide: 0,
+        scrollTop: 0,
+        slidesOffset: [],
+      }
+    },
+    computed: {
+      slides () {
+        return this.$refs.slide
       }
     },
     methods: {
@@ -67,60 +49,60 @@
         return img.url
       },
       scrollToNext (index) {
-        if(index < this.layouts.length - 1) {
-          this.nextSlide = index + 1
-          this.currentSlide = index
-        } else {
-          this.nextSlide = 0
-          this.currentSlide = this.layouts.length - 1
-        }
+        this.currentSlide = index < this.layouts.length - 1 ? index + 1 : 0
         if(process.browser) {
-          const current = document.getElementById(this.currentSlide)
-          const next = document.getElementById(this.nextSlide)
-          current.style.opacity = 0
-          next.style.opacity = 0
+          for(let s = 0; s < this.slides.length; s++) {
+            this.slides[s].style.opacity = 0
+          }
+          const newSlide = document.getElementById(this.currentSlide)
           setTimeout( () => { 
-            next.scrollIntoView(true)
-            next.style.opacity = 1
-            current.style.opacity = 1
-          }, 350)
+            newSlide.scrollIntoView(true)
+            for(let s = 0; s < this.slides.length; s++) {
+              this.slides[s].style.opacity = 1
+            }
+          }, 250)
         }
       },
       scrollToPrev (index) {
-        if(index > 0) {
-          this.nextSlide = index - 1
-          this.curentSlide = index
-        } else {
-          this.nextSlide = this.layouts.length -  1
-          this.currentSlide = 0
-        }
+        this.currentSlide = index > 0 ? index - 1 : this.layouts.length -  1
         if(process.browser) {
-          const current = document.getElementById(this.currentSlide)
-          const next = document.getElementById(this.nextSlide)
-          current.style.opacity = 0
-          next.style.opacity = 0
+          for(let s = 0; s < this.slides.length; s++) {
+            this.slides[s].style.opacity = 0
+          }
+          const newSlide = document.getElementById(this.currentSlide)
           setTimeout( () => { 
-            next.scrollIntoView(true)
-            next.style.opacity = 1
-            current.style.opacity = 1
-          }, 350)
+            newSlide.scrollIntoView(true)
+            for(let s = 0; s < this.slides.length; s++) {
+              this.slides[s].style.opacity = 1
+            }
+          }, 250)
         }
       },
       keyListener (key) {
         if (key.keyCode === 27) {
           this.$router.push({path: '/projects'})
         } else if (key.keyCode === 39) {
-          this.scrollToNext (this.nextSlide)
+          this.scrollToNext (this.currentSlide)
         } else if (key.keyCode === 37) {
-          this.scrollToPrev (this.nextSlide)
+          this.scrollToPrev (this.currentSlide)
+        }
+      },
+      scrollListener () {
+        this.scrollTop = window.pageYOffset || document.documentElement.scrollTop
+        for(let s = 0; s < this.slides.length; s++) {
+          let offsetTop = this.slides[s].getBoundingClientRect().top
+          offsetTop = offsetTop < 0 ? offsetTop * -1 : offsetTop
+          this.slidesOffset[s] = offsetTop
         }
       }
     },
     mounted () {
       document.addEventListener('keyup', this.keyListener)
+      document.addEventListener('scroll', this.scrollListener)
     },
     destroyed () {
       document.removeEventListener('keyup', this.keyListener)
+      document.removeEventListener('scroll', this.scrollListener)
     }
   }
 </script>
@@ -153,7 +135,7 @@
     width: 100%
     height: 100vh
     @include pointer()
-    transition: opacity 0.35s
+    transition: opacity 0.25s
     &--inner
       display: flex
       align-items: center

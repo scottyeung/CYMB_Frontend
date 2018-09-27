@@ -2,7 +2,7 @@
     <nav class="menu__wrapper" v-if="menuActive">
         <ol class="menu__list" v-if="!info">
           <li class="menu__title italic" @click="showInfo(true)">
-            <span>{{project.title}}</span><template v-if="project.content.client"></template>
+            <span>{{project.title}}</span>
             <span v-if="project.content.client">({{project.content.client}})</span>
           </li>
           <li><nuxt-link to="/projects">Projects</nuxt-link></li>
@@ -64,8 +64,9 @@ export default {
 
   .menu
     &__wrapper
+      @include fs-s()
       width: 100vw
-      padding: $mp-a $mp-c*2
+      padding: $mp-a $mp-b
       z-index: 99
       position: fixed
     &__list
