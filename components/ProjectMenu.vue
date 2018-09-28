@@ -1,17 +1,17 @@
 <template>
-    <nav class="menu__wrapper" v-if="menuActive">
-        <ol class="menu__list" v-if="!info">
-          <li class="menu__title italic" @click="showInfo(true)">
-            <span>{{project.title}}</span>
-            <span v-if="project.content.client">({{project.content.client}})</span>
-          </li>
-          <li><nuxt-link to="/projects">Projects</nuxt-link></li>
-          <li><nuxt-link to="/information">Info & Contact</nuxt-link></li>
-        </ol>
-        <ol class="menu__list" v-if="info" @mouseleave="showMenu(false), showInfo(false)">
-          <li class="menu__project-info" @click="showInfo(false)">{{project.content.description}}</li>
-        </ol>
-    </nav>
+  <nav class="menu__wrapper">
+      <ol class="menu__list">
+        <li class="menu__list--item">
+          <nuxt-link class="menu__list--prev" :to="'/' + prevProject.id">Previous</nuxt-link>
+        </li>
+         <li class="menu__list--item">
+          <nuxt-link class="menu__list--next" :to="'/' + nextProject.id">Next</nuxt-link>
+        </li>
+        <li class="menu__list--item">
+          <nuxt-link class="menu__list--all" to="/projects">Close</nuxt-link>
+        </li>
+      </ol>
+  </nav>
 </template>
 
 <script>
@@ -19,43 +19,7 @@ import { mapMutations } from 'vuex'
 
 export default {
   name: 'ProjectMenu',
-  props: ['project'],
-  data () {
-    return {
-      info: false,
-      menu: false,
-      menuActive: true,
-      scrollTop: 0,
-      lastScroll: 0
-    }
-  },
-  methods: {
-    showInfo (boolean) {
-      this.info = boolean
-    },
-    showMenu (boolean) {
-      this.menu = boolean
-    },
-    handleScroll () {
-      this.scrollTop = window.scrollY
-
-      // Hide and show menu
-      if (this.scrollTop > this.lastScroll) {
-        // this.menuActive = false
-      } else if (this.scrollTop < this.lastScroll) {
-        // this.menuActive = true
-      }
-
-      //Save last scroll
-      this.lastScroll = this.scrollTop
-    }
-  },
-  beforeMount() {
-    window.addEventListener('scroll', this.handleScroll)
-  },
-  beforeDestroy() {
-    window.removeEventListener('scroll', this.handleScroll)
-  }
+  props: ['project', 'nextProject', 'prevProject'],
 }
 </script>
 
@@ -64,24 +28,20 @@ export default {
 
   .menu
     &__wrapper
-      @include fs-s()
-      width: 100vw
-      padding: $mp-a $mp-b
-      z-index: 99
-      position: fixed
+      display: block
+      margin-left: auto
+      @include nobr()
     &__list
       list-style: none
-      li 
-        display: inline
-        &:nth-child(2)
-          @include pointer()
-          &:after
-            content: ", "
-    &__title
-      margin-right: $mp-b
-      cursor: help
-    &__project-info
-      @include pointer()
+      &--item
+        display: inline-block
+        margin-left: $mp-a
+        // &:after
+        //   content: ", "
+        // &:last-child:after
+        //   content: ""
+    &__project--info
+      cursor: pointer
       
       
 </style>

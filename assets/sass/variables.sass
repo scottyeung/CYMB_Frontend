@@ -1,4 +1,5 @@
 $black: #121212
+$transparent: rgba(12, 12, 12, 0.98)
 $white: #fff
 $grey: rgb(240,240,240)
 
@@ -16,13 +17,13 @@ $lh-s: 15px
 $lh-m: 20px
 
 @mixin fs-m()
-  font-size: 17px
+  font-size: 18px
   line-height: $lh-m
 
-$lh-l: 24px
+$lh-l: 21px
 
 @mixin fs-l()
-  font-size: 21px
+  font-size: 19.5px
   line-height: $lh-l
 
 @mixin left()
@@ -92,6 +93,7 @@ $lh-l: 24px
 
 .nuxt-link-exact-active
   @include italic()
+  // text-transform: uppercase
 
 
 

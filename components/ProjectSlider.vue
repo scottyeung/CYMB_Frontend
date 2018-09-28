@@ -1,35 +1,33 @@
 <template>
   <div class="project__slider">
-    <!-- <div class="project__next" @click="next(1)"/> -->
-<!--     <div class="project__prev" @click="prev(2)"/> -->
-    <a @click="scrollToNext(index)" v-for="(layout, index) in layouts">
-      <div class="project__slide" :id="index" ref="slide">
+    <a class="project__next" @click="scrollToNext(currentSlide)"/>
+    <!-- <a class="project__prev" @click="scrollToPrev(currentSlide)"/> -->
+    <div class="project__slide" v-for="(layout, index) in layouts" :id="index" ref="slide">
+      <div 
+        class="project__slide--inner"
+        :class="{'triple': layout.images.length === 3}"
+      >
         <div 
-          class="project__slide--inner"
-          :class="{'triple': layout.images.length === 3}"
+          v-for="image in layout.images"
+          class="project__slide--img" 
+          :class="[{
+            'solo': layout.images.length === 1, 
+            'triple': layout.images.length === 3
+          }]"
         >
           <div 
-            v-for="image in layout.images"
-            class="project__slide--img" 
-            :class="[{
-              'solo': layout.images.length === 1, 
-              'triple': layout.images.length === 3
-            }]"
-          >
-            <div 
-              :style="{backgroundImage: 'url(' + image.url + ')'}"
-            />
-          </div>
+            :style="{backgroundImage: 'url(' + image.url + ')'}"
+          />
         </div>
       </div>
-    </a>
+    </div>
   </div>
 </template>
 
 <script>
   export default {
     name: 'ProjectSlider',
-    props: ['layouts', 'images', 'number'],
+    props: ['layouts', 'images'],
     data () {
       return {
         currentSlide: 0,
@@ -49,38 +47,48 @@
         return img.url
       },
       scrollToNext (index) {
-        this.currentSlide = index < this.layouts.length - 1 ? index + 1 : 0
+        if(index == this.layouts.length - 1) {
+          // Open info at the end
+          this.$emit('infoChanged', true)
+        }
+          // Change curentSlide and
+          this.currentSlide = index < this.layouts.length - 1 ? index + 1 : 0
         if(process.browser) {
-          for(let s = 0; s < this.slides.length; s++) {
-            this.slides[s].style.opacity = 0
-          }
+          // for(let s = 0; s < this.slides.length; s++) {
+          //   this.slides[s].style.opacity = 0
+          // }
+
+          // Scroll to next Slide
           const newSlide = document.getElementById(this.currentSlide)
-          setTimeout( () => { 
-            newSlide.scrollIntoView(true)
-            for(let s = 0; s < this.slides.length; s++) {
-              this.slides[s].style.opacity = 1
-            }
-          }, 250)
+          newSlide.scrollIntoView(true)
+          // setTimeout( () => { 
+          //   newSlide.scrollIntoView(true)
+          //   for(let s = 0; s < this.slides.length; s++) {
+          //     this.slides[s].style.opacity = 1
+          //   }
+          // }, 250)
         }
       },
       scrollToPrev (index) {
         this.currentSlide = index > 0 ? index - 1 : this.layouts.length -  1
         if(process.browser) {
-          for(let s = 0; s < this.slides.length; s++) {
-            this.slides[s].style.opacity = 0
-          }
+          // for(let s = 0; s < this.slides.length; s++) {
+          //   this.slides[s].style.opacity = 0
+          // }
           const newSlide = document.getElementById(this.currentSlide)
-          setTimeout( () => { 
-            newSlide.scrollIntoView(true)
-            for(let s = 0; s < this.slides.length; s++) {
-              this.slides[s].style.opacity = 1
-            }
-          }, 250)
+          newSlide.scrollIntoView(true)
+          // setTimeout( () => { 
+          //   newSlide.scrollIntoView(true)
+          //   for(let s = 0; s < this.slides.length; s++) {
+          //     this.slides[s].style.opacity = 1
+          //   }
+          // }, 250)
         }
       },
       keyListener (key) {
         if (key.keyCode === 27) {
-          this.$router.push({path: '/projects'})
+          this.$emit('infoChanged', true)
+          // this.$router.push({path: '/projects'})
         } else if (key.keyCode === 39) {
           this.scrollToNext (this.currentSlide)
         } else if (key.keyCode === 37) {
@@ -88,12 +96,13 @@
         }
       },
       scrollListener () {
+        // Check current active slide
         this.scrollTop = window.pageYOffset || document.documentElement.scrollTop
         for(let s = 0; s < this.slides.length; s++) {
           let offsetTop = this.slides[s].getBoundingClientRect().top
-          offsetTop = offsetTop < 0 ? offsetTop * -1 : offsetTop
-          this.slidesOffset[s] = offsetTop
+          this.slidesOffset[s] = Math.abs(offsetTop)
         }
+        this.currentSlide = this.slidesOffset.indexOf(Math.min.apply(null, this.slidesOffset))
       }
     },
     mounted () {
@@ -111,14 +120,14 @@
 @import "../assets/sass/variables.sass"
 
 .project
-  // &__next
-  //   position: fixed
-  //   top: 0
-  //   right: 0
-  //   width: 50%
-  //   height: 100%
-  //   z-index: 90
-  //   cursor: e-resize
+  &__next
+    position: fixed
+    top: 0
+    right: 0
+    width: 100%
+    height: 100%
+    z-index: 90
+    cursor: s-resize
   // &__prev
   //   position: fixed
   //   top: 0
@@ -126,7 +135,7 @@
   //   width: 50%
   //   height: 100%
   //   z-index: 90
-  //   cursor: w-resize
+  //   cursor: n-resize
   &__slider
     position: relative
     user-select: none
@@ -143,9 +152,9 @@
       user-select: none
       width: 100vw
       height: 100%
-      padding: $mp-c
+      padding: $mp-d
       &.triple
-        padding: $mp-c 35px
+        padding: $mp-d
     &--img
       height: 100%;
       width: 50%;
@@ -155,11 +164,11 @@
         background-size: contain
         background-repeat: no-repeat
       &:first-child 
-        padding: $mp-d 35px $mp-d $mp-d
+        padding: $mp-d $mp-d $mp-d $mp-d
         div
           background-position: center right
       &:nth-child(2) 
-        padding: $mp-d $mp-d $mp-d 35px
+        padding: $mp-d $mp-d $mp-d $mp-d
         div
           background-position: center left
       &.solo
@@ -168,7 +177,7 @@
         div
           background-position: center
       &.triple
-        padding: $mp-d 35px $mp-d 35px
+        padding: $mp-d $mp-d $mp-d $mp-d
         div
           background-position: center
 </style>

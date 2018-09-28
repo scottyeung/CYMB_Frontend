@@ -101,13 +101,14 @@ export default {
 
 .projects
   @include center
-  padding: $mp-d 0
+  padding: $mp-c*2 0
   display: flex
   align-items: flex-end
   justify-content: center
   flex-wrap: wrap
-  width: calc(100vw + 20px)
-  margin-left: $mp-a * -1
+  width: 100vw
+  width: calc(100vw + 30px)
+  margin-left: $mp-c/2 * -1
   &__block
     padding: $mp-c
     display: inline-block

@@ -2,8 +2,10 @@
     <nav class="menu__wrapper" :class="color">
       <ol class="menu__list">
           <li class="menu__title">Constantin Mirbach</li>
-          <li><nuxt-link to="/projects">Projects</nuxt-link></li>
-          <li><nuxt-link to="/information">Info & Contact</nuxt-link></li>
+          <li class="menu__nav">
+            <nuxt-link class="menu__nav--projects" to="/projects">Projects</nuxt-link>
+            <nuxt-link class="menu__nav--about" to="/information">About</nuxt-link>
+          </li>
       </ol>
     </nav>
 </template>
@@ -33,17 +35,21 @@ export default {
   .menu
     &__wrapper
       width: 100vw
-      padding: $mp-a $mp-b
+      padding: $mp-a $mp-c/2
       z-index: 99
-      position: fixed
+      position: absolute
     &__list
       list-style: none
       li
-        display: inline
-        &:nth-child(2)
-          &:after
-            content: ", "
+        display: block
     &__title
-      margin-right: $mp-b
+      margin-right: $mp-c
+      cursor: default
+    &__nav
+      &--about
+        cursor: help
+      a:first-child
+        &:after
+            content: ", "
 </style>
 

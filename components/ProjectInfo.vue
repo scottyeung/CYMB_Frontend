@@ -1,17 +1,32 @@
 <template>
-  <div class="project__info" v-if="showInfo" @click="hideInfo">
-    <div class="project__title">
-      <span>{{project.title}}</span><br>
-      <span class="nobr italic">{{project.content.client}}</span>
+  <transition name="fade--info">
+    <div class="project__info" v-if="showInfo" @click.self="hideInfo">
+      <div class="project__title">
+        <span class="nobr">{{project.title}}&nbsp;</span>
+        <span class="nobr italic">{{project.content.client}}</span>
+      </div>
+      <!-- <div class="project__client" v-if="project.content.client">
+        <span class="nobr italic">{{project.content.client}}</span>
+      </div> -->
+      <div class="project__description">{{project.content.description}}</div>
+      <ProjectMenu
+        :project="project"
+        :nextProject="nextProject"
+        :prevProject="prevProject"
+      />
     </div>
-    <div class="project__description">{{project.content.description}}</div>
-  </div>
+  </transition>
 </template>
 
 <script>
+  import ProjectMenu from '~/components/ProjectMenu'
+
   export default {
     name: 'ProjectInfo',
-    props: ['project', 'showInfo'],
+    props: ['project', 'showInfo', 'layouts', 'images', 'nextProject', 'prevProject'],
+    components: {
+      ProjectMenu
+    },
     methods: {
       hideInfo () {
         this.$emit('infoChanged', false)
@@ -23,6 +38,12 @@
 <style lang="sass">
 @import "../assets/sass/variables.sass"
 
+.fade--info
+  &-leave-active, &-enter-active
+    // transition: all .2s ease-in-out
+  &-leave-to, &-enter
+    opacity: 0
+
 .project
   &__info
     position: fixed
@@ -31,31 +52,20 @@
     height: 100vh
     width: 100vw
     display: flex
-    align-items: center
-    justify-content: center
-    flex-wrap: wrap
-    flex-direction: column
-    padding: $mp-a
+    align-items: flex-start
+    padding: $mp-a $mp-c/2
     z-index: 99
     @include pointer()
-    background: rgba(255,255,255,0.9)
+    // @include white()
+    // background: $transparent
   &__title
-    display: inline-block
-    @include center()
+    display: block
     span
-      display: inline-block
-      // background: $white
-      padding: 0 $mp-a
+      display: block
+    margin: 0 $mp-c 0 0
   &__description
-    max-width: 450px
+    max-width: 750px
+    margin: 0 $mp-c 0 0
     display: inline-block
-    // background: $white
-    margin: $lh-m 0 0 0
-    padding: 0 $mp-a
-    // height: 100%
-    // display: flex
-    // align-items: center
-    @include center()
-    @include fs-m()
 
 </style>

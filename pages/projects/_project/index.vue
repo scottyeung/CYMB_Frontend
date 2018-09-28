@@ -1,31 +1,36 @@
 <template>
   <div class="container project">
-    <ProjectMenu
-      :project="project"  
+    <ProjectInfo
+      :project="project"
+      :nextProject="nextProject"
+      :prevProject="prevProject"
+      :showInfo="showInfo"
+      :images="images"
+      :layouts="layouts"
+      @infoChanged="changeInfo"
     />
     <ProjectSlider 
       :layouts="layouts" 
       :images="images"
+      @infoChanged="changeInfo"
     />
   </div>
 </template>
 
 <script>
   import axios from '~/node_modules/axios'
+  import ProjectInfo from '~/components/ProjectInfo'
   import ProjectSlider from '~/components/ProjectSlider'
-  import ProjectMenu from '~/components/ProjectMenu'
 
   export default {
     name: "Project",
     components: {
       ProjectSlider,
-      ProjectMenu
+      ProjectInfo
     },
     data () {
       return {
-        number: 0,
         showInfo: true,
-        scrollPosition: 0
       }
     },
     async asyncData ({ params }) {
@@ -42,6 +47,23 @@
       },
       layouts () {
         return this.project.content.layouts
+      },
+      nextProject () {
+        let projects = this.$store.state.projects.data
+        let currentIndex = projects.indexOf(this.project)
+        let nextIndex = currentIndex < projects.length - 1 ? currentIndex + 1 : 0
+        return projects[nextIndex]
+      },
+      prevProject () {
+        let projects = this.$store.state.projects.data
+        let currentIndex = projects.indexOf(this.project)
+        let prevIndex = currentIndex > 0 ? currentIndex - 1 : projects.length - 1
+        return projects[prevIndex]
+      },
+    },
+    methods: {
+      changeInfo (boolean) {
+        this.showInfo = boolean
       }
     }
   }

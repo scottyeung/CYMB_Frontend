@@ -1,7 +1,7 @@
 <template>
   <div class="projects__caption">
     <nuxt-link :to="project.id">
-      <span class="projects__c__title">{{ projectTitle }}</span>
+      <span class="projects__title">{{ projectTitle }}</span>
       <span class="nobr italic">{{ projectSecondary }}</span>
     </nuxt-link>
   </div>
@@ -10,14 +10,14 @@
 <script>
 
 export default {
-	name: 'IndexCaption',
+	name: 'ProjectsCaption',
   props: ['project'],
   computed: {
     projectTitle () {
       return this.project.title
     },
     projectSecondary () {
-      if(this.project.content.client.length > 0 && this.project.content.client !== this.project.title) {
+      if(this.project.content.client && this.project.content.client !== this.project.title) {
         return this.project.content.client
       }
     }
@@ -34,9 +34,6 @@ export default {
     padding: 0
     span
       display: block;
-
-  .projects__c__title 
-    padding-right: 10px
 
 </style>
 
