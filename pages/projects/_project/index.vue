@@ -4,15 +4,10 @@
       :project="project"
       :nextProject="nextProject"
       :prevProject="prevProject"
-      :showInfo="showInfo"
-      :images="images"
       :layouts="layouts"
-      @infoChanged="changeInfo"
     />
     <ProjectSlider 
       :layouts="layouts" 
-      :images="images"
-      @infoChanged="changeInfo"
     />
   </div>
 </template>
@@ -27,11 +22,6 @@
     components: {
       ProjectSlider,
       ProjectInfo
-    },
-    data () {
-      return {
-        showInfo: true,
-      }
     },
     async asyncData ({ params }) {
       let { data } = await axios.get(
@@ -60,11 +50,6 @@
         let prevIndex = currentIndex > 0 ? currentIndex - 1 : projects.length - 1
         return projects[prevIndex]
       },
-    },
-    methods: {
-      changeInfo (boolean) {
-        this.showInfo = boolean
-      }
     }
   }
 </script>

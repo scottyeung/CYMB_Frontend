@@ -5,12 +5,12 @@ const createStore = () => {
     state: {
       siteInfo: [],
       projects: [],
-      showMenu: false
+      currentSlide: 0,
+      infoVisible: true
     },
     getters: {
-      // GET_FILTERACTIVE: (state) => (filtervalue) => {
-      //   const trueorfalse = _.includes(state.filtervalue, filtervalue)
-      //   return trueorfalse
+      // getSlide: (state) => {
+      //   return state.currentSlide
       // },
     },
     actions: {
@@ -56,9 +56,12 @@ const createStore = () => {
       setProjectDetails: (state, project) => {
         state.projects.data[project.data.num - 1] = project.data
       },
-
-      changeMenu: (state, bool) => {
-        state.showMenu = bool
+      // Set Slide
+      setSlide: (state, index) => {
+        state.currentSlide = index
+      },
+      setInfo: (state, bool) => {
+        state.infoVisible = bool
       }
     }
   })

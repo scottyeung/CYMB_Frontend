@@ -1,10 +1,12 @@
 <template>
     <nav class="menu__wrapper" :class="color">
       <ol class="menu__list">
-          <li class="menu__title">Constantin Mirbach</li>
           <li class="menu__nav">
-            <nuxt-link class="menu__nav--projects" to="/projects">Projects</nuxt-link>
-            <nuxt-link class="menu__nav--about" to="/information">About</nuxt-link>
+            <nuxt-link class="menu__nav--projects" to="/projects">Constantin Mirbach</nuxt-link>
+          </li>
+          <li class="menu__nav">
+            <!-- <nuxt-link class="menu__nav--projects" to="/projects">Projects</nuxt-link> -->
+            <nuxt-link class="menu__nav--about" to="/information">?</nuxt-link>
           </li>
       </ol>
     </nav>
@@ -41,15 +43,17 @@ export default {
     &__list
       list-style: none
       li
-        display: block
+        display: inline-block
+        float: left
     &__title
-      margin-right: $mp-c
+      // margin-right: $mp-c
       cursor: default
     &__nav
+      margin-right: $mp-c
       &--about
         cursor: help
-      a:first-child
-        &:after
-            content: ", "
+      // a:first-child
+      //   &:after
+      //       content: ", "
 </style>
 

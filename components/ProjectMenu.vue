@@ -8,7 +8,7 @@
           <nuxt-link class="menu__list--next" :to="'/' + nextProject.id">Next</nuxt-link>
         </li>
         <li class="menu__list--item">
-          <nuxt-link class="menu__list--all" to="/projects">Close</nuxt-link>
+          <nuxt-link class="menu__list--all" to="/projects">All</nuxt-link>
         </li>
       </ol>
   </nav>
@@ -28,18 +28,23 @@ export default {
 
   .menu
     &__wrapper
+      position: fixed
+      top: 0
+      right: 0
       display: block
-      margin-left: auto
+      padding: $mp-a $mp-b
       @include nobr()
+      // @include fs-s()
     &__list
       list-style: none
+      display: flex
       &--item
         display: inline-block
-        margin-left: $mp-a
-        // &:after
-        //   content: ", "
-        // &:last-child:after
-        //   content: ""
+        margin-left: $mp-b
+      &--prev
+        cursor: w-resize
+      &--next
+        cursor: e-resize
     &__project--info
       cursor: pointer
       

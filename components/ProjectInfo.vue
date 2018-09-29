@@ -1,36 +1,43 @@
 <template>
   <transition name="fade--info">
-    <div class="project__info" v-if="showInfo" @click.self="hideInfo">
-      <div class="project__title">
-        <span class="nobr">{{project.title}}&nbsp;</span>
-        <span class="nobr italic">{{project.content.client}}</span>
-      </div>
-      <!-- <div class="project__client" v-if="project.content.client">
-        <span class="nobr italic">{{project.content.client}}</span>
-      </div> -->
-      <div class="project__description">{{project.content.description}}</div>
+    <div class="project__info" v-if="$store.state.infoVisible" @click.self="setInfo(false)">
       <ProjectMenu
         :project="project"
         :nextProject="nextProject"
         :prevProject="prevProject"
       />
+      <div class="project__title">
+        <span class="nobr">{{project.title}}</span>
+        <span class="nobr italic">{{project.content.client}}</span>
+      </div>
+      <ProjectThumbs
+        :layouts="layouts"
+        :images="images"
+      />
+      <div class="project__description">
+        {{project.content.description}}
+      </div>
     </div>
   </transition>
 </template>
 
 <script>
   import ProjectMenu from '~/components/ProjectMenu'
+  import ProjectThumbs from '~/components/ProjectThumbs'
+  import { mapMutations } from 'vuex'
+
 
   export default {
     name: 'ProjectInfo',
-    props: ['project', 'showInfo', 'layouts', 'images', 'nextProject', 'prevProject'],
+    props: ['project', 'layouts', 'images', 'nextProject', 'prevProject'],
     components: {
-      ProjectMenu
+      ProjectMenu,
+      ProjectThumbs
     },
     methods: {
-      hideInfo () {
-        this.$emit('infoChanged', false)
-      }
+      ...mapMutations([
+        'setInfo'
+      ]),
     }
   }
 </script>
@@ -51,21 +58,18 @@
     left: 0
     height: 100vh
     width: 100vw
-    display: flex
-    align-items: flex-start
     padding: $mp-a $mp-c/2
     z-index: 99
     @include pointer()
-    // @include white()
-    // background: $transparent
+    background: $transparent
   &__title
-    display: block
+    // margin: $lh-m 0 0 0
+    cursor: default
     span
       display: block
-    margin: 0 $mp-c 0 0
   &__description
-    max-width: 750px
-    margin: 0 $mp-c 0 0
-    display: inline-block
+    max-width: 1200px
+    margin: $lh-m 0 0 0
+    cursor: default
 
 </style>
