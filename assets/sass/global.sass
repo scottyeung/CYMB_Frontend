@@ -19,8 +19,9 @@
     font-style: italic
 
 #__nuxt
-  font-family: 'CourierNewPSMT', 'BodoniSixITC-Book', Times, serif
-  // letter-spacing: -0.01em
+  font-family: 'FournierMTStd-Regular', 'CourierNewPSMT', 'BodoniSixITC-Book', Times, serif
+  letter-spacing: 0.025em
+  font-feature-settings: "salt" 1
 
 body
   @include fs-m()
@@ -29,7 +30,7 @@ body
 h1, h2, h3, h4, h5, h6
   font-weight: normal
   font-size: inherit
-
+  text-decoration: underline
 a
   text-decoration: none
   color: inherit
@@ -47,7 +48,7 @@ button
   overflow-y: hidden
 
 .nuxt-link-exact-active
-// @include italic()
+	@include italic()
 // text-transform: uppercase
  
 

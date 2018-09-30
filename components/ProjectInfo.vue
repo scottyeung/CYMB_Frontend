@@ -1,22 +1,24 @@
 <template>
   <transition name="fade--info">
-    <div class="project__info" v-if="$store.state.infoVisible" @click.self="setInfo(false)">
+    <div class="project__info--wrapper" v-if="$store.state.infoVisible" @click.self="setInfo(false)">
       <ProjectMenu
         :project="project"
         :nextProject="nextProject"
         :prevProject="prevProject"
       />
-      <div class="project__title">
-        <span class="nobr">{{project.title}}</span>
-        <span class="nobr italic">{{project.content.client}}</span>
+      <div class="project__info">
+        <div class="project__info--title">
+          <span class="nobr">{{project.title}}</span>
+          <span class="nobr italic">{{project.content.client}}</span>
+        </div>
+        <div class="project__info--description">
+          {{project.content.description}}
+        </div>
       </div>
       <ProjectThumbs
         :layouts="layouts"
         :images="images"
       />
-      <div class="project__description">
-        {{project.content.description}}
-      </div>
     </div>
   </transition>
 </template>
@@ -53,23 +55,25 @@
 
 .project
   &__info
-    position: fixed
-    top: 0
-    left: 0
-    height: 100vh
-    width: 100vw
-    padding: $mp-a $mp-c/2
-    z-index: 99
-    @include pointer()
-    background: $transparent
-  &__title
-    // margin: $lh-m 0 0 0
-    cursor: default
-    span
-      display: block
-  &__description
-    max-width: 1200px
-    margin: $lh-m 0 0 0
-    cursor: default
+    display: flex
+    &--wrapper
+      position: fixed
+      top: 0
+      left: 0
+      height: 100vh
+      width: 100vw
+      padding: $mp-a $mp-c/2
+      z-index: 99
+      @include pointer()
+      background: $transparent
+    &--title
+      margin: 0 $mp-c 0 0
+      cursor: default
+      span
+        display: block
+    &--description
+      max-width: 1200px
+      padding: 0 195px 0 0
+      cursor: default
 
 </style>

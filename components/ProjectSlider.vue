@@ -80,7 +80,11 @@
       },
       keyListener (key) {
         if (key.keyCode === 27) {
-          this.setInfo(true)
+          if(!this.$store.state.infoVisible) {
+            this.setInfo(true)
+          } else {
+            this.$router.push({ path: '/projects' })
+          }
         } else if (key.keyCode === 39) {
           this.scrollToNext (this.currentSlide)
         } else if (key.keyCode === 37) {

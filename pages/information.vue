@@ -1,26 +1,40 @@
 <template>
-  <div class="container">
-    <Menu></Menu>
-    <div class="information">
-      <div class="information__address information--block">
-        <h2 class="italic">Contact</h2>
-        <span><a :href="'tel:' + phone ">{{phone}}</a></span>
-        <span><a :href="'mailto:' + email ">{{email}}</a></span>
+  <div class="container information">
+    <keep-alive><Menu></Menu></keep-alive>
+    <div class="information__inner">
+      <div class="information--column">
+        <div class="information__address information--block">
+          <h2>Contact</h2>
+          <p>
+            <span>{{street}}</span>
+            <span>{{postcode}} {{city}} ({{country}})</span>
+          </p>
+          <p>
+            <a :href="'tel:' + phone ">{{phone}}</a>
+            <a :href="'mailto:' + email ">{{email}}</a>
+            <a :href="instagram">Instagram</a>
+          </p>
+        </div>
+        <img 
+          v-if="images" 
+          :src="images[0].url"
+          class="information__image"
+        />
+        <div class="information__about information--block">
+          <p>{{about}}</p>
+        </div>
       </div>
-      <div class="information__clients information--block">
-        <h2 class="italic">Clients</h2>
-        <span v-for="client in clients">{{client.client}}</span>
-      </div>
-      <div class="information__imprint information--block">
-        <h2 class="italic">Imprint</h2>
-        <p class="information__address">
-          <span>Constantin Mirbach</span>
-          <span>{{street}}</span>
-          <span>{{postcode}} {{city}}</span>
-          <span>{{country}}</span>
-        </p>
-        <p>{{legalNotice}}</p>
-        <span>Website by <a href="http://studioscholz.info" target="_blank">Studio Scholz</a></span>
+      <div class="information--column">
+        <div class="information__clients information--block">
+          <h2>Selected Clients</h2>
+          <span v-for="client in clients">{{client.client}}</span>
+        </div>
+        <div class="information__imprint information--block">
+          <h2>Legal Notice</h2>
+          <p>{{legalNotice}}</p>
+          <span>Ust-Id: {{ustid}}</span>
+          <span>Website by <a href="http://studioscholz.info" target="_blank">Studio Scholz</a></span>
+        </div>
       </div>
     </div>
   </div>
@@ -30,16 +44,24 @@
 import axios from '~/node_modules/axios'
 import Menu from '~/components/Menu.vue'
 
+// const {parse, stringify} = require('flatted/cjs')
+
+
 export default {
   name: 'Information',
   components: {
     Menu
   },
   async asyncData ({ params }) {
-    let { data } = await axios.get('http://127.0.0.1:8888/rest/pages/information')
-    console.log({data})
+    let {data} = await axios.get('http://127.0.0.1:8888/rest/pages/information')
+    let information = data.data.content
+
+    data = await axios.get('http://127.0.0.1:8888/rest/pages/information/files')
+    let images = data.data.data
+
     return { 
-      information: data.data.content, 
+      information: information, 
+      images: images
     }
   },
   computed: {
@@ -69,6 +91,12 @@ export default {
     },
     legalNotice () {
       return this.$store.state.siteInfo.content.legal
+    },
+    about () {
+      return this.information.about
+    },
+    instagram () {
+      return this.information.instagram
     }
   }
 }
@@ -78,17 +106,43 @@ export default {
   @import "../assets/sass/variables.sass"
 
   .information
-    width: 100%
-    padding: $mp-c*2 $mp-b
+    background: yellow
+    &__inner
+      width: 100%
+      width: calc(100vw + 30px)
+      padding: $mp-d + $mp-c 0 50px 0
+      margin: 0 -15px
+      // display: flex
+    &--column
+      max-width: 900px
+      width: 100%
+      // width: calc(100% / 3)
+      padding: 0 $mp-c
+    &--block
+      margin-bottom: $lh-m
+    &__image
+      width: 100%
+      max-width: 500px
+    &__about
+      @include fs-s()
     &__address
       span
         display: block
+      p
+        display: block
+        margin-bottom: $lh-m
+        a
+          display: block
     &__clients
       span
+        display: inline
         &:after
           content: ", "
-        &:last-child:after
-          content: ""
+    &__imprint
+      span
+        display: block
+      p
+        margin-bottom: $lh-m
 
 </style>
 

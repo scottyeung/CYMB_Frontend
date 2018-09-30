@@ -1,12 +1,12 @@
 <template>
-    <nav class="menu__wrapper" :class="color">
+    <nav class="menu__wrapper">
       <ol class="menu__list">
           <li class="menu__nav">
-            <nuxt-link class="menu__nav--projects" to="/projects">Constantin Mirbach</nuxt-link>
+            <a class="menu__nav--title">Constantin Mirbach</a>
           </li>
           <li class="menu__nav">
-            <!-- <nuxt-link class="menu__nav--projects" to="/projects">Projects</nuxt-link> -->
-            <nuxt-link class="menu__nav--about" to="/information">?</nuxt-link>
+            <nuxt-link class="menu__nav--projects" to="/projects">Projects</nuxt-link>
+            <nuxt-link class="menu__nav--about" to="/information">About</nuxt-link>
           </li>
       </ol>
     </nav>
@@ -17,12 +17,7 @@ import { mapMutations } from 'vuex'
 
 export default {
   name: 'Menu',
-  props: ['color', 'background'],
-  data () {
-    return {
-      showMenu: false
-    }
-  },
+
   methods: {
     ...mapMutations([
       'changeMenu'
@@ -45,15 +40,12 @@ export default {
       li
         display: inline-block
         float: left
-    &__title
-      // margin-right: $mp-c
-      cursor: default
     &__nav
       margin-right: $mp-c
+      &--projects
+        &:after
+          content: ", "
       &--about
         cursor: help
-      // a:first-child
-      //   &:after
-      //       content: ", "
 </style>
 
