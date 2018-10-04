@@ -1,25 +1,27 @@
 <template>
-  <div class="project__thumbs">
-    <div 
-      class="project__thumb" 
+  <div class="project__thumbs" @click.self="setInfo(false)">
+    <div
+      class="project__thumb"
       v-for="(layout, index) in layouts"
+      :key="index"
       :style="{width: slideWidth + 'px'}"
       @click="setSlide(index), setInfo(false), scrollToNext()"
     >
-        <div 
+        <div
           class="project__thumb--inner"
           ref="thumb"
           :class="{'triple': layout.images.length === 3}"
         >
-          <div 
-            v-for="image in layout.images"
-            class="project__thumb--img" 
+          <div
+            v-for="(image, index) in layout.images"
+            :key="index"
+            class="project__thumb--img"
             :class="[{
-              'solo': layout.images.length === 1, 
+              'solo': layout.images.length === 1,
               'triple': layout.images.length === 3
             }]"
           >
-            <div 
+            <div
               :style="{backgroundImage: 'url(' + image.thumb + ')'}"
             />
           </div>
@@ -75,7 +77,7 @@
 </script>
 
 <style lang="sass">
-@import "../assets/sass/variables.sass"
+@import "~/assets/sass/variables.sass"
 
 .project
   &__thumbs
@@ -107,11 +109,11 @@
         width: 100%;
         background-size: contain
         background-repeat: no-repeat
-      &:first-child 
+      &:first-child
         padding: 4px 4px 4px 4px
         div
           background-position: center right
-      &:nth-child(2) 
+      &:nth-child(2)
         padding: 4px 4px 4px 4px
         div
           background-position: center left

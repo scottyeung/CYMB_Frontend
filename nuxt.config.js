@@ -1,4 +1,5 @@
 const webpack = require('webpack')
+require('dotenv').config()
 
 module.exports = {
   /*
@@ -30,9 +31,10 @@ module.exports = {
   ],
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/dotenv'
   ],
   axios: {
-    proxy: true
+    baseURL: process.env.NODE_ENV === 'dev' ? 'http://127.0.0.1:8888/rest/' : 'https://cms.constantinmirbach.de',
   },
   css: [
     '~/assets/sass/global.sass'
@@ -53,10 +55,9 @@ module.exports = {
     },
     plugins: [
       new webpack.ProvidePlugin({
-        // '_find': ['lodash', 'find'],
-        // '_sample': ['lodash', 'sample'],
-        // '_reverse': ['lodash', 'reverse'],
-        '_': 'lodash'
+        '_.find': ['lodash', 'find'],
+        '_.sample': ['lodash', 'sample'],
+        '_.reverse': ['lodash', 'shuffle']
       })
     ]
   }

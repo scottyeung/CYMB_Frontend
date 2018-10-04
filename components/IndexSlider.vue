@@ -1,10 +1,10 @@
 <template>
-  <div 
-    class="index__slider" 
+  <div
+    class="index__slider"
     :class="[indexImages[currentNumber].content.sizing, indexImages[currentNumber].content.background]"
   >
-    <div 
-    class="index__slider__img" 
+    <div
+    class="index__slider__img"
     :style="{backgroundImage: 'url(' + indexImages[currentNumber].url + ')'}"
     :class="indexImages[currentNumber].content.sizing"
     @click="onSwipeLeft"
@@ -22,7 +22,7 @@ export default {
     }
   },
   computed: {
-    indexImages () { 
+    indexImages () {
       return this.$store.state.indexImages.data
     },
     nextImgUrl () {
@@ -75,9 +75,9 @@ export default {
     },
     dataEmit () {
       this.$emit(
-        'slideChange', 
-        this.indexImages[this.currentNumber].content.color, 
-        this.indexImages[this.currentNumber].content.background, 
+        'slideChange',
+        this.indexImages[this.currentNumber].content.color,
+        this.indexImages[this.currentNumber].content.background,
         this.indexImages[this.currentNumber].content.project
       )
     }
@@ -94,7 +94,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  @import "../assets/sass/variables.sass"
+  @import "~/assets/sass/variables.sass"
 
   .index__slider
     width: 100%

@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../../assets/sass/variables.sass"
+@import "~/assets/sass/variables.sass"
 
 </style>
 

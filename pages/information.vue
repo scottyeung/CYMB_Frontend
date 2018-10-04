@@ -15,8 +15,8 @@
             <a :href="instagram">Instagram</a>
           </p>
         </div>
-        <img 
-          v-if="images" 
+        <img
+          v-if="images"
           :src="images[0].url"
           class="information__image"
         />
@@ -27,7 +27,7 @@
       <div class="information--column">
         <div class="information__clients information--block">
           <h2>Selected Clients</h2>
-          <span v-for="client in clients">{{client.client}}</span>
+          <span v-for="client in clients" :key="client.client">{{client.client}}</span>
         </div>
         <div class="information__imprint information--block">
           <h2>Legal Notice</h2>
@@ -41,88 +41,85 @@
 </template>
 
 <script>
-import axios from '~/node_modules/axios'
-import Menu from '~/components/Menu.vue'
+  import Menu from '~/components/Menu.vue'
 
-// const {parse, stringify} = require('flatted/cjs')
+  export default {
+    name: 'Information',
+    components: {
+      Menu
+    },
+    async asyncData ({ app }) {
+      let {data} = await app.$axios.get('/pages/information')
+      let information = data.data.content
 
+      data = await app.$axios.get('/pages/information/files')
+      let images = data.data.data
 
-export default {
-  name: 'Information',
-  components: {
-    Menu
-  },
-  async asyncData ({ params }) {
-    let {data} = await axios.get('http://127.0.0.1:8888/rest/pages/information')
-    let information = data.data.content
-
-    data = await axios.get('http://127.0.0.1:8888/rest/pages/information/files')
-    let images = data.data.data
-
-    return { 
-      information: information, 
-      images: images
-    }
-  },
-  computed: {
-    street () {
-      return this.information.street
+      return {
+        information: information,
+        images: images
+      }
     },
-    postcode () {
-      return this.information.postcode.toString()
-    },
-    city () {
-      return this.information.city
-    },
-    country () {
-      return this.information.country
-    },
-    email () {
-      return this.information.email
-    },
-    phone () {
-      return this.information.phone
-    },
-    ustid () {
-      return this.information.ustid
-    },
-    clients () {
-      return this.information.clients
-    },
-    legalNotice () {
-      return this.$store.state.siteInfo.content.legal
-    },
-    about () {
-      return this.information.about
-    },
-    instagram () {
-      return this.information.instagram
+    computed: {
+      street () {
+        return this.information.street
+      },
+      postcode () {
+        return this.information.postcode.toString()
+      },
+      city () {
+        return this.information.city
+      },
+      country () {
+        return this.information.country
+      },
+      email () {
+        return this.information.email
+      },
+      phone () {
+        return this.information.phone
+      },
+      ustid () {
+        return this.information.ustid
+      },
+      clients () {
+        return this.information.clients
+      },
+      legalNotice () {
+        return this.$store.state.siteInfo.content.legal
+      },
+      about () {
+        return this.information.about
+      },
+      instagram () {
+        return this.information.instagram
+      }
     }
   }
-}
 </script>
 
 <style lang="sass" scoped>
-  @import "../assets/sass/variables.sass"
+  @import "~/assets/sass/variables.sass"
 
   .information
-    background: yellow
+    // color: $colored
+    min-height: 100vh
     &__inner
       width: 100%
-      width: calc(100vw + 30px)
       padding: $mp-d + $mp-c 0 50px 0
-      margin: 0 -15px
-      // display: flex
+      display: flex
     &--column
-      max-width: 900px
-      width: 100%
-      // width: calc(100% / 3)
-      padding: 0 $mp-c
+      max-width: 650px
+      width: 50%
+      padding: 0 $mp-a 0 $mp-c
+      &:first-child
+        padding: 0 $mp-c 0 $mp-a
+
     &--block
       margin-bottom: $lh-m
     &__image
       width: 100%
-      max-width: 500px
+      // max-width: 600px
     &__about
       @include fs-s()
     &__address

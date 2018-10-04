@@ -1,22 +1,22 @@
 <template>
   <div class="project__scroll">
-    <div 
-      class="project__scroll--move-l" 
+    <div
+      class="project__scroll--move-l"
       @mouseover="moveScroll('right', 'start')"
       @mouseleave="moveScroll('right', 'stop')"
     />
-    <div 
-      class="project__scroll--move-r" 
+    <div
+      class="project__scroll--move-r"
       @mouseover="moveScroll('left', 'start')"
       @mouseleave="moveScroll('left', 'stop')"
     />
-    <div 
-      class="project__scroll--inner" 
+    <div
+      class="project__scroll--inner"
       ref="scrollContainer"
       :style="{width: containerWidth + 'px', left: scrollPosition + 'px'}"
     >
-      <div 
-        class="project__spread" 
+      <div
+        class="project__spread"
         v-for="(layout, index) in sortedLayouts"
         :key="layout.image1 + ' ' + layout.image2"
         :style="{width: slideWidth + 'px'}"
@@ -25,9 +25,9 @@
         @click="select(index)"
       >
         <div class="project__spread--inner" :class="layout.sizing">
-          <div 
-            class="project__spread--img" 
-            v-if="layout.image1" 
+          <div
+            class="project__spread--img"
+            v-if="layout.image1"
             :class="[{
               'solo': !layout.image2 && !layout.image3,
               'triple': layout.image1 && layout.image2 && layout.image3
@@ -35,9 +35,9 @@
           >
             <div :style="{backgroundImage: 'url(' + findImage(layout.image1) + ')'}"/>
           </div>
-          <div 
-            class="project__spread--img" 
-            v-if="layout.image2" 
+          <div
+            class="project__spread--img"
+            v-if="layout.image2"
             :class="[{
               'solo': !layout.image1 && !layout.image3,
               'triple': layout.image1 && layout.image2 && layout.image3
@@ -45,9 +45,9 @@
           >
             <div :style="{backgroundImage: 'url(' + findImage(layout.image2) + ')'}"/>
           </div>
-          <div 
-            class="project__spread--img" 
-            v-if="layout.image3" 
+          <div
+            class="project__spread--img"
+            v-if="layout.image3"
             :class="[{
               'solo': !layout.image1 && !layout.image2,
               'triple': layout.image1 && layout.image2 && layout.image3
@@ -148,7 +148,7 @@
 </script>
 
 <style lang="sass">
-@import "../assets/sass/variables.sass"
+@import "~/assets/sass/variables.sass"
 
 // .spreads-enter-active, .spreads-leave-active
 //   z-index: -1
@@ -185,7 +185,7 @@
       height: 10vh
       z-index: 95
       cursor: e-resize
-    &--inner 
+    &--inner
       height: 100%
       width: 1000vw
       display: flex
@@ -216,11 +216,11 @@
         width: 100%;
         background-size: contain
         background-repeat: no-repeat
-      &:first-child 
+      &:first-child
         padding: 9px 4.5px 9px 9px
         div
           background-position: center right
-      &:nth-child(2) 
+      &:nth-child(2)
         padding: 9px 9px 9px 4.5px
         div
           background-position: center left

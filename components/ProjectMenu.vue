@@ -8,7 +8,7 @@
           <nuxt-link class="menu__list--next" :to="'/' + nextProject.id">Next</nuxt-link>
         </li>
         <li class="menu__list--item">
-          <nuxt-link class="menu__list--all" to="/projects">All</nuxt-link>
+          <nuxt-link class="menu__list--all" to="/projects">Close</nuxt-link>
         </li>
       </ol>
   </nav>
@@ -24,7 +24,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  @import "../assets/sass/variables.sass"
+  @import "~/assets/sass/variables.sass"
 
   .menu
     &__wrapper
@@ -32,7 +32,7 @@ export default {
       top: 0
       right: 0
       display: block
-      padding: $mp-a $mp-b
+      padding: $mp-a $mp-c/2
       @include nobr()
       // @include fs-s()
     &__list
@@ -47,7 +47,7 @@ export default {
         cursor: e-resize
     &__project--info
       cursor: pointer
-      
-      
+
+
 </style>
 

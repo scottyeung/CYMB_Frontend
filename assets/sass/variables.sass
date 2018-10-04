@@ -1,23 +1,23 @@
 $black: #121212
-$transparent: rgba(255, 255, 255, 0.95)
+$transparent: rgba(255, 255, 255, 0.975)
 $white: #fff
-$grey: rgb(240,240,240)
+$colored: #007fff
 
 $mp-a: 10px
 $mp-b: 20px
 $mp-c: 30px
 $mp-d: 40px
 
-$lh-s: 14.5px
+$lh-s: 15px
 
 @mixin fs-s()
-  font-size: 15px
+  font-size: 15.5px
   line-height: $lh-s
 
 $lh-m: 20px
 
 @mixin fs-m()
-  font-size: 19.5px
+  font-size: 19.75px
   line-height: $lh-m
 
 $lh-l: 24px
@@ -29,41 +29,23 @@ $lh-l: 24px
 @mixin left()
   text-align: left
 
-.left
-  @include left()
-
 @mixin center()
   text-align: center
-
-.center
-  @include center()
 
 @mixin right()
   text-align: right
 
-.right
-  @include right()
-
-@mixin nobr() 
-  white-space: nowrap 
-
-.nobr 
-  @include nobr()
+@mixin nobr()
+  white-space: nowrap
 
 @mixin hidden()
   display: none
-
-.hidden
-  @include hidden()
 
 @mixin transparent()
   opacity: 0
   z-index: -1
   user-select: none
   pointer-events: none
-
-.transparent
-  @include transparent()
 
 @mixin white()
   color: $white
@@ -77,10 +59,6 @@ $lh-l: 24px
 
 @mixin italic()
   font-style: italic
-  // transform: skewX(-40deg)
-
-.italic
-  @include italic()
 
 @mixin pointer()
   cursor: pointer

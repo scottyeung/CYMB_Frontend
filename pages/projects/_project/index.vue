@@ -6,16 +6,18 @@
       :prevProject="prevProject"
       :layouts="layouts"
     />
-    <ProjectSlider 
-      :layouts="layouts" 
+    <a class="project__button" @click="setInfo(true)">&#215;</a>
+    <ProjectSlider
+      :layouts="layouts"
     />
   </div>
 </template>
 
 <script>
-  import axios from '~/node_modules/axios'
   import ProjectInfo from '~/components/ProjectInfo'
   import ProjectSlider from '~/components/ProjectSlider'
+  import { mapMutations } from 'vuex'
+
 
   export default {
     name: "Project",
@@ -23,9 +25,9 @@
       ProjectSlider,
       ProjectInfo
     },
-    async asyncData ({ params }) {
-      let { data } = await axios.get(
-        'http://127.0.0.1:8888/rest/pages/projects+' + params.project + '/files'
+    async asyncData ({ params, app }) {
+      let { data } = await app.$axios.get(
+        '/pages/projects+' + params.project + '/files'
       )
       return { images: data }
     },
@@ -50,12 +52,28 @@
         let prevIndex = currentIndex > 0 ? currentIndex - 1 : projects.length - 1
         return projects[prevIndex]
       },
+    },
+    methods: {
+      ...mapMutations([
+        'setInfo'
+      ]),
+    },
+    created () {
+      this.setInfo (true)
     }
   }
 </script>
 
 <style lang="sass">
-@import "../../../assets/sass/variables.sass"
+@import "~/assets/sass/variables.sass"
 
+.project
+  &__button
+    position: fixed
+    top: 0
+    right: 0
+    padding: $mp-a $mp-c/2
+    z-index: 95
+    cursor: help
 
 </style>

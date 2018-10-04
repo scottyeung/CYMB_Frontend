@@ -1,22 +1,27 @@
 <template>
-  <div class="project__slider" :style="{overflow: hideScroll}">
-    <a class="project__button" @click="setInfo(true)">?</a>
+  <div class="project__slider">
     <a class="project__next" @click="scrollToNext(currentSlide)"/>
     <!-- <a class="project__prev" @click="scrollToPrev(currentSlide)"/> -->
-    <div class="project__slide" v-for="(layout, index) in layouts" :id="index" ref="slide">
-      <div 
+    <div
+      class="project__slide"
+      v-for="(layout, index) in layouts"
+      :key="index"
+      :id="index"
+      ref="slide">
+      <div
         class="project__slide--inner"
         :class="{'triple': layout.images.length === 3}"
       >
-        <div 
-          v-for="image in layout.images"
-          class="project__slide--img" 
+        <div
+          v-for="(image, index) in layout.images"
+          :key="index"
+          class="project__slide--img"
           :class="[{
-            'solo': layout.images.length === 1, 
+            'solo': layout.images.length === 1,
             'triple': layout.images.length === 3
           }]"
         >
-          <div 
+          <div
             :style="{backgroundImage: 'url(' + image.url + ')'}"
           />
         </div>
@@ -44,10 +49,6 @@
       },
       currentSlide () {
         return this.$store.state.currentSlide
-      },
-      hideScroll () {
-        let vis = this.$store.state.infoVisible ? 'hidden' : 'visible'
-        return vis
       }
     },
     methods: {
@@ -71,9 +72,11 @@
         }
       },
       scrollToPrev (index) {
+        // Change currentSlide
         let currentSlide = index > 0 ? index - 1 : this.layouts.length -  1
         this.setSlide(currentSlide)
         if(process.browser) {
+          // Scroll to prev Slide
           const newSlide = document.getElementById(this.currentSlide)
           newSlide.scrollIntoView(true)
         }
@@ -102,11 +105,6 @@
         this.setSlide(currentSlide)
       }
     },
-    // watch: {
-    //   currentSlide (index) {
-    //     this.scrollToNext (this.currentSlide - 1)
-    //   }
-    // },
     mounted () {
       document.addEventListener('keyup', this.keyListener)
       document.addEventListener('scroll', this.scrollListener)
@@ -119,7 +117,7 @@
 </script>
 
 <style lang="sass">
-@import "../assets/sass/variables.sass"
+@import "~/assets/sass/variables.sass"
 
 .project
   &__next
@@ -138,13 +136,6 @@
   //   height: 100%
   //   z-index: 90
   //   cursor: n-resize
-  &__button
-    position: fixed
-    top: 0
-    right: 0
-    padding: $mp-a $mp-b
-    z-index: 95
-    cursor: help
   &__slider
     position: relative
     user-select: none
@@ -172,11 +163,11 @@
         width: 100%;
         background-size: contain
         background-repeat: no-repeat
-      &:first-child 
+      &:first-child
         padding: $mp-d $mp-d $mp-d $mp-d
         div
           background-position: center right
-      &:nth-child(2) 
+      &:nth-child(2)
         padding: $mp-d $mp-d $mp-d $mp-d
         div
           background-position: center left

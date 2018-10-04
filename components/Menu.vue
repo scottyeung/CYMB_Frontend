@@ -27,7 +27,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  @import "../assets/sass/variables.sass"
+  @import "~/assets/sass/variables.sass"
 
   .menu
     &__wrapper

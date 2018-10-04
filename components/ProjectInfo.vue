@@ -40,12 +40,12 @@
       ...mapMutations([
         'setInfo'
       ]),
-    }
+    },
   }
 </script>
 
 <style lang="sass">
-@import "../assets/sass/variables.sass"
+@import "~/assets/sass/variables.sass"
 
 .fade--info
   &-leave-active, &-enter-active
@@ -67,10 +67,13 @@
       @include pointer()
       background: $transparent
     &--title
-      margin: 0 $mp-c 0 0
+      margin-right: $mp-a
+      display: flex
+      flex-wrap: nowrap
       cursor: default
       span
-        display: block
+        margin-right: $mp-b
+        display: inline-block
     &--description
       max-width: 1200px
       padding: 0 195px 0 0

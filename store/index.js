@@ -1,5 +1,5 @@
 import Vuex from 'vuex'
-  
+
 const createStore = () => {
   return new Vuex.Store({
     state: {
@@ -8,37 +8,32 @@ const createStore = () => {
       currentSlide: 0,
       infoVisible: true
     },
-    getters: {
-      // getSlide: (state) => {
-      //   return state.currentSlide
-      // },
-    },
     actions: {
 
       // Get Index Files
       async getSiteInfo ({ commit }) {
-        const info = await this.$axios.$get('http://localhost:8888/rest/site')
+        const info = await this.$axios.$get('/site')
         commit('setSiteInfo', info)
       },
 
       async getProjectDetails({ commit, state }) {
-        
+
         for (let i = 0; i < state.projects.data.length; i++) {
           let id = state.projects.data[i].id
           id = id.replace("/", "+")
-          const project = await this.$axios.$get('http://localhost:8888/rest/pages/' + id)
+          const project = await this.$axios.$get('/pages/' + id)
           commit('setProjectDetails', project)
         }
       },
 
       async getProjects({ commit, dispatch }) {
-        const projects = await this.$axios.$get('http://localhost:8888/rest/pages/projects/children')
+        const projects = await this.$axios.$get('/pages/projects/children')
         commit('setProjects', projects)
         await dispatch ('getProjectDetails')
       },
-      
+
       //Nuxt Server Init
-      async nuxtServerInit ({ commit, dispatch }) {
+      async nuxtServerInit ({ dispatch }) {
         await dispatch ('getSiteInfo')
         await dispatch ('getProjects')
       }

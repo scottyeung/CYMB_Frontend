@@ -2,31 +2,34 @@
   <div class="container">
     <Menu></Menu>
     <no-ssr>
-      <div 
+      <div
       v-packery='{
-        itemSelector: ".projects__block", 
-        percentPosition: true, 
+        itemSelector: ".projects__block",
+        percentPosition: true,
         transitionDuration: 0,
         originTop: true,
-        originRight: true
-      }' 
-      class="projects" 
+        originRight: true,
+        initLayout: false
+      }'
+      class="projects"
       @layoutComplete="showLayout()"
       >
-        <div 
+        <div
         v-packery-item
-        class="projects__block" 
+        class="projects__block"
         :class="[
-          widthClasses[index%widthClasses.length], 
+          widthClasses[index%widthClasses.length],
           project.orientation
-        ]" 
-        v-for="(project, index) of projects">
+        ]"
+        v-for="(project, index) of projects"
+        :key="index"
+        >
           <nuxt-link :to="{path: '/' + project.id }">
-          <img 
+          <img
             v-if="project.randomImage"
-            class="projects__img" 
+            class="projects__img"
             :src="project.randomImage.url"
-          ></img>
+          />
           </nuxt-link>
           <ProjectsCaption :project="project"></ProjectsCaption>
         </div>
@@ -58,7 +61,7 @@ export default {
       this.widthClasses = _.shuffle(this.widthClasses)
     },
     randomImage () {
-      if(process.browser) { 
+      if(process.browser) {
         const self = this
         for(let i = 0; i < self.projects.length; i++) {
 
@@ -94,7 +97,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../assets/sass/variables.sass"
+@import "~/assets/sass/variables.sass"
 
 .projects
   @include center
