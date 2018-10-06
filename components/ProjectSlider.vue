@@ -128,14 +128,6 @@
     height: 100%
     z-index: 90
     cursor: s-resize
-  // &__prev
-  //   position: fixed
-  //   top: 0
-  //   left: 0
-  //   width: 50%
-  //   height: 100%
-  //   z-index: 90
-  //   cursor: n-resize
   &__slider
     position: relative
     user-select: none
@@ -153,31 +145,26 @@
       width: 100vw
       height: 100%
       padding: $mp-d
-      &.triple
-        padding: $mp-d
     &--img
       height: 100%;
       width: 50%;
+      padding: $mp-d
       div
         height: 100%;
         width: 100%;
         background-size: contain
         background-repeat: no-repeat
       &:first-child
-        padding: $mp-d $mp-d $mp-d $mp-d
         div
           background-position: center right
       &:nth-child(2)
-        padding: $mp-d $mp-d $mp-d $mp-d
         div
           background-position: center left
       &.solo
-        padding: $mp-d $mp-d $mp-d $mp-d
         width: 100%;
         div
           background-position: center
       &.triple
-        padding: $mp-d $mp-d $mp-d $mp-d
         div
           background-position: center
 </style>

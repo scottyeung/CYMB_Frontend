@@ -84,12 +84,13 @@
     width: 100vw
     display: block
   &__thumb
-    width: 13vw
-    height: 13vh
+    width: 12.75vw
+    height: 12.75vh
     @include pointer()
     transition: opacity 0.25s
     display: inline-block
     // background: $white
+    // border: solid 2px
     margin: $mp-b $mp-b 0 0
     &--inner
       display: flex
@@ -102,28 +103,25 @@
       &.triple
         padding: 4px
     &--img
-      height: 100%;
-      width: 50%;
+      height: 100%
+      width: 50%
+      padding: 4px
       div
         height: 100%;
         width: 100%;
         background-size: contain
         background-repeat: no-repeat
       &:first-child
-        padding: 4px 4px 4px 4px
         div
           background-position: center right
       &:nth-child(2)
-        padding: 4px 4px 4px 4px
         div
           background-position: center left
       &.solo
-        padding: 4px 4px 4px 4px
         width: 100%;
         div
           background-position: center
       &.triple
-        padding: 4px 4px 4px 4px
         div
           background-position: center
 

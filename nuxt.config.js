@@ -27,7 +27,8 @@ module.exports = {
   },
   loading: false,
   plugins: [
-    {src: '~/plugins/VuePackery.js', ssr: false }
+    {src: '~/plugins/VuePackery.js', ssr: false },
+    // {src: '~/plugins/Packery.js', ssr: false }
   ],
   modules: [
     '@nuxtjs/axios',

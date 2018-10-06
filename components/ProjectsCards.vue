@@ -4,21 +4,24 @@
     <no-ssr>
       <div
       v-packery='{
+        initLayout: true,
         itemSelector: ".projects__block",
         percentPosition: true,
         transitionDuration: 0,
         originTop: true,
-        originRight: true,
-        initLayout: false
+        originLeft: true
       }'
       class="projects"
-      @layoutComplete="showLayout()"
+      ref="packery"
+      @layoutComplete="saveLayout(), showLayout(true)"
       >
         <div
         v-packery-item
-        class="projects__block"
+        class="projects__block stamp"
+        ref="image"
         :class="[
           widthClasses[index%widthClasses.length],
+          alignClasses[index%alignClasses.length],
           project.orientation
         ]"
         v-for="(project, index) of projects"
@@ -49,6 +52,8 @@ export default {
   data () {
     return {
       widthClasses: ['small', 'small', 'medium', 'large'],
+      alignClasses: ['flex-start', 'flex-start', 'center', 'flex-end'],
+      layoutComplete: false
     }
   },
   computed: {
@@ -59,15 +64,16 @@ export default {
   methods: {
     shuffleClasses () {
       this.widthClasses = _.shuffle(this.widthClasses)
+      this.alignClasses = _.shuffle(this.alignClasses)
     },
     randomImage () {
       if(process.browser) {
         const self = this
-        for(let i = 0; i < self.projects.length; i++) {
-
+        this.projects.forEach(project => {
+        // for(let i = 0; i < self.projects.length; i++) {
           // Choose random image
-          let randomImage = _.sample(self.projects[i].content.cover)
-          self.$set(self.projects[i], 'randomImage', randomImage)
+          let randomImage = _.sample(project.content.cover)
+          this.$set(project, 'randomImage', randomImage)
 
           // Load image
           const newImage = new Image()
@@ -78,20 +84,34 @@ export default {
             let orientation = ''
             orientation = newImage.naturalWidth >= newImage.naturalHeight ? 'landscape' : orientation
             orientation = newImage.naturalWidth < newImage.naturalHeight ? 'portrait' : orientation
-            self.$set(self.projects[i], 'orientation', orientation)
+            self.$set(project, 'orientation', orientation)
           }
-        }
+        })
       }
     },
-    showLayout () {
-      // setTimeout(
-      //   () => this.loaded = true
-      // , 300);
+    saveLayout () {
+      const images = this.$refs.image
+      console.log(images)
+      console.log(images.length)
+      images.forEach(image => {
+        const left = image.style.left
+        const top = image.style.top
+        console.log(top)
+        console.log(left)
+      })
+    },
+    showLayout (bool) {
+      setTimeout(
+        () => this.layoutComplete = bool
+      , 200);
     }
   },
   created () {
     this.randomImage ()
     this.shuffleClasses ()
+  },
+  mounted () {
+    // packeryEvents.$emit('layout', this.$refs.packery)
   }
 }
 </script>
@@ -104,7 +124,7 @@ export default {
   padding: $mp-d 0
   display: flex
   align-items: flex-end
-  justify-content: center
+  justify-content: flex-start
   flex-wrap: wrap
   width: 100vw
   width: calc(100vw + 30px)

@@ -1,6 +1,8 @@
 <template>
   <div>
-    <nuxt/>
+    <keep-alive>
+      <nuxt/>
+    </keep-alive>
   </div>
 </template>
 

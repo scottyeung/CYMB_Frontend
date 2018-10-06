@@ -2,7 +2,9 @@
   <div class="container">
     <Menu></Menu>
     <no-ssr>
-      <ProjectsCards/>
+      <keep-alive>
+        <ProjectsCards/>
+      </keep-alive>
     </no-ssr>
   </div>
 </template>
