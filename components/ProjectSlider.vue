@@ -65,29 +65,26 @@
         let img = _.find(this.images.data, function(e) { return e.id === id })
         return img.url
       },
-      scrollToNext (index) {
+      async scrollToNext (index) {
         // Change currentSlide
-        let currentSlide = 0
         if (index < this.layouts.length - 1) {
-          currentSlide = index + 1
+          await this.setSlide(index + 1)
         } else if (index === this.layouts.length - 1) {
-          currentSlide = 0
+          await this.setSlide(0)
         } else {
-          currentSlide = 1
+          await this.setSlide(1)
         }
-        this.setSlide(currentSlide)
-        if(process.browser) {
-          // Scroll to next Slide
-          const newSlide = document.getElementById(this.currentSlide)
-          newSlide.scrollIntoView(true)
-        }
+        this.scroll()
+
       },
       scrollToPrev (index) {
         // Change currentSlide
         let currentSlide = index > 0 ? index - 1 : this.layouts.length -  1
         this.setSlide(currentSlide)
+        this.scroll()
+      },
+      scroll () {
         if(process.browser) {
-          // Scroll to prev Slide
           const newSlide = document.getElementById(this.currentSlide)
           newSlide.scrollIntoView(true)
         }
