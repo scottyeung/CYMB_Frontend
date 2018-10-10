@@ -72,8 +72,8 @@
     position: fixed
     top: 0
     right: 0
-    padding: $mp-a $mp-c/2
+    padding: 12px $mp-c/2
     z-index: 95
-    cursor: help
+    cursor: pointer
 
 </style>

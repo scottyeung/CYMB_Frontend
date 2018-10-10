@@ -111,9 +111,9 @@
     &--column
       max-width: 650px
       width: 50%
-      padding: 0 $mp-a 0 $mp-c
+      padding: 0 $mp-c/2 0 $mp-c
       &:first-child
-        padding: 0 $mp-c 0 $mp-a
+        padding: 0 $mp-c 0 $mp-c/2
 
     &--block
       margin-bottom: $lh-m

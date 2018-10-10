@@ -1,29 +1,31 @@
 <template>
   <div class="project__slider">
     <a class="project__next" @click="scrollToNext(currentSlide)"/>
-    <!-- <a class="project__prev" @click="scrollToPrev(currentSlide)"/> -->
-    <div
-      class="project__slide"
-      v-for="(layout, index) in layouts"
-      :key="index"
-      :id="index"
-      ref="slide">
+    <a class="project__prev" @click="scrollToPrev(currentSlide)"/>
+    <div class="project__loop" ref="loop">
       <div
-        class="project__slide--inner"
-        :class="{'triple': layout.images.length === 3}"
-      >
+        class="project__slide"
+        v-for="(layout, index) in layouts"
+        :key="index"
+        :id="index"
+        ref="slide">
         <div
-          v-for="(image, index) in layout.images"
-          :key="index"
-          class="project__slide--img"
-          :class="[{
-            'solo': layout.images.length === 1,
-            'triple': layout.images.length === 3
-          }]"
+          class="project__slide--inner"
+          :class="{'triple': layout.images.length === 3}"
         >
           <div
-            :style="{backgroundImage: 'url(' + image.url + ')'}"
-          />
+            v-for="(image, index) in layout.images"
+            :key="index"
+            class="project__slide--img"
+            :class="[{
+              'solo': layout.images.length === 1,
+              'triple': layout.images.length === 3
+            }]"
+          >
+            <div
+              :style="{backgroundImage: 'url(' + image.url + ')'}"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -38,14 +40,16 @@
     props: ['layouts'],
     data () {
       return {
-        // currentSlide: 0,
+        pageHeight: 0,
+        duplicated: false,
+        isTouch: false,
         scrollTop: 0,
         slidesOffset: [],
       }
     },
     computed: {
       slides () {
-        return this.$refs.slide
+        return [].slice.call(document.getElementsByClassName("project__slide"))
       },
       currentSlide () {
         return this.$store.state.currentSlide
@@ -63,7 +67,14 @@
       },
       scrollToNext (index) {
         // Change currentSlide
-        let currentSlide = index < this.layouts.length - 1 ? index + 1 : 0
+        let currentSlide = 0
+        if (index < this.layouts.length - 1) {
+          currentSlide = index + 1
+        } else if (index === this.layouts.length - 1) {
+          currentSlide = 0
+        } else {
+          currentSlide = 1
+        }
         this.setSlide(currentSlide)
         if(process.browser) {
           // Scroll to next Slide
@@ -94,10 +105,36 @@
           this.scrollToPrev (this.currentSlide)
         }
       },
+      makeDuplicates() {
+        const container = this.$refs.loop
+        if (container.hasChildNodes()) {
+          container.appendChild(container.childNodes[0].cloneNode(true))
+        }
+        return true
+      },
+      getDimensions() {
+        const container = this.$refs.loop
+        if (this.duplicated === false) {
+          this.duplicated = this.makeDuplicates()
+        }
+        const numOfItems = this.$refs.slide.length
+        for (var i = 0; i < numOfItems; i++) {
+          const itemHeight = this.$refs.slide[i].clientHeight
+          this.pageHeight = this.pageHeight + itemHeight
+        }
+      },
       scrollListener () {
-        // Check current active slide
+        // Get scroll position
         this.scrollTop = window.pageYOffset || document.documentElement.scrollTop
-        for(let s = 0; s < this.slides.length; s++) {
+
+        // Loop
+        const container = this.$refs.loop
+        if (this.scrollTop === this.pageHeight) {
+          window.scrollTo(0, 0)
+				}
+
+        // Check current active slide
+        for (let s = 0; s < this.slides.length; s++) {
           let offsetTop = this.slides[s].getBoundingClientRect().top
           this.slidesOffset[s] = Math.abs(offsetTop)
         }
@@ -106,8 +143,10 @@
       }
     },
     mounted () {
+      this.getDimensions()
+      window.addEventListener('resize', this.getDimensions)
       document.addEventListener('keyup', this.keyListener)
-      document.addEventListener('scroll', this.scrollListener)
+      window.addEventListener('scroll', this.scrollListener)
     },
     destroyed () {
       document.removeEventListener('keyup', this.keyListener)
@@ -123,20 +162,28 @@
   &__next
     position: fixed
     top: 0
-    left: 0
-    width: 100%
+    left: 50%
+    width: 50%
     height: 100%
     z-index: 90
     cursor: s-resize
+  &__prev
+    position: fixed
+    top: 0
+    left: 0
+    width: 50%
+    height: 100%
+    z-index: 90
+    cursor: n-resize
   &__slider
     position: relative
     user-select: none
     -webkit-tap-highlight-color: red
   &__slide
+    min-height: 100vh
     width: 100%
     height: 100vh
-    @include pointer()
-    transition: opacity 0.25s
+    transform: translate3d(0,0,0)
     &--inner
       display: flex
       align-items: center

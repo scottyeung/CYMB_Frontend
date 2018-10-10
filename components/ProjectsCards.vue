@@ -13,15 +13,16 @@
       }'
       class="projects"
       ref="packery"
-      @layoutComplete="saveLayout(), showLayout(true)"
+      @layoutComplete="showLayout(true)"
       >
         <div
         v-packery-item
-        class="projects__block stamp"
+        class="projects__block"
         ref="image"
         :class="[
-          widthClasses[index%widthClasses.length],
-          alignClasses[index%alignClasses.length],
+          {transparent: !layoutComplete},
+          $store.state.widthClasses[index%$store.state.widthClasses.length],
+          $store.state.alignClasses[index%$store.state.alignClasses.length],
           project.orientation
         ]"
         v-for="(project, index) of projects"
@@ -51,8 +52,6 @@ export default {
   },
   data () {
     return {
-      widthClasses: ['small', 'small', 'medium', 'large'],
-      alignClasses: ['flex-start', 'flex-start', 'center', 'flex-end'],
       layoutComplete: false
     }
   },
@@ -62,15 +61,10 @@ export default {
     }
   },
   methods: {
-    shuffleClasses () {
-      this.widthClasses = _.shuffle(this.widthClasses)
-      this.alignClasses = _.shuffle(this.alignClasses)
-    },
     randomImage () {
-      if(process.browser) {
+      if(process.browser && !this.$store.state.projects.data[0].randomImage) {
         const self = this
         this.projects.forEach(project => {
-        // for(let i = 0; i < self.projects.length; i++) {
           // Choose random image
           let randomImage = _.sample(project.content.cover)
           this.$set(project, 'randomImage', randomImage)
@@ -89,29 +83,12 @@ export default {
         })
       }
     },
-    saveLayout () {
-      const images = this.$refs.image
-      console.log(images)
-      console.log(images.length)
-      images.forEach(image => {
-        const left = image.style.left
-        const top = image.style.top
-        console.log(top)
-        console.log(left)
-      })
-    },
     showLayout (bool) {
-      setTimeout(
-        () => this.layoutComplete = bool
-      , 200);
+      setTimeout( () => this.layoutComplete = bool, 150);
     }
   },
   created () {
     this.randomImage ()
-    this.shuffleClasses ()
-  },
-  mounted () {
-    // packeryEvents.$emit('layout', this.$refs.packery)
   }
 }
 </script>
@@ -133,15 +110,15 @@ export default {
     padding: $mp-c
     display: inline-block
     vertical-align: bottom
-    width: 37.5%
-    &.small, &.portrait
+    width: 30%
+    &.small.portrait
       width: 22.5%
     &.medium.portrait
       width: 25%
     &.large.portrait
-      width: 30%
+      width: 27.5%
     &.small.landscape, &.small.square
-      width: 30%
+      width: 35%
     &.medium.landscape, &.medium.square
       width: 40%
     &.large.landscape, &.large.square

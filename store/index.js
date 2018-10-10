@@ -6,10 +6,11 @@ const createStore = () => {
       siteInfo: [],
       projects: [],
       currentSlide: 0,
-      infoVisible: true
+      infoVisible: true,
+      widthClasses: ['small', 'medium', 'large'],
+      alignClasses: ['flex-start', 'center', 'flex-end']
     },
     actions: {
-
       // Get Index Files
       async getSiteInfo ({ commit }) {
         const info = await this.$axios.$get('/site')
@@ -33,9 +34,10 @@ const createStore = () => {
       },
 
       //Nuxt Server Init
-      async nuxtServerInit ({ dispatch }) {
+      async nuxtServerInit ({ commit, dispatch }) {
         await dispatch ('getSiteInfo')
         await dispatch ('getProjects')
+        commit('shuffleClasses')
       }
     },
     mutations: {
@@ -57,6 +59,10 @@ const createStore = () => {
       },
       setInfo: (state, bool) => {
         state.infoVisible = bool
+      },
+      shuffleClasses: (state) => {
+        state.widthClasses = _.shuffle(state.widthClasses)
+        state.alignClasses = _.shuffle(state.alignClasses)
       }
     }
   })
