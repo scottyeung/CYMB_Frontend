@@ -110,7 +110,8 @@
         }
       },
       getDimensions() {
-        const itemsLength = this.$refs.slide.length
+        const itemsLength = this.$refs.slide ? this.$refs.slide.length : 0
+        this.pageHeight = 0
         for (var i = 0; i < itemsLength - 1; i++) {
           const itemHeight = this.$refs.slide[i].clientHeight
           this.pageHeight = this.pageHeight + itemHeight
@@ -138,7 +139,7 @@
       this.getDimensions()
       window.addEventListener('resize', this.getDimensions)
       document.addEventListener('keyup', this.keyListener)
-      document.addEventListener('scroll', this.scrollListener)
+      document.addEventListener('scroll',  this.scrollListener)
     },
     destroyed () {
       window.removeEventListener('resize', this.getDimensions)

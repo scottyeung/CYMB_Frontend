@@ -8,7 +8,6 @@ const createStore = () => {
       currentSlide: 0,
       infoVisible: true,
       widthClasses: ['small', 'medium', 'large'],
-      alignClasses: ['flex-start', 'center', 'flex-end']
     },
     actions: {
       // Get Index Files
@@ -26,15 +25,15 @@ const createStore = () => {
         for (let i = 0; i < state.projects.data.length; i++) {
           let id = state.projects.data[i].id
           id = id.replace("/", "+")
-          const project = await this.$axios.$get('/pages/' + id)
-          commit('setProjectDetails', project)
-          dispatch('getProjectImages', { id: id, index: i })
+          const details = await this.$axios.$get('/pages/' + id)
+          commit('setProjectDetails', details)
+          await dispatch('getProjectImages', { id: id, index: i })
         }
       },
 
       async getProjects({ commit, dispatch }) {
         const projects = await this.$axios.$get('/pages/projects/children')
-        commit('setProjects', projects)
+        await commit('setProjects', projects)
         await dispatch ('getProjectDetails')
       },
 
@@ -51,12 +50,12 @@ const createStore = () => {
         state.siteInfo = info.data
       },
       // Set Projects
-      setProjects: (state, projects) => {
-        state.projects = projects
+      setProjects: (state, payload) => {
+        state.projects = payload
       },
       // Set Projects
-      setProjectDetails: (state, project) => {
-        state.projects.data[project.data.num - 1] = project.data
+      setProjectDetails: (state, payload) => {
+        state.projects.data[payload.data.num - 1] = payload.data
       },
       // Set Images
       setProjectImages: (state, payload) => {

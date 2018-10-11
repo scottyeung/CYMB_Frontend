@@ -12,9 +12,8 @@
         v-packery-item
         class="projects__block"
         :class="[
-          {transparent: !layoutComplete},
+          //{transparent: !layoutComplete},
           $store.state.widthClasses[index%$store.state.widthClasses.length],
-          $store.state.alignClasses[index%$store.state.alignClasses.length],
           project.randomImage.orientation
         ]"
         v-for="(project, index) of projects"
@@ -31,8 +30,13 @@
                 v-if="project.randomImage"
                 class="projects__img"
                 :src="project.randomImage.url"
+                :style="{height: project.randomImage.height}"
               />
-              <div class="projects__placeholder" :style="{height: project.randomImage.height}" slot="placeholder"></div>
+              <div
+                class="projects__placeholder"
+                :style="{height: project.randomImage.height}"
+                slot="placeholder"
+              ></div>
             </clazy-load>
           </nuxt-link>
           <ProjectsCaption ref="caption" :project="project"></ProjectsCaption>
@@ -72,36 +76,21 @@ export default {
   methods: {
     randomImage () {
       if(process.browser && !this.$store.state.projects.data[0].randomImage) {
-        const self = this
-        this.projects.forEach((project, index) => {
+        this.projects.forEach(project => {
           // Choose random image
           let randomImage = _.sample(project.content.cover)
           this.$set(project, 'randomImage', randomImage)
 
-          // Find original image
+          // Match with original image
           const ogImage = _.find(project.images, function(img) {
-            return img.id === randomImage.id
+            return img.id === project.randomImage.id
           })
 
           // Set ratio and orientation
           if(ogImage) {
-            self.$set(project.randomImage, 'orientation', ogImage.dimensions.orientation)
-            self.$set(project.randomImage, 'ratio', ogImage.dimensions.ratio)
+            this.$set(project.randomImage, 'orientation', ogImage.dimensions.orientation)
+            this.$set(project.randomImage, 'ratio', ogImage.dimensions.ratio)
           }
-
-          // new Image()
-          // newImage.src = randomImage.url
-
-          // Get orientation
-          // newImage.onload = async function() {
-          //   let orientation = ''
-          //   let ratio = null
-          //   orientation = await newImage.naturalWidth >= newImage.naturalHeight ? 'landscape' : orientation
-          //   orientation = await newImage.naturalWidth < newImage.naturalHeight ? 'portrait' : orientation
-          //   ratio = await newImage.naturalHeight / newImage.naturalWidth
-          //   self.$set(project.randomImage, 'orientation', orientation)
-          //   self.$set(project.randomImage, 'ratio', ratio)
-          // }
         })
       }
     },
@@ -111,13 +100,10 @@ export default {
     },
     setHeight () {
       const images = this.$refs.image
-      console.log(images)
       this.projects.forEach((project, index) => {
-        console.log(index)
         const img = images[index].$el
         const ratio = project.randomImage.ratio
         const height = (img.clientWidth / ratio) + 'px'
-        console.log(img, ratio)
         this.$set(project.randomImage, 'height', height)
       })
     }
@@ -129,7 +115,7 @@ export default {
     this.$nextTick(function () {
       this.setHeight()
     }),
-    window.addEventListener('resize', this.setHeight)
+    window.addEventListener('resize', _.debounce(this.setHeight), 300)
   },
   destroyed () {
     window.removeEventListener('resize', this.setHeight)

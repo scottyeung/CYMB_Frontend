@@ -25,7 +25,7 @@ module.exports = {
   loading: false,
   plugins: [
     {src: '~/plugins/VuePackery.js', ssr: false },
-    {src: '~/plugins/VueClazyLoad.js', ssr: true },
+    {src: '~/plugins/VueClazyLoad.js', ssr: false },
   ],
   modules: [
     '@nuxtjs/axios',
@@ -55,7 +55,9 @@ module.exports = {
       new webpack.ProvidePlugin({
         '_.find': ['lodash', 'find'],
         '_.sample': ['lodash', 'sample'],
-        '_.shuffle': ['lodash', 'shuffle']
+        '_.shuffle': ['lodash', 'shuffle'],
+        '_.debounce': ['lodash', 'debounce'],
+        '_.findIndex': ['lodash', 'findIndex']
       })
     ]
   }
