@@ -5,7 +5,7 @@
     <div class="project__loop" ref="loop">
       <div
         class="project__slide"
-        v-for="(layout, index) in layouts"
+        v-for="(layout, index) in loopLayouts"
         :key="index"
         :id="index"
         ref="slide">
@@ -13,19 +13,21 @@
           class="project__slide--inner"
           :class="{'triple': layout.images.length === 3}"
         >
-          <div
-            v-for="(image, index) in layout.images"
-            :key="index"
-            class="project__slide--img"
-            :class="[{
-              'solo': layout.images.length === 1,
-              'triple': layout.images.length === 3
-            }]"
-          >
-            <div
-              :style="{backgroundImage: 'url(' + image.url + ')'}"
-            />
-          </div>
+          <no-ssr>
+            <clazy-load
+              :src="image.url"
+              margin="100%"
+              v-for="(image, index) in layout.images"
+              :key="index"
+              class="project__slide--img"
+              :class="[{
+                'solo': layout.images.length === 1,
+                'triple': layout.images.length === 3
+              }]"
+            >
+              <img :src="image.url" />
+            </clazy-load>
+          </no-ssr>
         </div>
       </div>
     </div>
@@ -48,6 +50,11 @@
       }
     },
     computed: {
+      loopLayouts () {
+        const first = this.layouts[0]
+        const loopLayouts = this.layouts.concat(first)
+        return loopLayouts
+      },
       slides () {
         return [].slice.call(document.getElementsByClassName("project__slide"))
       },
@@ -102,20 +109,9 @@
           this.scrollToPrev (this.currentSlide)
         }
       },
-      createDuplicate() {
-        const container = this.$refs.loop
-        if (container.hasChildNodes()) {
-          container.appendChild(container.childNodes[0].cloneNode(true))
-        }
-        return true
-      },
       getDimensions() {
-        const container = this.$refs.loop
-        if (this.duplicated === false) {
-          this.duplicated = this.createDuplicate()
-        }
-        const numOfItems = this.$refs.slide.length
-        for (var i = 0; i < numOfItems; i++) {
+        const itemsLength = this.$refs.slide.length
+        for (var i = 0; i < itemsLength - 1; i++) {
           const itemHeight = this.$refs.slide[i].clientHeight
           this.pageHeight = this.pageHeight + itemHeight
         }
@@ -125,8 +121,7 @@
         this.scrollTop = window.pageYOffset || document.documentElement.scrollTop
 
         // Loop
-        const container = this.$refs.loop
-        if (this.scrollTop === this.pageHeight) {
+        if (this.scrollTop >= this.pageHeight) {
           window.scrollTo(0, 0)
 				}
 
@@ -194,22 +189,21 @@
       height: 100%;
       width: 50%;
       padding: $mp-d
-      div
-        height: 100%;
-        width: 100%;
-        background-size: contain
-        background-repeat: no-repeat
+      img
+        height: 100%
+        width: 100%
+        object-fit: contain
       &:first-child
-        div
-          background-position: center right
+        img
+          object-position: 100% 50%
       &:nth-child(2)
-        div
-          background-position: center left
+        img
+          object-position: 0% 50%
       &.solo
         width: 100%;
-        div
-          background-position: center
+        img
+          object-position: 50% 50%
       &.triple
-        div
-          background-position: center
+        img
+          object-position: 50% 50%
 </style>
