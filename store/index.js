@@ -17,13 +17,18 @@ const createStore = () => {
         commit('setSiteInfo', info)
       },
 
-      async getProjectDetails({ commit, state }) {
+      async getProjectImages({ commit }, payload) {
+        const images = await this.$axios.$get('/pages/' + payload.id + '/files')
+        commit('setProjectImages', { images: images, index: payload.index })
+      },
 
+      async getProjectDetails({ commit, state, dispatch }) {
         for (let i = 0; i < state.projects.data.length; i++) {
           let id = state.projects.data[i].id
           id = id.replace("/", "+")
           const project = await this.$axios.$get('/pages/' + id)
           commit('setProjectDetails', project)
+          dispatch('getProjectImages', { id: id, index: i })
         }
       },
 
@@ -52,6 +57,10 @@ const createStore = () => {
       // Set Projects
       setProjectDetails: (state, project) => {
         state.projects.data[project.data.num - 1] = project.data
+      },
+      // Set Images
+      setProjectImages: (state, payload) => {
+        state.projects.data[payload.index]['images'] = payload.images.data
       },
       // Set Slide
       setSlide: (state, index) => {

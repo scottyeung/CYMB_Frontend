@@ -1,10 +1,8 @@
 <template>
-  <div class="projects__caption">
-    <nuxt-link :to="project.id">
-      <span class="projects__title">{{ projectTitle }}</span>
-      <span class="nobr italic">{{ projectSecondary }}</span>
-    </nuxt-link>
-  </div>
+  <nuxt-link class="projects__caption" :to="project.id">
+    <span class="projects__title">{{ projectTitle }}</span>
+    <span class="nobr italic">{{ projectSecondary }}</span>
+  </nuxt-link>
 </template>
 
 <script>
@@ -31,7 +29,7 @@ export default {
   .projects__caption
     @include center()
     @include fs-s()
-    padding: 0
+    padding: $mp-a/2 0 0 0
     span
       display: block;
 

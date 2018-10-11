@@ -2,9 +2,6 @@ const webpack = require('webpack')
 require('dotenv').config()
 
 module.exports = {
-  /*
-  ** Headers of the page
-  */
   head: {
     title: 'Constantin Mirbach',
     meta: [
@@ -28,7 +25,7 @@ module.exports = {
   loading: false,
   plugins: [
     {src: '~/plugins/VuePackery.js', ssr: false },
-    {src: '~/plugins/VueLoop.js', ssr: false },
+    {src: '~/plugins/VueClazyLoad.js', ssr: true },
   ],
   modules: [
     '@nuxtjs/axios',

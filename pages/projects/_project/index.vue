@@ -25,17 +25,20 @@
       ProjectSlider,
       ProjectInfo
     },
-    async asyncData ({ params, app }) {
-      let { data } = await app.$axios.get(
-        '/pages/projects+' + params.project + '/files'
-      )
-      return { images: data }
-    },
+    // async asyncData ({ params, app }) {
+    //   let { data } = await app.$axios.get(
+    //     '/pages/projects+' + params.project + '/files'
+    //   )
+    //   return { images: data }
+    // },
     computed: {
       project () {
         const self = this
         let proj = _.find(this.$store.state.projects.data, function(e) { return e.slug === self.$route.params.project })
         return proj
+      },
+      images () {
+        return this.project.images
       },
       layouts () {
         return this.project.content.layouts

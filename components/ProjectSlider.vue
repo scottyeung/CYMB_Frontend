@@ -102,7 +102,7 @@
           this.scrollToPrev (this.currentSlide)
         }
       },
-      makeDuplicates() {
+      createDuplicate() {
         const container = this.$refs.loop
         if (container.hasChildNodes()) {
           container.appendChild(container.childNodes[0].cloneNode(true))
@@ -112,7 +112,7 @@
       getDimensions() {
         const container = this.$refs.loop
         if (this.duplicated === false) {
-          this.duplicated = this.makeDuplicates()
+          this.duplicated = this.createDuplicate()
         }
         const numOfItems = this.$refs.slide.length
         for (var i = 0; i < numOfItems; i++) {
@@ -143,9 +143,10 @@
       this.getDimensions()
       window.addEventListener('resize', this.getDimensions)
       document.addEventListener('keyup', this.keyListener)
-      window.addEventListener('scroll', this.scrollListener)
+      document.addEventListener('scroll', this.scrollListener)
     },
     destroyed () {
+      window.removeEventListener('resize', this.getDimensions)
       document.removeEventListener('keyup', this.keyListener)
       document.removeEventListener('scroll', this.scrollListener)
     }
