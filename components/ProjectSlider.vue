@@ -13,21 +13,17 @@
           class="project__slide--inner"
           :class="{'triple': layout.images.length === 3}"
         >
-          <no-ssr>
-            <clazy-load
-              :src="image.url"
-              margin="100%"
-              v-for="(image, index) in layout.images"
-              :key="index"
-              class="project__slide--img"
-              :class="[{
-                'solo': layout.images.length === 1,
-                'triple': layout.images.length === 3
-              }]"
-            >
-              <img :src="image.url" />
-            </clazy-load>
-          </no-ssr>
+          <div
+            v-for="(image, index) in layout.images"
+            :key="index"
+            class="project__slide--img"
+            :class="[{
+              'solo': layout.images.length === 1,
+              'triple': layout.images.length === 3
+            }]"
+          >
+            <img :src="image.url" />
+          </div>
         </div>
       </div>
     </div>
@@ -76,13 +72,15 @@
         // Change currentSlide
         if (index < this.layouts.length - 1) {
           await this.setSlide(index + 1)
+          this.scroll()
         } else if (index === this.layouts.length - 1) {
+          await this.setInfo(true)
           await this.setSlide(0)
+          setTimeout(() => { this.scroll() }, 50)
         } else {
           await this.setSlide(1)
+          this.scroll()
         }
-        this.scroll()
-
       },
       scrollToPrev (index) {
         // Change currentSlide
@@ -124,6 +122,7 @@
         // Loop
         if (this.scrollTop >= this.pageHeight) {
           window.scrollTo(0, 0)
+          this.setInfo(true)
 				}
 
         // Check current active slide

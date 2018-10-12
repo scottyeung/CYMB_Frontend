@@ -15,6 +15,7 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.3.1",
     "@nuxtjs/dotenv": "^1.1.1",
+    "intersection-observer": "^0.5.0",
     "nuxt": "^2.0.0",
     "vue-clazy-load": "^0.4.2",
     "vue-loop": "^0.2.6",

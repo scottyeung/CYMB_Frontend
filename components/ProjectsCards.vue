@@ -46,7 +46,6 @@
   </div>
 </template>
 
-<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=IntersectionObserver"></script>
 <script>
 import ProjectsCaption from '~/components/ProjectsCaption.vue'
 

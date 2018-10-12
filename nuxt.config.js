@@ -13,6 +13,9 @@ module.exports = {
       { name: 'msapplication-config', content: '/favicon/browserconfig.xml' },
       { name: 'theme-color', content: '#ffffff' }
     ],
+    script: [
+      { src: 'https://cdn.polyfill.io/v2/polyfill.min.js?features=IntersectionObserver' }
+    ],
     link: [
       { rel: 'apple-touch-icon', sizes: '180x180', href: '/favicon/apple-touch-icon.png' },
       { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon/favicon-32x32.png' },
@@ -20,7 +23,7 @@ module.exports = {
       { rel: 'mask-icon', href: '/favicon/safari-pinned-tab.svg', color: '#fd5f00' },
       { rel: 'shortcut icon', href: '/favicon/favicon.ico' },
       { rel: 'manifest', href: '/favicon/site.webmanifest' }
-    ],
+    ]
   },
   loading: false,
   plugins: [
