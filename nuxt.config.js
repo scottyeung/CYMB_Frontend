@@ -35,7 +35,7 @@ module.exports = {
     '@nuxtjs/dotenv'
   ],
   axios: {
-    baseURL: process.env.NODE_ENV === 'dev' ? 'http://127.0.0.1:8888/rest/' : 'https://cms.constantinmirbach.de',
+    baseURL: process.env.NODE_ENV !== 'production' ? 'http://127.0.0.1:8888/rest/' : 'https://cms.constantinmirbach.com',
   },
   css: [
     '~/assets/sass/global.sass'

@@ -1,33 +1,29 @@
 <template>
-  <transition name="fade--info">
-    <div class="project__info--wrapper" v-if="$store.state.infoVisible" @click.self="setInfo(false)">
-      <ProjectMenu
-        :project="project"
-        :nextProject="nextProject"
-        :prevProject="prevProject"
-      />
-      <div class="project__info">
-        <div class="project__info--title">
-          <span class="nobr">{{project.title}}</span>
-          <span class="nobr italic">{{project.content.client}}</span>
-        </div>
-        <div class="project__info--description">
-          {{project.content.description}}
-        </div>
+  <nuxt-link to="images" class="project__info--wrapper">
+    <ProjectMenu
+      :project="project"
+      :nextProject="nextProject"
+      :prevProject="prevProject"
+    />
+    <div class="project__info">
+      <div class="project__info--title">
+        <span class="nobr">{{project.title}}</span>
+        <span class="nobr italic">{{project.content.client}}</span>
       </div>
-      <ProjectThumbs
-        :layouts="layouts"
-        :images="images"
-      />
+      <div class="project__info--description">
+        {{project.content.description}}
+      </div>
     </div>
-  </transition>
+    <ProjectThumbs
+      :layouts="layouts"
+      :images="images"
+    />
+  </nuxt-link>
 </template>
 
 <script>
   import ProjectMenu from '~/components/ProjectMenu'
   import ProjectThumbs from '~/components/ProjectThumbs'
-  import { mapMutations } from 'vuex'
-
 
   export default {
     name: 'ProjectInfo',
@@ -35,12 +31,7 @@
     components: {
       ProjectMenu,
       ProjectThumbs
-    },
-    methods: {
-      ...mapMutations([
-        'setInfo'
-      ]),
-    },
+    }
   }
 </script>
 
@@ -56,6 +47,7 @@
 .project
   &__info
     display: flex
+    pointer-events: none
     &--wrapper
       position: fixed
       top: 0

@@ -2,10 +2,10 @@
   <nav class="menu__wrapper">
       <ol class="menu__list">
         <li class="menu__list--item">
-          <nuxt-link class="menu__list--prev" :to="'/' + prevProject.id">Previous</nuxt-link>
+          <nuxt-link class="menu__list--prev" :to="'/' + prevProject.id + '/overview'">Previous</nuxt-link>
         </li>
          <li class="menu__list--item">
-          <nuxt-link class="menu__list--next" :to="'/' + nextProject.id">Next</nuxt-link>
+          <nuxt-link class="menu__list--next" :to="'/' + nextProject.id + '/overview'">Next</nuxt-link>
         </li>
         <li class="menu__list--item">
           <nuxt-link class="menu__list--all" to="/projects">Close</nuxt-link>
@@ -15,8 +15,6 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
-
 export default {
   name: 'ProjectMenu',
   props: ['project', 'nextProject', 'prevProject'],
@@ -34,7 +32,6 @@ export default {
       display: block
       padding: $mp-a $mp-c/2
       @include nobr()
-      // @include fs-s()
     &__list
       list-style: none
       display: flex

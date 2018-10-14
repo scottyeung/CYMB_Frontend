@@ -6,7 +6,6 @@ const createStore = () => {
       siteInfo: [],
       projects: [],
       currentSlide: 0,
-      infoVisible: true,
       widthClasses: ['small', 'medium', 'large'],
     },
     actions: {
@@ -65,12 +64,8 @@ const createStore = () => {
       setSlide: (state, index) => {
         state.currentSlide = index
       },
-      setInfo: (state, bool) => {
-        state.infoVisible = bool
-      },
       shuffleClasses: (state) => {
         state.widthClasses = _.shuffle(state.widthClasses)
-        state.alignClasses = _.shuffle(state.alignClasses)
       }
     }
   })

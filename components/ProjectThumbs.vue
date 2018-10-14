@@ -1,33 +1,34 @@
 <template>
-  <div class="project__thumbs" @click.self="setInfo(false)">
-    <div
+  <div class="project__thumbs">
+    <nuxt-link
+      to="images"
       class="project__thumb"
       v-for="(layout, index) in layouts"
       :key="index"
       :style="{width: slideWidth + 'px'}"
-      @click="setSlide(index), setInfo(false), scrollToNext()"
+      @click.native="setSlide(index)"
     >
+      <div
+        class="project__thumb--inner"
+        ref="thumb"
+        :class="{'triple': layout.images.length === 3}"
+      >
         <div
-          class="project__thumb--inner"
-          ref="thumb"
-          :class="{'triple': layout.images.length === 3}"
+          v-for="(image, index) in layout.images"
+          :key="index"
+          class="project__thumb--img"
+          :class="[{
+            'solo': layout.images.length === 1,
+            'triple': layout.images.length === 3
+          }]"
         >
           <div
-            v-for="(image, index) in layout.images"
-            :key="index"
-            class="project__thumb--img"
-            :class="[{
-              'solo': layout.images.length === 1,
-              'triple': layout.images.length === 3
-            }]"
-          >
-            <div
-              :style="{backgroundImage: 'url(' + image.thumb + ')'}"
-            />
-          </div>
+            :style="{backgroundImage: 'url(' + image.thumb + ')'}"
+          />
         </div>
       </div>
-    </div>
+    </nuxt-link>
+  </div>
 </template>
 
 <script>
@@ -44,8 +45,7 @@
     },
     methods: {
       ...mapMutations([
-        'setSlide',
-        'setInfo'
+        'setSlide'
       ]),
       setWidth () {
         if(process.browser && this.$refs.thumb) {
@@ -57,14 +57,7 @@
           this.slideWidth = thumbHeight * ratio
           this.containerWidth = ((thumbHeight * ratio)) * this.layouts.length
         }
-      },
-      scrollToNext () {
-        if(process.browser) {
-          // Scroll to next Slide
-          const newSlide = document.getElementById(this.$store.state.currentSlide)
-          newSlide.scrollIntoView(true)
-        }
-      },
+      }
     },
     mounted () {
       window.addEventListener('resize', this.setWidth)
@@ -89,8 +82,6 @@
     @include pointer()
     transition: opacity 0.25s
     display: inline-block
-    // background: $white
-    // border: solid 2px
     margin: $mp-b $mp-b 0 0
     &--inner
       display: flex
@@ -124,5 +115,4 @@
       &.triple
         div
           background-position: center
-
 </style>

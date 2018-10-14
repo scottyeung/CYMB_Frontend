@@ -7,7 +7,6 @@
         class="project__slide"
         v-for="(layout, index) in loopLayouts"
         :key="index"
-        :id="index"
         ref="slide">
         <div
           class="project__slide--inner"
@@ -39,8 +38,6 @@
     data () {
       return {
         pageHeight: 0,
-        duplicated: false,
-        isTouch: false,
         scrollTop: 0,
         slidesOffset: [],
       }
@@ -60,8 +57,7 @@
     },
     methods: {
       ...mapMutations([
-        'setSlide',
-        'setInfo'
+        'setSlide'
       ]),
       findImage (id) {
         const self = this
@@ -72,35 +68,30 @@
         // Change currentSlide
         if (index < this.layouts.length - 1) {
           await this.setSlide(index + 1)
-          this.scroll()
+          this.scrolling()
         } else if (index === this.layouts.length - 1) {
-          await this.setInfo(true)
           await this.setSlide(0)
-          setTimeout(() => { this.scroll() }, 50)
+          this.scrolling()
         } else {
           await this.setSlide(1)
-          this.scroll()
+          this.scrolling()
         }
       },
       scrollToPrev (index) {
         // Change currentSlide
         let currentSlide = index > 0 ? index - 1 : this.layouts.length -  1
         this.setSlide(currentSlide)
-        this.scroll()
+        this.scrolling()
       },
-      scroll () {
+      scrolling () {
         if(process.browser) {
-          const newSlide = document.getElementById(this.currentSlide)
+          const newSlide = this.$refs.slide[this.currentSlide]
           newSlide.scrollIntoView(true)
         }
       },
       keyListener (key) {
         if (key.keyCode === 27) {
-          if(!this.$store.state.infoVisible) {
-            this.setInfo(true)
-          } else {
-            this.$router.push({ path: '/projects' })
-          }
+          this.$router.push({ path: 'overview' })
         } else if (key.keyCode === 39) {
           this.scrollToNext (this.currentSlide)
         } else if (key.keyCode === 37) {
@@ -122,7 +113,6 @@
         // Loop
         if (this.scrollTop >= this.pageHeight) {
           window.scrollTo(0, 0)
-          this.setInfo(true)
 				}
 
         // Check current active slide
@@ -132,18 +122,26 @@
         }
         let currentSlide = this.slidesOffset.indexOf(Math.min.apply(null, this.slidesOffset))
         this.setSlide(currentSlide)
+      },
+      async initialScroll () {
+        const newSlide = this.$refs.slide[this.$store.state.currentSlide]
+        const top = await newSlide.getBoundingClientRect().top
+        window.scrollTo(0, top)
       }
     },
     mounted () {
       this.getDimensions()
+      this.$nextTick(function() {
+        this.initialScroll()
+      })
       window.addEventListener('resize', this.getDimensions)
       document.addEventListener('keyup', this.keyListener)
-      document.addEventListener('scroll',  this.scrollListener)
+      // document.addEventListener('scroll',  this.scrollListener)
     },
     destroyed () {
       window.removeEventListener('resize', this.getDimensions)
       document.removeEventListener('keyup', this.keyListener)
-      document.removeEventListener('scroll', this.scrollListener)
+      // document.removeEventListener('scroll', this.scrollListener)
     }
   }
 </script>
