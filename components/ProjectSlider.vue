@@ -136,12 +136,12 @@
       })
       window.addEventListener('resize', this.getDimensions)
       document.addEventListener('keyup', this.keyListener)
-      // document.addEventListener('scroll',  this.scrollListener)
+      document.addEventListener('scroll',  this.scrollListener)
     },
     destroyed () {
       window.removeEventListener('resize', this.getDimensions)
       document.removeEventListener('keyup', this.keyListener)
-      // document.removeEventListener('scroll', this.scrollListener)
+      document.removeEventListener('scroll', this.scrollListener)
     }
   }
 </script>
