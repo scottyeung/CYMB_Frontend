@@ -49,18 +49,17 @@
       Menu
     },
     async asyncData ({ app }) {
-      let {data} = await app.$axios.get('/pages/information')
-      let information = data.data.content
-
-      data = await app.$axios.get('/pages/information/files')
+      let {data}  = await app.$axios.get('/pages/information/files')
       let images = data.data.data
 
       return {
-        information: information,
         images: images
       }
     },
     computed: {
+      information () {
+        return this.$store.state.information
+      },
       street () {
         return this.information.street
       },

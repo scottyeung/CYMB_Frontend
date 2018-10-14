@@ -10,9 +10,11 @@ const createStore = () => {
     },
     actions: {
       // Get Index Files
-      async getSiteInfo ({ commit }) {
+      async getInfo ({ commit }) {
         const info = await this.$axios.$get('/site')
+        const about = await this.$axios.$get('/pages/information')
         commit('setSiteInfo', info)
+        commit('setInfo', about)
       },
 
       async getProjectImages({ commit }, payload) {
@@ -38,15 +40,19 @@ const createStore = () => {
 
       //Nuxt Server Init
       async nuxtServerInit ({ commit, dispatch }) {
-        await dispatch ('getSiteInfo')
+        await dispatch ('getInfo')
         await dispatch ('getProjects')
         commit('shuffleClasses')
       }
     },
     mutations: {
-      // Set Index files
+      // Set Site Info
       setSiteInfo: (state, info) => {
         state.siteInfo = info.data
+      },
+      // Set About Info
+      setInfo: (state, info) => {
+        state.information = info.data.content
       },
       // Set Projects
       setProjects: (state, payload) => {

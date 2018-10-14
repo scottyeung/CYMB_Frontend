@@ -23,9 +23,6 @@
         let proj = _.find(this.$store.state.projects.data, function(e) { return e.slug === self.$route.params.project })
         return proj
       },
-      images () {
-        return this.project.images
-      },
       layouts () {
         return this.project.content.layouts
       },

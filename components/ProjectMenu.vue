@@ -1,16 +1,16 @@
 <template>
   <nav class="menu__wrapper">
-      <ol class="menu__list">
+    <ol class="menu__list">
+      <li class="menu__list--item">
+        <nuxt-link class="menu__list--prev" :to="'/' + prevProject.id + '/overview'">Previous</nuxt-link>
+      </li>
         <li class="menu__list--item">
-          <nuxt-link class="menu__list--prev" :to="'/' + prevProject.id + '/overview'">Previous</nuxt-link>
-        </li>
-         <li class="menu__list--item">
-          <nuxt-link class="menu__list--next" :to="'/' + nextProject.id + '/overview'">Next</nuxt-link>
-        </li>
-        <li class="menu__list--item">
-          <nuxt-link class="menu__list--all" to="/projects">Close</nuxt-link>
-        </li>
-      </ol>
+        <nuxt-link class="menu__list--next" :to="'/' + nextProject.id + '/overview'">Next</nuxt-link>
+      </li>
+      <li class="menu__list--item">
+        <nuxt-link class="menu__list--all" to="/projects">Close</nuxt-link>
+      </li>
+    </ol>
   </nav>
 </template>
 

@@ -35,8 +35,13 @@ module.exports = {
     '@nuxtjs/dotenv'
   ],
   axios: {
-    baseURL: process.env.NODE_ENV !== 'production' ? 'http://127.0.0.1:8888/rest/' : 'https://cms.constantinmirbach.com',
+    // proxy: false,
+    baseURL: process.env.NODE_ENV !== 'production' ? 'http://127.0.0.1:8888/rest' : 'https://cms.constantinmirbach.com/rest',
+    // proxyHeaders: false,
   },
+  // proxy: {
+  //   '/rest/': '/rest'
+  // },
   css: [
     '~/assets/sass/global.sass'
   ],

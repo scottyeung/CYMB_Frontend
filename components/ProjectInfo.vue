@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link to="images" class="project__info--wrapper">
+  <div class="project__info--wrapper" @click.self="showImages()">
     <ProjectMenu
       :project="project"
       :nextProject="nextProject"
@@ -18,7 +18,7 @@
       :layouts="layouts"
       :images="images"
     />
-  </nuxt-link>
+  </div>
 </template>
 
 <script>
@@ -31,18 +31,17 @@
     components: {
       ProjectMenu,
       ProjectThumbs
+    },
+    methods: {
+      showImages () {
+        this.$router.push({ path: 'images' })
+      }
     }
   }
 </script>
 
 <style lang="sass">
 @import "~/assets/sass/variables.sass"
-
-.fade--info
-  &-leave-active, &-enter-active
-    // transition: all .2s ease-in-out
-  &-leave-to, &-enter
-    opacity: 0
 
 .project
   &__info

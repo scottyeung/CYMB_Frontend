@@ -6,13 +6,11 @@
       v-packery='layoutOptions'
       class="projects"
       ref="packery"
-      @layoutComplete="showLayout(true)"
       >
         <div
         v-packery-item
         class="projects__block"
         :class="[
-          //{transparent: !layoutComplete},
           $store.state.widthClasses[index%$store.state.widthClasses.length],
           project.randomImage.orientation
         ]"
@@ -20,24 +18,25 @@
         :key="index"
         >
           <nuxt-link :to="{path: '/' + project.id }">
-            <clazy-load
+            <!-- <clazy-load
               :src="project.randomImage.url"
               class="projects__img__wrapper"
               ref="image"
               margin="100%"
-            >
+            > -->
               <img
                 v-if="project.randomImage"
                 class="projects__img"
                 :src="project.randomImage.url"
                 :style="{height: project.randomImage.height}"
+                ref="image"
               />
-              <div
+              <!-- <div
                 class="projects__placeholder"
                 :style="{height: project.randomImage.height}"
                 slot="placeholder"
               ></div>
-            </clazy-load>
+            </clazy-load> -->
           </nuxt-link>
           <ProjectsCaption ref="caption" :project="project"></ProjectsCaption>
         </div>
@@ -93,14 +92,10 @@ export default {
         })
       }
     },
-    showLayout (bool) {
-      this.layoutComplete = bool
-      // setTimeout( () => this.layoutComplete = bool, 150);
-    },
     setHeight () {
       const images = this.$refs.image
       this.projects.forEach((project, index) => {
-        const img = images[index].$el
+        const img = images[index]
         const ratio = project.randomImage.ratio
         const height = (img.clientWidth / ratio) + 'px'
         this.$set(project.randomImage, 'height', height)
@@ -111,9 +106,9 @@ export default {
     this.randomImage ()
   },
   mounted () {
-    this.$nextTick(function () {
+    this.$nextTick(() => {
       this.setHeight()
-    }),
+    })
     window.addEventListener('resize', _.debounce(this.setHeight), 300)
   },
   destroyed () {

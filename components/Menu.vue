@@ -45,7 +45,5 @@ export default {
       &--projects
         &:after
           content: ", "
-      &--about
-        cursor: help
 </style>
 
