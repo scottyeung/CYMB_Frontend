@@ -1,14 +1,14 @@
 <template>
   <div
-    class="index__slider"
     :class="[indexImages[currentNumber].content.sizing, indexImages[currentNumber].content.background]"
+    class="index__slider"
   >
     <div
-    class="index__slider__img"
-    :style="{backgroundImage: 'url(' + indexImages[currentNumber].url + ')'}"
-    :class="indexImages[currentNumber].content.sizing"
-    @click="onSwipeLeft"
-    ></div>
+      :style="{backgroundImage: 'url(' + indexImages[currentNumber].url + ')'}"
+      :class="indexImages[currentNumber].content.sizing"
+      class="index__slider__img"
+      @click="onSwipeLeft"
+    />
   </div>
 </template>
 
@@ -39,6 +39,14 @@ export default {
         return this.indexImages[this.indexImages.length - 1].url
       }
     }
+  },
+  mounted () {
+    this.preloadImages([this.nextImgUrl, this.prevImgUrl])
+    window.addEventListener('keyup', this.keyListener)
+    this.dataEmit ()
+  },
+  beforeDestroy () {
+    window.removeEventListener('keyup', this.keyListener)
   },
   methods: {
     preloadImages (arr) {
@@ -82,14 +90,6 @@ export default {
       )
     }
   },
-  mounted () {
-    this.preloadImages([this.nextImgUrl, this.prevImgUrl])
-    window.addEventListener('keyup', this.keyListener)
-    this.dataEmit ()
-  },
-  beforeDestroy () {
-    window.removeEventListener('keyup', this.keyListener)
-  }
 }
 </script>
 

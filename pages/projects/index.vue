@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Menu></Menu>
+    <Menu/>
     <no-ssr>
       <keep-alive>
         <ProjectsCards/>

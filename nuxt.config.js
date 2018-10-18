@@ -2,6 +2,7 @@ const webpack = require('webpack')
 require('dotenv').config()
 
 module.exports = {
+  mode: 'universal',
   head: {
     title: 'Constantin Mirbach',
     meta: [
@@ -35,13 +36,8 @@ module.exports = {
     '@nuxtjs/dotenv'
   ],
   axios: {
-    // proxy: false,
     baseURL: process.env.NODE_ENV !== 'production' ? 'http://127.0.0.1:8888/rest' : 'https://cms.constantinmirbach.com/rest',
-    // proxyHeaders: false,
   },
-  // proxy: {
-  //   '/rest/': '/rest'
-  // },
   css: [
     '~/assets/sass/global.sass'
   ],
@@ -49,8 +45,9 @@ module.exports = {
     baseUrl: process.env.BASE_URL || 'http://localhost:8080'
   },
   build: {
-    extend (config, { isDev }) {
-      if (isDev && process.client) {
+    extend(config, ctx) {
+      // Run ESLint on save
+      if (ctx.isDev && ctx.isClient) {
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
@@ -65,7 +62,7 @@ module.exports = {
         '_.sample': ['lodash', 'sample'],
         '_.shuffle': ['lodash', 'shuffle'],
         '_.debounce': ['lodash', 'debounce'],
-        '_.findIndex': ['lodash', 'findIndex']
+        // '_.findIndex': ['lodash', 'findIndex']
       })
     ]
   }

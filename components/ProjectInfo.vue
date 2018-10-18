@@ -1,17 +1,20 @@
 <template>
-  <div class="project__info--wrapper" @click.self="showImages()">
+  <div
+    class="project__info--wrapper"
+    @click.self="showImages()"
+  >
     <ProjectMenu
       :project="project"
-      :nextProject="nextProject"
-      :prevProject="prevProject"
+      :next-project="nextProject"
+      :prev-project="prevProject"
     />
     <div class="project__info">
       <div class="project__info--title">
-        <span class="nobr">{{project.title}}</span>
-        <span class="nobr italic">{{project.content.client}}</span>
+        <span class="nobr">{{ project.title }}</span>
+        <span class="nobr italic">{{ project.content.client }}</span>
       </div>
       <div class="project__info--description">
-        {{project.content.description}}
+        {{ project.content.description }}
       </div>
     </div>
     <ProjectThumbs
@@ -27,11 +30,11 @@
 
   export default {
     name: 'ProjectInfo',
-    props: ['project', 'layouts', 'images', 'nextProject', 'prevProject'],
     components: {
       ProjectMenu,
       ProjectThumbs
     },
+    props: ['project', 'layouts', 'images', 'nextProject', 'prevProject'],
     methods: {
       showImages () {
         this.$router.push({ path: 'images' })

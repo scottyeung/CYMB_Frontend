@@ -1,5 +1,8 @@
 <template>
-  <div class="index__caption" :class="color">
+  <div
+    :class="color"
+    class="index__caption"
+  >
     <nuxt-link :to="project">{{ projectTitle }}</nuxt-link>
   </div>
 </template>

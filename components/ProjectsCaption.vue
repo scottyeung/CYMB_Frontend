@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link class="projects__caption" :to="project.id">
+  <nuxt-link :to="project.id" class="projects__caption">
     <span class="projects__title">{{ projectTitle }}</span>
     <span class="nobr italic">{{ projectSecondary }}</span>
   </nuxt-link>

@@ -6,15 +6,16 @@ const createStore = () => {
       siteInfo: [],
       projects: [],
       currentSlide: 0,
-      widthClasses: ['small', 'medium', 'large'],
+      widthClasses: ['small', 'small', 'medium', 'large'],
     },
     actions: {
-      // Get Index Files
       async getInfo ({ commit }) {
         const info = await this.$axios.$get('/site')
         const about = await this.$axios.$get('/pages/information')
+        const images = await this.$axios.get('/pages/information/files')
         commit('setSiteInfo', info)
-        commit('setInfo', about)
+        await commit('setInfo', about)
+        commit('setInfoImage', images)
       },
 
       async getProjectImages({ commit }, payload) {
@@ -38,7 +39,6 @@ const createStore = () => {
         await dispatch ('getProjectDetails')
       },
 
-      //Nuxt Server Init
       async nuxtServerInit ({ commit, dispatch }) {
         await dispatch ('getInfo')
         await dispatch ('getProjects')
@@ -46,27 +46,31 @@ const createStore = () => {
       }
     },
     mutations: {
-      // Set Site Info
+      // Site info
       setSiteInfo: (state, info) => {
         state.siteInfo = info.data
       },
-      // Set About Info
+      // About
       setInfo: (state, info) => {
         state.information = info.data.content
       },
-      // Set Projects
+      // About image
+      setInfoImage: (state, images) => {
+        state.information.images = images.data.data
+      },
+      // Projects
       setProjects: (state, payload) => {
         state.projects = payload
       },
-      // Set Projects
+      // Project Details
       setProjectDetails: (state, payload) => {
         state.projects.data[payload.data.num - 1] = payload.data
       },
-      // Set Images
+      // Project images
       setProjectImages: (state, payload) => {
         state.projects.data[payload.index]['images'] = payload.images.data
       },
-      // Set Slide
+      // Slide
       setSlide: (state, index) => {
         state.currentSlide = index
       },

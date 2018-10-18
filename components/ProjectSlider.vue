@@ -2,26 +2,27 @@
   <div class="project__slider">
     <a class="project__next" @click="scrollToNext(currentSlide)"/>
     <a class="project__prev" @click="scrollToPrev(currentSlide)"/>
-    <div class="project__loop" ref="loop">
+    <div ref="loop" class="project__loop">
       <div
-        class="project__slide"
         v-for="(layout, index) in loopLayouts"
+        ref="slide"
         :key="index"
-        ref="slide">
+        class="project__slide"
+      >
         <div
-          class="project__slide--inner"
           :class="{'triple': layout.images.length === 3}"
+          class="project__slide--inner"
         >
           <div
             v-for="(image, index) in layout.images"
             :key="index"
-            class="project__slide--img"
             :class="[{
               'solo': layout.images.length === 1,
               'triple': layout.images.length === 3
             }]"
+            class="project__slide--img"
           >
-            <img :src="image.url" />
+            <img :src="image.url" >
           </div>
         </div>
       </div>
@@ -54,6 +55,20 @@
       currentSlide () {
         return this.$store.state.currentSlide
       }
+    },
+    mounted () {
+      this.getDimensions()
+      this.$nextTick(function() {
+        this.initialScroll()
+      })
+      window.addEventListener('resize', this.getDimensions)
+      document.addEventListener('keyup', this.keyListener)
+      document.addEventListener('scroll',  this.scrollListener)
+    },
+    destroyed () {
+      window.removeEventListener('resize', this.getDimensions)
+      document.removeEventListener('keyup', this.keyListener)
+      document.removeEventListener('scroll', this.scrollListener)
     },
     methods: {
       ...mapMutations([
@@ -128,20 +143,6 @@
         const top = await newSlide.getBoundingClientRect().top
         window.scrollTo(0, top)
       }
-    },
-    mounted () {
-      this.getDimensions()
-      this.$nextTick(function() {
-        this.initialScroll()
-      })
-      window.addEventListener('resize', this.getDimensions)
-      document.addEventListener('keyup', this.keyListener)
-      document.addEventListener('scroll',  this.scrollListener)
-    },
-    destroyed () {
-      window.removeEventListener('resize', this.getDimensions)
-      document.removeEventListener('keyup', this.keyListener)
-      document.removeEventListener('scroll', this.scrollListener)
     }
   }
 </script>

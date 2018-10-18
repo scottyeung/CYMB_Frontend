@@ -1,21 +1,21 @@
 <template>
   <div class="container">
-    <Menu></Menu>
+    <Menu/>
     <no-ssr>
       <div
-      v-packery='layoutOptions'
-      class="projects"
-      ref="packery"
+        v-packery="layoutOptions"
+        ref="packery"
+        class="projects"
       >
         <div
-        v-packery-item
-        class="projects__block"
-        :class="[
-          $store.state.widthClasses[index%$store.state.widthClasses.length],
-          project.randomImage.orientation
-        ]"
-        v-for="(project, index) of projects"
-        :key="index"
+          v-packery-item
+          v-for="(project, index) of projects"
+          :class="[
+            $store.state.widthClasses[index%$store.state.widthClasses.length],
+            project.randomImage.orientation
+          ]"
+          :key="index"
+          class="projects__block"
         >
           <nuxt-link :to="{path: '/' + project.id }">
             <!-- <clazy-load
@@ -24,21 +24,21 @@
               ref="image"
               margin="100%"
             > -->
-              <img
-                v-if="project.randomImage"
-                class="projects__img"
-                :src="project.randomImage.url"
-                :style="{height: project.randomImage.height}"
-                ref="image"
-              />
-              <!-- <div
+            <img
+              v-if="project.randomImage"
+              ref="image"
+              :src="project.randomImage.url"
+              :style="{height: project.randomImage.height}"
+              class="projects__img"
+            >
+            <!-- <div
                 class="projects__placeholder"
                 :style="{height: project.randomImage.height}"
                 slot="placeholder"
               ></div>
             </clazy-load> -->
           </nuxt-link>
-          <ProjectsCaption ref="caption" :project="project"></ProjectsCaption>
+          <ProjectsCaption ref="caption" :project="project"/>
         </div>
       </div>
     </no-ssr>
@@ -71,6 +71,18 @@ export default {
       return this.$store.state.projects.data
     }
   },
+  created () {
+    this.randomImage ()
+  },
+  mounted () {
+    this.$nextTick(() => {
+      this.setHeight()
+    })
+    window.addEventListener('resize', _.debounce(this.setHeight), 300)
+  },
+  destroyed () {
+    window.removeEventListener('resize', this.setHeight)
+  },
   methods: {
     randomImage () {
       if(process.browser && !this.$store.state.projects.data[0].randomImage) {
@@ -102,18 +114,6 @@ export default {
       })
     }
   },
-  created () {
-    this.randomImage ()
-  },
-  mounted () {
-    this.$nextTick(() => {
-      this.setHeight()
-    })
-    window.addEventListener('resize', _.debounce(this.setHeight), 300)
-  },
-  destroyed () {
-    window.removeEventListener('resize', this.setHeight)
-  }
 }
 </script>
 

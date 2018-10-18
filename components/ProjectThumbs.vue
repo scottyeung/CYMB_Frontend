@@ -1,26 +1,26 @@
 <template>
   <div class="project__thumbs">
     <nuxt-link
-      to="images"
-      class="project__thumb"
       v-for="(layout, index) in layouts"
       :key="index"
       :style="{width: slideWidth + 'px'}"
+      to="images"
+      class="project__thumb"
       @click.native="setSlide(index)"
     >
       <div
-        class="project__thumb--inner"
         ref="thumb"
         :class="{'triple': layout.images.length === 3}"
+        class="project__thumb--inner"
       >
         <div
           v-for="(image, index) in layout.images"
           :key="index"
-          class="project__thumb--img"
           :class="[{
             'solo': layout.images.length === 1,
             'triple': layout.images.length === 3
           }]"
+          class="project__thumb--img"
         >
           <div
             :style="{backgroundImage: 'url(' + image.thumb + ')'}"
@@ -43,6 +43,13 @@
         containerWidth: 0
       }
     },
+    mounted () {
+      window.addEventListener('resize', this.setWidth)
+      this.setWidth ()
+    },
+    destroyed () {
+      window.removeEventListener('resize', this.setWidth)
+    },
     methods: {
       ...mapMutations([
         'setSlide'
@@ -58,13 +65,6 @@
           this.containerWidth = ((thumbHeight * ratio)) * this.layouts.length
         }
       }
-    },
-    mounted () {
-      window.addEventListener('resize', this.setWidth)
-      this.setWidth ()
-    },
-    destroyed () {
-      window.removeEventListener('resize', this.setWidth)
     }
   }
 </script>

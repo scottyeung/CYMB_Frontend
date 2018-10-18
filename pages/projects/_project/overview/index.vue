@@ -2,8 +2,8 @@
   <div class="container project">
     <ProjectInfo
       :project="project"
-      :nextProject="nextProject"
-      :prevProject="prevProject"
+      :next-project="nextProject"
+      :prev-project="prevProject"
       :layouts="layouts"
     />
   </div>
@@ -39,6 +39,12 @@
         return projects[prevIndex]
       },
     },
+    mounted () {
+      document.addEventListener('keyup', this.keyListener)
+    },
+    destroyed () {
+      document.removeEventListener('keyup', this.keyListener)
+    },
     methods: {
       keyListener (key) {
         if (key.keyCode === 27) {
@@ -46,12 +52,6 @@
         }
       },
     },
-    mounted () {
-      document.addEventListener('keyup', this.keyListener)
-    },
-    destroyed () {
-      document.removeEventListener('keyup', this.keyListener)
-    }
   }
 </script>
 
