@@ -108,10 +108,7 @@
 </script>
 
 <style lang="sass" scoped>
-  @import "~/assets/sass/variables.sass"
-
   .information
-    // color: $colored
     min-height: 100vh
     &__inner
       width: 100%

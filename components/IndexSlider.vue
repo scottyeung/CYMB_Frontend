@@ -94,8 +94,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  @import "~/assets/sass/variables.sass"
-
   .index__slider
     width: 100%
     height: 100%

@@ -118,46 +118,44 @@ export default {
 </script>
 
 <style lang="sass">
-@import "~/assets/sass/variables.sass"
-
-.projects
-  @include center
-  padding: $mp-d 0
-  display: flex
-  align-items: flex-end
-  justify-content: flex-start
-  flex-wrap: wrap
-  width: 100vw
-  width: calc(100vw + 30px)
-  margin-left: $mp-c/2 * -1
-  &__block
-    padding: $mp-c
-    display: inline-block
-    vertical-align: bottom
-    width: 30%
-    a
-      display: block
-    &.small.portrait
-      width: 22.5%
-    &.medium.portrait
-      width: 25%
-    &.large.portrait
-      width: 27.5%
-    &.small.landscape, &.small.square
-      width: 35%
-    &.medium.landscape, &.medium.square
-      width: 40%
-    &.large.landscape, &.large.square
-      width: 45%
-    &.flexStart
-      align-self: flex-start
-    &.flexEnd
-      align-self: flex-end
-  &__img
-    width: 100%
-    vertical-align: top
-    &__wrapper
-      display: block;
+  .projects
+    @include center
+    padding: $mp-d 0
+    display: flex
+    align-items: flex-end
+    justify-content: flex-start
+    flex-wrap: wrap
+    width: 100vw
+    width: calc(100vw + 30px)
+    margin-left: $mp-c/2 * -1
+    &__block
+      padding: $mp-c
+      display: inline-block
+      vertical-align: bottom
+      width: 30%
+      a
+        display: block
+      &.small.portrait
+        width: 22.5%
+      &.medium.portrait
+        width: 25%
+      &.large.portrait
+        width: 27.5%
+      &.small.landscape, &.small.square
+        width: 35%
+      &.medium.landscape, &.medium.square
+        width: 40%
+      &.large.landscape, &.large.square
+        width: 45%
+      &.flexStart
+        align-self: flex-start
+      &.flexEnd
+        align-self: flex-end
+    &__img
+      width: 100%
+      vertical-align: top
+      &__wrapper
+        display: block
 
 </style>
 

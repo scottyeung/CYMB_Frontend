@@ -44,33 +44,31 @@
 </script>
 
 <style lang="sass">
-@import "~/assets/sass/variables.sass"
-
-.project
-  &__info
-    display: flex
-    pointer-events: none
-    &--wrapper
-      position: fixed
-      top: 0
-      left: 0
-      height: 100vh
-      width: 100vw
-      padding: $mp-a $mp-c/2
-      z-index: 99
-      @include pointer()
-      background: $transparent
-    &--title
-      margin-right: $mp-a
+  .project
+    &__info
       display: flex
-      flex-wrap: nowrap
-      cursor: default
-      span
-        margin-right: $mp-b
-        display: inline-block
-    &--description
-      max-width: 1200px
-      padding: 0 229px 0 0
-      cursor: default
+      pointer-events: none
+      &--wrapper
+        position: fixed
+        top: 0
+        left: 0
+        height: 100vh
+        width: 100vw
+        padding: $mp-a $mp-c/2
+        z-index: 99
+        @include pointer()
+        background: $transparent
+      &--title
+        margin-right: $mp-a
+        display: flex
+        flex-wrap: nowrap
+        cursor: default
+        span
+          margin-right: $mp-b
+          display: inline-block
+      &--description
+        max-width: 1200px
+        padding: 0 229px 0 0
+        cursor: default
 
 </style>

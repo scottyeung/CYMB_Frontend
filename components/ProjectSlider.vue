@@ -148,61 +148,59 @@
 </script>
 
 <style lang="sass">
-@import "~/assets/sass/variables.sass"
-
-.project
-  &__next
-    position: fixed
-    top: 0
-    left: 50%
-    width: 50%
-    height: 100%
-    z-index: 90
-    cursor: s-resize
-  &__prev
-    position: fixed
-    top: 0
-    left: 0
-    width: 50%
-    height: 100%
-    z-index: 90
-    cursor: n-resize
-  &__slider
-    position: relative
-    user-select: none
-    -webkit-tap-highlight-color: red
-  &__slide
-    min-height: 100vh
-    width: 100%
-    height: 100vh
-    transform: translate3d(0,0,0)
-    &--inner
-      display: flex
-      align-items: center
-      justify-content: space-evenly
-      user-select: none
-      width: 100vw
+  .project
+    &__next
+      position: fixed
+      top: 0
+      left: 50%
+      width: 50%
       height: 100%
-      padding: $mp-d
-    &--img
-      height: 100%;
-      width: 50%;
-      padding: $mp-d
-      img
+      z-index: 90
+      cursor: s-resize
+    &__prev
+      position: fixed
+      top: 0
+      left: 0
+      width: 50%
+      height: 100%
+      z-index: 90
+      cursor: n-resize
+    &__slider
+      position: relative
+      user-select: none
+      -webkit-tap-highlight-color: red
+    &__slide
+      min-height: 100vh
+      width: 100%
+      height: 100vh
+      transform: translate3d(0,0,0)
+      &--inner
+        display: flex
+        align-items: center
+        justify-content: space-evenly
+        user-select: none
+        width: 100vw
         height: 100%
-        width: 100%
-        object-fit: contain
-      &:first-child
+        padding: $mp-d
+      &--img
+        height: 100%;
+        width: 50%;
+        padding: $mp-d
         img
-          object-position: 100% 50%
-      &:nth-child(2)
-        img
-          object-position: 0% 50%
-      &.solo
-        width: 100%;
-        img
-          object-position: 50% 50%
-      &.triple
-        img
-          object-position: 50% 50%
+          height: 100%
+          width: 100%
+          object-fit: contain
+        &:first-child
+          img
+            object-position: 100% 50%
+        &:nth-child(2)
+          img
+            object-position: 0% 50%
+        &.solo
+          width: 100%;
+          img
+            object-position: 50% 50%
+        &.triple
+          img
+            object-position: 50% 50%
 </style>

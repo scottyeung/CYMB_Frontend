@@ -24,8 +24,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  @import "~/assets/sass/variables.sass"
-
   .projects__caption
     @include center()
     @include fs-s()

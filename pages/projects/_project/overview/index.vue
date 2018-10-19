@@ -56,15 +56,13 @@
 </script>
 
 <style lang="sass">
-@import "~/assets/sass/variables.sass"
-
-.project
-  &__button
-    position: fixed
-    top: 0
-    right: 0
-    padding: 12px $mp-c/2
-    z-index: 95
-    cursor: pointer
+  .project
+    &__button
+      position: fixed
+      top: 0
+      right: 0
+      padding: 12px $mp-c/2
+      z-index: 95
+      cursor: pointer
 
 </style>
