@@ -1,35 +1,33 @@
 <template>
   <div class="container">
     <Menu/>
-    <no-ssr>
+    <div
+      v-packery="layoutOptions"
+      ref="packery"
+      class="projects"
+    >
       <div
-        v-packery="layoutOptions"
-        ref="packery"
-        class="projects"
+        v-packery-item
+        v-for="(project, index) of projects"
+        :class="[
+          $store.state.widthClasses[index%$store.state.widthClasses.length],
+          project.randomImage.orientation
+        ]"
+        :key="index"
+        class="projects__block"
       >
-        <div
-          v-packery-item
-          v-for="(project, index) of projects"
-          :class="[
-            $store.state.widthClasses[index%$store.state.widthClasses.length],
-            project.randomImage.orientation
-          ]"
-          :key="index"
-          class="projects__block"
-        >
-          <nuxt-link :to="{path: '/' + project.id }">
-            <img
-              v-if="project.randomImage"
-              ref="image"
-              :src="project.randomImage.url"
-              :style="{height: project.randomImage.height}"
-              class="projects__img"
-            >
-          </nuxt-link>
-          <ProjectsCaption ref="caption" :project="project"/>
-        </div>
+        <nuxt-link :to="{path: '/' + project.id }">
+          <img
+            v-if="project.randomImage"
+            ref="image"
+            :src="project.randomImage.url"
+            :style="{height: project.randomImage.height}"
+            class="projects__img"
+          >
+        </nuxt-link>
+        <ProjectsCaption ref="caption" :project="project"/>
       </div>
-    </no-ssr>
+    </div>
   </div>
 </template>
 
@@ -66,7 +64,7 @@ export default {
     this.$nextTick(() => {
       this.setHeight()
     })
-    window.addEventListener('resize', _.debounce(this.setHeight), 300)
+    window.addEventListener('resize', this.setHeight)
   },
   destroyed () {
     window.removeEventListener('resize', this.setHeight)
@@ -96,8 +94,9 @@ export default {
       const images = this.$refs.image
       this.projects.forEach((project, index) => {
         const img = images[index]
+        const width = img.clientWidth
         const ratio = project.randomImage.ratio
-        const height = (img.clientWidth / ratio) + 'px'
+        const height = (width / ratio) + 'px'
         this.$set(project.randomImage, 'height', height)
       })
     }
@@ -105,10 +104,10 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
   .projects
     @include center
-    padding: $mp-d 0
+    padding: $mp-d 0 0 0
     display: flex
     align-items: flex-end
     justify-content: flex-start
@@ -162,10 +161,7 @@ export default {
 
   @media (max-width: $tablet-pt)
     .projects
-      width: calc(100vw - 15px)
-      margin-left: 7.5px
       &__block
-        padding: $mp-c/4
         &.small.portrait
           width: 50%
         &.medium.portrait
@@ -179,5 +175,12 @@ export default {
         &.large.landscape, &.large.square
           width: 50%
 
+    @media (max-width: $phone-ls)
+      .projects
+        width: calc(100vw - 15px)
+        margin-bottom: $mp-a
+        margin-left: 7.5px
+        &__block
+          padding: $mp-c/4
 </style>
 
