@@ -41,9 +41,11 @@
           </p>
         </div> -->
         <div class="information__legal information--block">
+          <p>
+            <span>VAT identification number : {{ ustid }}</span>
+            <span>Tax reference number: {{ taxno }}</span>
+          </p>
           <p>{{ legalNotice }}</p>
-          <span>VAT ID: {{ ustid }}</span>
-          <span>TAX ID: {{ taxno }}</span>
           <span>Website by <a href="http://studioscholz.info" target="_blank">Studio Scholz</a></span>
         </div>
       </div>
