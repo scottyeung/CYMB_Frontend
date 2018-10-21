@@ -140,6 +140,7 @@
         this.setSlide(currentSlide)
       },
       async initialScroll () {
+        window.scrollTo(0, 0)
         const newSlide = this.$refs.slide[this.$store.state.currentSlide]
         const top = await newSlide.getBoundingClientRect().top
         window.scrollTo(0, top)

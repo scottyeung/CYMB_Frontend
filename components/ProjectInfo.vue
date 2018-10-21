@@ -85,10 +85,6 @@
       &__menu
         position: relative
         padding: $lh-m 0 0 0
-      //   top: auto
-      //   right: auto
-      //   bottom: 0
-      //   left: 0
       &__info
         flex-direction: column
         &--title
