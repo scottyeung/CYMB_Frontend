@@ -15,10 +15,10 @@
 </template>
 
 <script>
-export default {
-  name: 'ProjectMenu',
-  props: ['project', 'nextProject', 'prevProject'],
-}
+  export default {
+    name: 'ProjectMenu',
+    props: ['project', 'nextProject', 'prevProject'],
+  }
 </script>
 
 <style lang="sass" scoped>

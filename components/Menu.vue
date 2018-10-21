@@ -19,17 +19,17 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+  import { mapMutations } from 'vuex'
 
-export default {
-  name: 'Menu',
+  export default {
+    name: 'Menu',
 
-  methods: {
-    ...mapMutations([
-      'changeMenu'
-    ])
+    methods: {
+      ...mapMutations([
+        'changeMenu'
+      ])
+    }
   }
-}
 </script>
 
 <style lang="sass" scoped>

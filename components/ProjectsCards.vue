@@ -32,76 +32,76 @@
 </template>
 
 <script>
-import ProjectsCaption from '~/components/ProjectsCaption.vue'
+  import ProjectsCaption from '~/components/ProjectsCaption.vue'
 
-export default {
-  name: 'ProjectsCards',
-  components: {
-    ProjectsCaption,
-  },
-  data () {
-    return {
-      layoutComplete: false,
-      layoutOptions: {
-        initLayout: true,
-        itemSelector: ".projects__block",
-        percentPosition: true,
-        transitionDuration: 0,
-        originTop: true,
-        originLeft: true
+  export default {
+    name: 'ProjectsCards',
+    components: {
+      ProjectsCaption,
+    },
+    data () {
+      return {
+        layoutComplete: false,
+        layoutOptions: {
+          initLayout: true,
+          itemSelector: ".projects__block",
+          percentPosition: true,
+          transitionDuration: 0,
+          originTop: true,
+          originLeft: true
+        }
       }
-    }
-  },
-  computed: {
-    projects () {
-      return this.$store.state.projects.data
-    }
-  },
-  created () {
-    this.randomImage ()
-  },
-  mounted () {
-    this.$nextTick(() => {
-      this.setHeight()
-    })
-    window.addEventListener('resize', this.setHeight)
-  },
-  destroyed () {
-    window.removeEventListener('resize', this.setHeight)
-  },
-  methods: {
-    randomImage () {
-      if(process.browser && !this.$store.state.projects.data[0].randomImage) {
-        this.projects.forEach(project => {
-          // Choose random image
-          let randomImage = _.sample(project.content.cover)
-          this.$set(project, 'randomImage', randomImage)
+    },
+    computed: {
+      projects () {
+        return this.$store.state.projects.data
+      }
+    },
+    created () {
+      this.randomImage ()
+    },
+    mounted () {
+      this.$nextTick(() => {
+        this.setHeight()
+      })
+      window.addEventListener('resize', this.setHeight)
+    },
+    destroyed () {
+      window.removeEventListener('resize', this.setHeight)
+    },
+    methods: {
+      randomImage () {
+        if(process.browser && !this.$store.state.projects.data[0].randomImage) {
+          this.projects.forEach(project => {
+            // Choose random image
+            let randomImage = _.sample(project.content.cover)
+            this.$set(project, 'randomImage', randomImage)
 
-          // Match with original image
-          const ogImage = _.find(project.images, function(img) {
-            return img.id === project.randomImage.id
+            // Match with original image
+            const ogImage = _.find(project.images, function(img) {
+              return img.id === project.randomImage.id
+            })
+
+            // Set ratio and orientation
+            if(ogImage) {
+              this.$set(project.randomImage, 'orientation', ogImage.dimensions.orientation)
+              this.$set(project.randomImage, 'ratio', ogImage.dimensions.ratio)
+            }
           })
-
-          // Set ratio and orientation
-          if(ogImage) {
-            this.$set(project.randomImage, 'orientation', ogImage.dimensions.orientation)
-            this.$set(project.randomImage, 'ratio', ogImage.dimensions.ratio)
-          }
+        }
+      },
+      setHeight () {
+        const images = this.$refs.image
+        this.projects.forEach((project, index) => {
+          const img = images[index]
+          const width = img.clientWidth
+          const ratio = project.randomImage.ratio
+          const height = (width / ratio) + 'px'
+          this.$set(project.randomImage, 'height', height)
         })
       }
     },
-    setHeight () {
-      const images = this.$refs.image
-      this.projects.forEach((project, index) => {
-        const img = images[index]
-        const width = img.clientWidth
-        const ratio = project.randomImage.ratio
-        const height = (width / ratio) + 'px'
-        this.$set(project.randomImage, 'height', height)
-      })
-    }
-  },
-}
+  }
 </script>
 
 <style lang="sass" scoped>

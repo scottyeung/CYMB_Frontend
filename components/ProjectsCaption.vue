@@ -6,21 +6,20 @@
 </template>
 
 <script>
-
-export default {
-	name: 'ProjectsCaption',
-  props: ['project'],
-  computed: {
-    projectTitle () {
-      return this.project.title
-    },
-    projectSecondary () {
-      if(this.project.content.client && this.project.content.client !== this.project.title) {
-        return this.project.content.client
+  export default {
+    name: 'ProjectsCaption',
+    props: ['project'],
+    computed: {
+      projectTitle () {
+        return this.project.title
+      },
+      projectSecondary () {
+        if(this.project.content.client && this.project.content.client !== this.project.title) {
+          return this.project.content.client
+        }
       }
     }
   }
-}
 </script>
 
 <style lang="sass">

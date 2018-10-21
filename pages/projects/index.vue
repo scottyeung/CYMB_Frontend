@@ -8,15 +8,15 @@
 </template>
 
 <script>
-import Menu from '~/components/Menu.vue'
-import ProjectsCards from '~/components/ProjectsCards.vue'
+  import Menu from '~/components/Menu.vue'
+  import ProjectsCards from '~/components/ProjectsCards.vue'
 
-export default {
-  name: 'Projects',
-  components: {
-    Menu,
-    ProjectsCards
+  export default {
+    name: 'Projects',
+    components: {
+      Menu,
+      ProjectsCards
+    }
   }
-}
 </script>
 

@@ -13,7 +13,7 @@
           <p>
             <a :href="'tel:' + phone ">{{ phone }}</a>
             <a :href="'mailto:' + email ">{{ email }}</a>
-            <a :href="'https://www.instagram.com/' + instagram">@{{ instagram }}</a>
+            <a :href="'https://www.instagram.com/' + instagram" target="_blank">@{{ instagram }}</a>
           </p>
         </div>
         <img
