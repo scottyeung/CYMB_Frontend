@@ -18,6 +18,7 @@
             :key="index"
             :class="[{
               'solo': layout.images.length === 1,
+              'double': layout.images.length === 2,
               'triple': layout.images.length === 3
             }]"
             class="project__slide--img"
@@ -168,18 +169,16 @@
     &__slider
       position: relative
       user-select: none
-      -webkit-tap-highlight-color: red
     &__slide
       min-height: 100vh
       width: 100%
       height: 100vh
-      transform: translate3d(0,0,0)
       &--inner
         display: flex
         align-items: center
         justify-content: space-evenly
         user-select: none
-        width: 100vw
+        width: 100%
         height: 100%
         padding: $mp-d
       &--img
@@ -203,4 +202,61 @@
         &.triple
           img
             object-position: 50% 50%
+
+  @media (max-width: $tablet-ls)
+    .project
+      &__slide
+        &--inner
+          padding: $mp-c
+        &--img
+          padding: $mp-c
+
+  @media (max-width: $tablet-pt)
+    .project
+      &__slide
+        &--inner
+          padding: $mp-b
+          &.triple
+            flex-wrap: wrap
+        &--img
+          padding: $mp-b
+          &.triple
+            height: 50%
+            &:nth-child(1)
+              width: 50%
+              margin: 0 25%
+              img
+                object-position: 50% 100%
+            &:nth-child(2)
+              img
+                object-position: 100% 0%
+            &:nth-child(3)
+              img
+                object-position: 0% 0%
+
+    @media (max-width: $phone-ls)
+      .project
+        &__slide
+          &--inner
+            padding: $mp-a
+          &--img
+            padding: $mp-a
+
+    @media (max-width: $phone-pt)
+      .project
+        &__slide
+          &--inner
+            flex-wrap: wrap
+          &--img
+            &.double
+              width: 100%
+              height: 50%
+              &:nth-child(1)
+                img
+                  object-position: 50% 100%
+              &:nth-child(2)
+                img
+                  object-position: 50% 0%
+
+
 </style>

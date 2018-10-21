@@ -15,6 +15,16 @@
             <a :href="instagram">Instagram</a>
           </p>
         </div>
+        <img
+          v-if="images"
+          :src="images[0].url"
+          class="information__image"
+        >
+        <div class="information__about information--block">
+          <p>{{ about }}</p>
+        </div>
+      </div>
+      <div class="information--column">
         <div class="information__clients information--block">
           <h2>Selected Clients</h2>
           <span v-for="client in clients" :key="client.client">{{ client.client }}</span>
@@ -25,31 +35,6 @@
           <span>Ust-Id: {{ ustid }}</span>
           <span>Website by <a href="http://studioscholz.info" target="_blank">Studio Scholz</a></span>
         </div>
-        <!-- <img
-          v-if="images"
-          :src="images[0].url"
-          class="information__image"
-        /> -->
-        <div class="information__about information--block">
-          <p>{{ about }}</p>
-        </div>
-      </div>
-      <div class="information--column">
-        <img
-          v-if="images"
-          :src="images[0].url"
-          class="information__image"
-        >
-        <!-- <div class="information__clients information--block">
-          <h2>Selected Clients</h2>
-          <span v-for="client in clients" :key="client.client">{{client.client}}</span>
-        </div>
-        <div class="information__imprint information--block">
-          <h2>Legal Notice</h2>
-          <p>{{legalNotice}}</p>
-          <span>Ust-Id: {{ustid}}</span>
-          <span>Website by <a href="http://studioscholz.info" target="_blank">Studio Scholz</a></span>
-        </div> -->
       </div>
     </div>
   </div>
@@ -115,7 +100,7 @@
       padding: $mp-d + $mp-c 0 50px 0
       display: flex
     &--column
-      max-width: 550px
+      max-width: 650px
       width: 50%
       padding: 0 $mp-c/2 0 $mp-c
       &:first-child
@@ -125,8 +110,6 @@
       margin-bottom: $lh-m
     &__image
       width: 100%
-      padding-top: $mp-c
-      transform: rotate(12deg)
       // max-width: 600px
     &__about
       @include fs-s()

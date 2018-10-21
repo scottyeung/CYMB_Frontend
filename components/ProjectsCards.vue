@@ -18,12 +18,6 @@
           class="projects__block"
         >
           <nuxt-link :to="{path: '/' + project.id }">
-            <!-- <clazy-load
-              :src="project.randomImage.url"
-              class="projects__img__wrapper"
-              ref="image"
-              margin="100%"
-            > -->
             <img
               v-if="project.randomImage"
               ref="image"
@@ -31,12 +25,6 @@
               :style="{height: project.randomImage.height}"
               class="projects__img"
             >
-            <!-- <div
-                class="projects__placeholder"
-                :style="{height: project.randomImage.height}"
-                slot="placeholder"
-              ></div>
-            </clazy-load> -->
           </nuxt-link>
           <ProjectsCaption ref="caption" :project="project"/>
         </div>
@@ -147,15 +135,49 @@ export default {
         width: 40%
       &.large.landscape, &.large.square
         width: 45%
-      &.flexStart
-        align-self: flex-start
-      &.flexEnd
-        align-self: flex-end
     &__img
       width: 100%
       vertical-align: top
       &__wrapper
         display: block
+
+  @media (max-width: $tablet-ls)
+    .projects
+      width: calc(100vw + 10px)
+      margin-left: -5px
+      &__block
+        padding: $mp-b
+        &.small.portrait
+          width: 25%
+        &.medium.portrait
+          width: 30%
+        &.large.portrait
+          width: 32.5%
+        &.small.landscape, &.small.square
+          width: 40%
+        &.medium.landscape, &.medium.square
+          width: 45%
+        &.large.landscape, &.large.square
+          width: 50%
+
+  @media (max-width: $tablet-pt)
+    .projects
+      width: calc(100vw - 15px)
+      margin-left: 7.5px
+      &__block
+        padding: $mp-c/4
+        &.small.portrait
+          width: 50%
+        &.medium.portrait
+          width: 50%
+        &.large.portrait
+          width: 50%
+        &.small.landscape, &.small.square
+          width: 50%
+        &.medium.landscape, &.medium.square
+          width: 50%
+        &.large.landscape, &.large.square
+          width: 50%
 
 </style>
 

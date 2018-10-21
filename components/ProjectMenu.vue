@@ -23,19 +23,14 @@ export default {
 
 <style lang="sass" scoped>
   .menu
-    &__wrapper
-      position: fixed
-      top: 0
-      right: 0
-      display: block
-      padding: $mp-a $mp-c/2
-      @include nobr()
     &__list
       list-style: none
       display: flex
       &--item
         display: inline-block
         margin-left: $mp-b
+        &:first-child
+          margin-left: 0
       &--prev
         cursor: w-resize
       &--next

@@ -3,11 +3,6 @@
     class="project__info--wrapper"
     @click.self="showImages()"
   >
-    <ProjectMenu
-      :project="project"
-      :next-project="nextProject"
-      :prev-project="prevProject"
-    />
     <div class="project__info">
       <div class="project__info--title">
         <span class="nobr">{{ project.title }}</span>
@@ -17,6 +12,12 @@
         {{ project.content.description }}
       </div>
     </div>
+    <ProjectMenu
+      :project="project"
+      :next-project="nextProject"
+      :prev-project="prevProject"
+      class="project__menu"
+    />
     <ProjectThumbs
       :layouts="layouts"
       :images="images"
@@ -45,19 +46,21 @@
 
 <style lang="sass">
   .project
+    &__menu
+      position: fixed
+      top: 0
+      right: 0
+      display: block
+      padding: $mp-a $mp-c/2
+      @include nobr()
     &__info
       display: flex
       pointer-events: none
       &--wrapper
-        position: fixed
-        top: 0
-        left: 0
-        height: 100vh
         width: 100vw
         padding: $mp-a $mp-c/2
         z-index: 99
         @include pointer()
-        background: $transparent
       &--title
         margin-right: $mp-a
         display: flex
@@ -70,5 +73,30 @@
         max-width: 1200px
         padding: 0 229px 0 0
         cursor: default
+
+  @media (max-width: $tablet-ls)
+    .project
+      &__info
+        &--title
+          flex-direction: column
+
+  @media (max-width: $tablet-pt)
+    .project
+      &__menu
+        position: relative
+        padding: $lh-m 0 0 0
+      //   top: auto
+      //   right: auto
+      //   bottom: 0
+      //   left: 0
+      &__info
+        flex-direction: column
+        &--title
+          flex-direction: column
+          span
+            display: block
+        &--description
+          padding: $lh-m 0 0 0
+
 
 </style>

@@ -3,7 +3,7 @@
     <nuxt-link
       v-for="(layout, index) in layouts"
       :key="index"
-      :style="{width: slideWidth + 'px'}"
+      :style="{height: slideHeight + 'px'}"
       to="images"
       class="project__thumb"
       @click.native="setSlide(index)"
@@ -18,13 +18,14 @@
           :key="index"
           :class="[{
             'solo': layout.images.length === 1,
+            'double': layout.images.length === 2,
             'triple': layout.images.length === 3
           }]"
           class="project__thumb--img"
         >
-          <div
-            :style="{backgroundImage: 'url(' + image.thumb + ')'}"
-          />
+          <img
+            :src="image.thumb"
+          >
         </div>
       </div>
     </nuxt-link>
@@ -39,30 +40,39 @@
     props: ['layouts'],
     data () {
       return {
-        slideWidth: 0,
-        containerWidth: 0
+        // slideWidth: 0,
+        slideHeight: 0,
       }
     },
     mounted () {
-      window.addEventListener('resize', this.setWidth)
-      this.setWidth ()
+      window.addEventListener('resize', this.setHeight)
+      this.setHeight ()
     },
     destroyed () {
-      window.removeEventListener('resize', this.setWidth)
+      window.removeEventListener('resize', this.setHeight)
     },
     methods: {
       ...mapMutations([
         'setSlide'
       ]),
-      setWidth () {
+      // setWidth () {
+      //   if(process.browser && this.$refs.thumb) {
+      //     const windowWidth = window.innerWidth
+      //     const windowHeight = window.innerHeight
+      //     const ratio = windowWidth/windowHeight
+      //     const thumbHeight = this.$refs.thumb[0].clientHeight
+
+      //     this.slideWidth = thumbHeight * ratio
+      //   }
+      // },
+      setHeight () {
         if(process.browser && this.$refs.thumb) {
           const windowWidth = window.innerWidth
           const windowHeight = window.innerHeight
-          const ratio = windowWidth/windowHeight
-          const thumbHeight = this.$refs.thumb[0].clientHeight
+          const ratio = windowHeight/windowWidth
+          const thumbWidth = this.$refs.thumb[0].clientWidth
 
-          this.slideWidth = thumbHeight * ratio
-          this.containerWidth = ((thumbHeight * ratio)) * this.layouts.length
+          this.slideHeight = thumbWidth * ratio
         }
       }
     }
@@ -72,15 +82,16 @@
 <style lang="sass">
   .project
     &__thumbs
-      width: 100vw
-      display: block
+      width: calc(100% + 30px)
+      height: 100%
+      margin-left: $mp-c/2 * -1
+      margin-top: $mp-a
     &__thumb
-      width: 12.75vw
-      height: 12.75vh
+      width: calc(100% / 6)
       @include pointer()
-      transition: opacity 0.25s
       display: inline-block
-      margin: $mp-b $mp-b 0 0
+      vertical-align: top
+      padding: $mp-a $mp-a 0 $mp-a
       &--inner
         display: flex
         align-items: center
@@ -88,29 +99,74 @@
         user-select: none
         width: 100%
         height: 100%
-        padding: 4px
-        &.triple
-          padding: 4px
+        padding: 5px
       &--img
-        height: 100%
-        width: 50%
-        padding: 4px
-        div
-          height: 100%;
-          width: 100%;
-          background-size: contain
-          background-repeat: no-repeat
+        height: 100%;
+        width: 50%;
+        padding: 5px
+        img
+          height: 100%
+          width: 100%
+          object-fit: contain
         &:first-child
-          div
-            background-position: center right
+          img
+            object-position: 100% 50%
         &:nth-child(2)
-          div
-            background-position: center left
+          img
+            object-position: 0% 50%
         &.solo
           width: 100%;
-          div
-            background-position: center
+          img
+            object-position: 50% 50%
         &.triple
-          div
-            background-position: center
+          img
+            object-position: 50% 50%
+
+  @media (max-width: $tablet-ls)
+    .project
+      &__thumb
+        width: calc(100% / 5)
+
+  @media (max-width: $tablet-pt)
+    .project
+      &__thumb
+        &--inner
+          &.triple
+            flex-wrap: wrap
+        &--img
+          &.triple
+            height: 50%
+            &:nth-child(1)
+              width: 50%
+              margin: 0 25%
+              img
+                object-position: 50% 100%
+            &:nth-child(2)
+              img
+                object-position: 100% 0%
+            &:nth-child(3)
+              img
+                object-position: 0% 0%
+
+  @media (max-width: $phone-ls)
+    .project
+      &__thumb
+        width: calc(100% / 4)
+
+  @media (max-width: $phone-pt)
+    .project
+      &__thumb
+        width: calc(100% / 3)
+        &--inner
+          flex-wrap: wrap
+        &--img
+          &.double
+            width: 100%
+            height: 50%
+            &:nth-child(1)
+              img
+                object-position: 50% 100%
+            &:nth-child(2)
+              img
+                object-position: 50% 0%
 </style>

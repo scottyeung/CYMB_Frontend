@@ -23,7 +23,7 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
   .projects__caption
     @include center()
     @include fs-s()
