@@ -87,11 +87,11 @@
       margin-left: $mp-c/2 * -1
       margin-top: $mp-a
     &__thumb
-      width: calc(100% / 6)
+      width: calc(100% / 8)
       @include pointer()
       display: inline-block
       vertical-align: top
-      padding: $mp-a $mp-a 0 $mp-a
+      padding: $mp-a $mp-a/2 0 $mp-a/2
       &--inner
         display: flex
         align-items: center
@@ -122,18 +122,27 @@
           img
             object-position: 50% 50%
 
+  @media (max-width: $desktop)
+    .project
+      &__thumb
+        width: calc(100% / 7)
+
   @media (max-width: $tablet-ls)
     .project
       &__thumb
-        width: calc(100% / 5)
+        width: calc(100% / 6)
 
   @media (max-width: $tablet-pt)
     .project
       &__thumb
+        width: calc(100% / 5)
+        padding: $mp-a 9px 0 9px
         &--inner
+          padding: 3px
           &.triple
             flex-wrap: wrap
         &--img
+          padding: 3px
           &.triple
             height: 50%
             &:nth-child(1)
