@@ -40,7 +40,6 @@
     props: ['layouts'],
     data () {
       return {
-        // slideWidth: 0,
         slideHeight: 0,
       }
     },
@@ -55,16 +54,6 @@
       ...mapMutations([
         'setSlide'
       ]),
-      // setWidth () {
-      //   if(process.browser && this.$refs.thumb) {
-      //     const windowWidth = window.innerWidth
-      //     const windowHeight = window.innerHeight
-      //     const ratio = windowWidth/windowHeight
-      //     const thumbHeight = this.$refs.thumb[0].clientHeight
-
-      //     this.slideWidth = thumbHeight * ratio
-      //   }
-      // },
       setHeight () {
         if(process.browser && this.$refs.thumb) {
           const windowWidth = window.innerWidth

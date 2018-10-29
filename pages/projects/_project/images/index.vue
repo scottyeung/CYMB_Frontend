@@ -11,14 +11,19 @@
   import ProjectSlider from '~/components/ProjectSlider'
 
   export default {
-    name: "Project",
+    name: "ProjectImages",
+    head() {
+      return {
+        titleTemplate: '%s: ' + this.project.title,
+      }
+    },
     components: {
       ProjectSlider
     },
     computed: {
       project () {
         const self = this
-        let proj = _.find(this.$store.state.projects.data, function(e) { return e.slug === self.$route.params.project })
+        let proj = _.find(this.$store.state.projects, function(e) { return e.slug === self.$route.params.project })
         return proj
       },
       layouts () {

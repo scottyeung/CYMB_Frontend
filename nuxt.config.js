@@ -4,19 +4,17 @@ require('dotenv').config()
 module.exports = {
   mode: 'universal',
   head: {
-    title: 'Constantin Mirbach',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'google-site-verification', content: '' },
       { name: 'msapplication-TileColor', content: '#ffffff' },
       { name: 'msapplication-config', content: '/favicon/browserconfig.xml' },
       { name: 'theme-color', content: '#ffffff' }
     ],
-    script: [
-      { src: 'https://cdn.polyfill.io/v2/polyfill.min.js?features=IntersectionObserver' }
-    ],
+    title: 'Constantin Mirbach',
+    // script: [
+    //   { src: 'https://cdn.polyfill.io/v2/polyfill.min.js?features=IntersectionObserver' }
+    // ],
     link: [
       { rel: 'apple-touch-icon', sizes: '180x180', href: '/favicon/apple-touch-icon.png' },
       { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon/favicon-32x32.png' },

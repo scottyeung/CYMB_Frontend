@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <Menu/>
     <div
       v-packery="layoutOptions"
       ref="packery"
@@ -54,7 +53,7 @@
     },
     computed: {
       projects () {
-        return this.$store.state.projects.data
+        return this.$store.state.projects
       }
     },
     created () {
@@ -71,7 +70,7 @@
     },
     methods: {
       randomImage () {
-        if(process.browser && !this.$store.state.projects.data[0].randomImage) {
+        if(process.browser && !this.$store.state.projects[0].randomImage) {
           this.projects.forEach(project => {
             // Choose random image
             let randomImage = _.sample(project.content.cover)

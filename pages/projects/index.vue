@@ -16,6 +16,11 @@
     components: {
       Menu,
       ProjectsCards
+    },
+    head() {
+      return {
+        titleTemplate: '%s: Projects',
+      }
     }
   }
 </script>

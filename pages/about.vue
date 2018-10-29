@@ -30,16 +30,6 @@
           <h2>Selected Clients</h2>
           <span v-for="client in clients" :key="client.client">{{ client.client }}</span>
         </div>
-        <!-- <div class="information__tax information--block">
-          <p>
-            <span class="italic">VAT ID</span>
-            <span>{{ ustid }}</span>
-          </p>
-          <p>
-            <span class="italic">Tax ID</span>
-            <span>{{ taxno }}</span>
-          </p>
-        </div> -->
         <div class="information__legal information--block">
           <p>
             <span>VAT identification number : {{ ustid }}</span>
@@ -104,6 +94,11 @@
       instagram () {
         return this.information.instagram
       }
+    },
+    head() {
+      return {
+        titleTemplate: '%s: About',
+      }
     }
   }
 </script>
@@ -115,7 +110,7 @@
       padding: $mp-d + $mp-c 0 0 0
       display: flex
     &__column
-      max-width: 650px
+      max-width: 700px
       width: 50%
       padding: 0 $mp-c/2 0 $mp-c
       &:first-child

@@ -24,8 +24,8 @@ const createStore = () => {
       },
 
       async getProjectDetails({ commit, state, dispatch }) {
-        for (let i = 0; i < state.projects.data.length; i++) {
-          let id = state.projects.data[i].id
+        for (let i = 0; i < state.projects.length; i++) {
+          let id = state.projects[i].id
           id = id.replace("/", "+")
           const details = await this.$axios.$get('/pages/' + id)
           commit('setProjectDetails', details)
@@ -60,15 +60,15 @@ const createStore = () => {
       },
       // Projects
       setProjects: (state, payload) => {
-        state.projects = payload
+        state.projects = payload.data
       },
       // Project Details
       setProjectDetails: (state, payload) => {
-        state.projects.data[payload.data.num - 1] = payload.data
+        state.projects[payload.data.num - 1] = payload.data
       },
       // Project images
       setProjectImages: (state, payload) => {
-        state.projects.data[payload.index]['images'] = payload.images.data
+        state.projects[payload.index]['images'] = payload.images.data
       },
       // Slide
       setSlide: (state, index) => {

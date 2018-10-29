@@ -13,30 +13,36 @@
   import ProjectInfo from '~/components/ProjectInfo'
 
   export default {
-    name: "Project",
+    name: "ProjectOverview",
+    head() {
+      return {
+        titleTemplate: '%s: ' + this.project.title,
+      }
+    },
     components: {
       ProjectInfo
     },
     computed: {
+      projects () {
+        return this.$store.state.projects
+      },
       project () {
         const self = this
-        let proj = _.find(this.$store.state.projects.data, function(e) { return e.slug === self.$route.params.project })
+        let proj = _.find(this.projects, function(e) { return e.slug === self.$route.params.project })
         return proj
       },
       layouts () {
         return this.project.content.layouts
       },
       nextProject () {
-        let projects = this.$store.state.projects.data
-        let currentIndex = projects.indexOf(this.project)
-        let nextIndex = currentIndex < projects.length - 1 ? currentIndex + 1 : 0
-        return projects[nextIndex]
+        let currentIndex = this.projects.indexOf(this.project)
+        let nextIndex = currentIndex < this.projects.length - 1 ? currentIndex + 1 : 0
+        return this.projects[nextIndex]
       },
       prevProject () {
-        let projects = this.$store.state.projects.data
-        let currentIndex = projects.indexOf(this.project)
-        let prevIndex = currentIndex > 0 ? currentIndex - 1 : projects.length - 1
-        return projects[prevIndex]
+        let currentIndex = this.projects.indexOf(this.project)
+        let prevIndex = currentIndex > 0 ? currentIndex - 1 : this.projects.length - 1
+        return this.projects[prevIndex]
       },
     },
     mounted () {
@@ -51,7 +57,7 @@
           this.$router.push({ path: '/projects' })
         }
       },
-    },
+    }
   }
 </script>
 

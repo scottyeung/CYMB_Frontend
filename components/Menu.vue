@@ -11,7 +11,7 @@
         >Projects</nuxt-link>
         <nuxt-link
           class="menu__nav--about"
-          to="/information"
+          to="/about"
         >About</nuxt-link>
       </li>
     </ol>
