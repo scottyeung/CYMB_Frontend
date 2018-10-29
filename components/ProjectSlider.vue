@@ -245,6 +245,16 @@
 
     @media (max-width: $phone-pt)
       .project
+        &__next
+          width: 100%;
+          height: 50%;
+          top: 50%;
+          left: 0;
+        &__prev
+          width: 100%;
+          height: 50%;
+          top: 0;
+          left: 0;
         &__slide
           &--inner
             flex-wrap: wrap

@@ -58,6 +58,7 @@
       pointer-events: none
       &--wrapper
         width: 100vw
+        min-height: 100vh
         padding: $mp-a $mp-c/2
         z-index: 99
         @include pointer()
