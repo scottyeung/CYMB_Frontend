@@ -8,6 +8,7 @@
       <div
         v-packery-item
         v-for="(project, index) of projects"
+        v-if="project.randomImage"
         :class="[
           $store.state.widthClasses[index%$store.state.widthClasses.length],
           project.randomImage.orientation
@@ -77,12 +78,12 @@
             this.$set(project, 'randomImage', randomImage)
 
             // Match with original image
-            const ogImage = _.find(project.images, function(img) {
-              return img.id === project.randomImage.id
-            })
+            if(randomImage) {
+              const ogImage = _.find(project.images, function(img) {
+                return img.id === project.randomImage.id
+              })
 
             // Set ratio and orientation
-            if(ogImage) {
               this.$set(project.randomImage, 'orientation', ogImage.dimensions.orientation)
               this.$set(project.randomImage, 'ratio', ogImage.dimensions.ratio)
             }

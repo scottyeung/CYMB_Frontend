@@ -7,19 +7,20 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { name: 'msapplication-TileColor', content: '#ffffff' },
+      { name: 'msapplication-TileColor', content: '#55b23e' },
       { name: 'msapplication-config', content: '/favicon/browserconfig.xml' },
-      { name: 'theme-color', content: '#ffffff' }
+      { name: 'theme-color', content: '#55b23e' }
     ],
     title: 'Constantin Mirbach',
     // script: [
     //   { src: 'https://cdn.polyfill.io/v2/polyfill.min.js?features=IntersectionObserver' }
     // ],
+
     link: [
       { rel: 'apple-touch-icon', sizes: '180x180', href: '/favicon/apple-touch-icon.png' },
       { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon/favicon-32x32.png' },
       { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon/favicon-16x16.png' },
-      { rel: 'mask-icon', href: '/favicon/safari-pinned-tab.svg', color: '#fd5f00' },
+      { rel: 'mask-icon', href: '/favicon/safari-pinned-tab.svg', color: '#55b23e' },
       { rel: 'shortcut icon', href: '/favicon/favicon.ico' },
       { rel: 'manifest', href: '/favicon/site.webmanifest' }
     ]
