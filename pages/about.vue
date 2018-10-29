@@ -22,7 +22,7 @@
           class="information__image"
         >
         <div class="information__about information--block">
-          <p>{{ about }}</p>
+          <p>{{ description }}</p>
         </div>
       </div>
       <div class="information__column">
@@ -47,52 +47,52 @@
   import Menu from '~/components/Menu.vue'
 
   export default {
-    name: 'Information',
+    name: 'About',
     components: {
       Menu
     },
     computed: {
-      information () {
-        return this.$store.state.information
+      about () {
+        return this.$store.state.about
       },
       images () {
-        return this.information.images
+        return this.about.images
       },
       street () {
-        return this.information.street
+        return this.about.street
       },
       postcode () {
-        return this.information.postcode.toString()
+        return this.about.postcode.toString()
       },
       city () {
-        return this.information.city
+        return this.about.city
       },
       country () {
-        return this.information.country
+        return this.about.country
       },
       email () {
-        return this.information.email
+        return this.about.email
       },
       phone () {
-        return this.information.phone
+        return this.about.phone
       },
       ustid () {
-        return this.information.ustid
+        return this.about.ustid
       },
       taxno () {
-        return this.information.taxno
+        return this.about.taxno
       },
       clients () {
-        return this.information.clients
+        return this.about.clients
       },
       legalNotice () {
         return this.$store.state.siteInfo.content.legal
       },
-      about () {
-        return this.information.about
+      description () {
+        return this.about.about
       },
       instagram () {
-        return this.information.instagram
+        return this.about.instagram
       }
     },
     head() {

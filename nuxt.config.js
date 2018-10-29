@@ -62,7 +62,6 @@ module.exports = {
         '_.sample': ['lodash', 'sample'],
         '_.shuffle': ['lodash', 'shuffle'],
         '_.debounce': ['lodash', 'debounce'],
-        // '_.findIndex': ['lodash', 'findIndex']
       })
     ]
   }

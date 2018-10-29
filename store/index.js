@@ -11,11 +11,11 @@ const createStore = () => {
     actions: {
       async getInfo ({ commit }) {
         const info = await this.$axios.$get('/site')
-        const about = await this.$axios.$get('/pages/information')
-        const images = await this.$axios.get('/pages/information/files')
+        const about = await this.$axios.$get('/pages/about')
+        const images = await this.$axios.get('/pages/about/files')
         commit('setSiteInfo', info)
-        await commit('setInfo', about)
-        commit('setInfoImage', images)
+        await commit('setAbout', about)
+        commit('SetAboutImage', images)
       },
 
       async getProjectImages({ commit }, payload) {
@@ -51,12 +51,12 @@ const createStore = () => {
         state.siteInfo = info.data
       },
       // About
-      setInfo: (state, info) => {
-        state.information = info.data.content
+      setAbout: (state, info) => {
+        state.about = info.data.content
       },
       // About image
-      setInfoImage: (state, images) => {
-        state.information.images = images.data.data
+      SetAboutImage: (state, images) => {
+        state.about.images = images.data.data
       },
       // Projects
       setProjects: (state, payload) => {
