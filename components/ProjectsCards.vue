@@ -4,6 +4,7 @@
       v-packery="layoutOptions"
       ref="packery"
       class="projects"
+      @layoutComplete="showImages(true)"
     >
       <div
         v-packery-item
@@ -11,7 +12,8 @@
         v-if="project.randomImage"
         :class="[
           $store.state.widthClasses[index%$store.state.widthClasses.length],
-          project.randomImage.orientation
+          project.randomImage.orientation,
+          {visible: visible}
         ]"
         :key="index"
         class="projects__block"
@@ -41,7 +43,7 @@
     },
     data () {
       return {
-        layoutComplete: false,
+        visible: false,
         layoutOptions: {
           initLayout: true,
           itemSelector: ".projects__block",
@@ -93,7 +95,7 @@
       },
       setHeight () {
         const images = this.$refs.image
-        if (this.projects.length == images.length) {
+        if (this.projects.length === images.length) {
           this.projects.forEach((project, index) => {
             const img = images[index]
             const width = img.clientWidth
@@ -102,8 +104,11 @@
             this.$set(project.randomImage, 'height', height)
           })
         }
+      },
+      showImages (boolean) {
+        this.visible = boolean
       }
-    },
+    }
   }
 </script>
 
@@ -123,6 +128,9 @@
       display: inline-block
       vertical-align: bottom
       width: 30%
+      opacity: 0
+      &.visible
+        opacity: 1
       a
         display: block
       &.small.portrait

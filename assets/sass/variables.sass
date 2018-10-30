@@ -19,12 +19,18 @@ $lh-s: 15.5px
 @mixin fs-s()
   font-size: 16px
   line-height: $lh-s
+  @media (max-width: $phone-pt)
+    font-size: 14px
+    line-height: 14px
 
 $lh-m: 21px
 
 @mixin fs-m()
-  font-size: 21.5px
+  font-size: 21px
   line-height: $lh-m
+  @media (max-width: $phone-pt)
+    font-size: 19px
+    line-height: 19px
 
 @mixin left()
   text-align: left
@@ -68,6 +74,9 @@ $lh-m: 21px
 
 @mixin noscroll()
   overflow-y: hidden!important
+
+@mixin tap()
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 
 
 

@@ -75,13 +75,13 @@
         padding: 0 229px 0 0
         cursor: default
 
-  @media (max-width: $tablet-ls)
+  @media (max-width: $desktop)
     .project
       &__info
         &--title
           flex-direction: column
 
-  @media (max-width: $tablet-pt)
+  @media (max-width: $tablet-ls)
     .project
       &__menu
         position: relative

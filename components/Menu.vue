@@ -41,13 +41,21 @@
       position: absolute
     &__list
       list-style: none
-      li
-        display: inline-block
-        float: left
+      display: flex
+      flex-wrap: wrap
     &__nav
-      margin-right: $mp-c
+      &--title
+        margin-right: $mp-c
       &--projects
         &:after
           content: ", "
+
+  @media (max-width: $phone-pt)
+    .menu
+      &__nav
+        &--title
+          margin-right: 0
+        &:nth-child(2)
+          margin-left: auto
 </style>
 
