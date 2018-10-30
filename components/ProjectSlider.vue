@@ -148,9 +148,10 @@
       },
       activeSlide (index) {
         if(
+          index === this.currentSlide ||
           index === this.currentSlide + 1 ||
           index === this.currentSlide - 1 ||
-          index === this.currentSlide ||
+          index === 0 ||
           index === this.loopLayouts.length - 2
         ) {
           return true
