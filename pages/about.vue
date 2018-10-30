@@ -36,7 +36,7 @@
             <span>Tax reference number: {{ taxno }}</span>
           </p>
           <p>{{ legalNotice }}</p>
-          <span>Website by <a href="http://studioscholz.info" target="_blank">Studio Scholz</a></span>
+          <span v-html="copyright"/>
         </div>
       </div>
     </div>
@@ -87,6 +87,9 @@
       },
       legalNotice () {
         return this.$store.state.siteInfo.content.legal
+      },
+      copyright () {
+        return this.$store.state.siteInfo.content.copyright
       },
       description () {
         return this.about.about
