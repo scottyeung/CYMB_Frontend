@@ -76,7 +76,7 @@
       margin-left: $mp-c/2 * -1
       margin-top: $mp-a
     &__thumb
-      width: calc(100% / 8)
+      width: calc(100% / 7)
       @include pointer()
       display: inline-block
       vertical-align: top
@@ -114,17 +114,17 @@
   @media (max-width: $desktop)
     .project
       &__thumb
-        width: calc(100% / 7)
+        width: calc(100% / 6)
 
   @media (max-width: $tablet-ls)
     .project
       &__thumb
-        width: calc(100% / 6)
+        width: calc(100% / 5)
 
   @media (max-width: $tablet-pt)
     .project
       &__thumb
-        width: calc(100% / 5)
+        width: calc(100% / 4)
         padding: $mp-a 9px 0 9px
         &--inner
           padding: 3px
