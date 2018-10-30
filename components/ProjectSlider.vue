@@ -10,6 +10,7 @@
         class="project__slide"
       >
         <div
+          v-if="activeSlide(index)"
           :class="{'triple': layout.images.length === 3}"
           class="project__slide--inner"
         >
@@ -144,6 +145,16 @@
         const newSlide = this.$refs.slide[this.$store.state.currentSlide]
         const top = await newSlide.getBoundingClientRect().top
         window.scrollTo(0, top)
+      },
+      activeSlide (index) {
+        if(
+          index === this.currentSlide + 1 ||
+          index === this.currentSlide - 1 ||
+          index === this.currentSlide ||
+          index === this.loopLayouts.length - 2
+        ) {
+          return true
+        }
       }
     }
   }
