@@ -73,6 +73,7 @@
       randomImage () {
         if(process.browser && !this.$store.state.projects[0].randomImage) {
           this.projects.forEach(project => {
+
             // Choose random image
             let randomImage = _.sample(project.content.cover)
             this.$set(project, 'randomImage', randomImage)
@@ -83,7 +84,7 @@
                 return img.id === project.randomImage.id
               })
 
-            // Set ratio and orientation
+              // Set ratio and orientation
               this.$set(project.randomImage, 'orientation', ogImage.dimensions.orientation)
               this.$set(project.randomImage, 'ratio', ogImage.dimensions.ratio)
             }
@@ -92,13 +93,15 @@
       },
       setHeight () {
         const images = this.$refs.image
-        this.projects.forEach((project, index) => {
-          const img = images[index]
-          const width = img.clientWidth
-          const ratio = project.randomImage.ratio
-          const height = (width / ratio) + 'px'
-          this.$set(project.randomImage, 'height', height)
-        })
+        if (this.projects.length == images.length) {
+          this.projects.forEach((project, index) => {
+            const img = images[index]
+            const width = img.clientWidth
+            const ratio = project.randomImage.ratio
+            const height = (width / ratio) + 'px'
+            this.$set(project.randomImage, 'height', height)
+          })
+        }
       }
     },
   }
