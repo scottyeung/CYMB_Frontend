@@ -71,7 +71,6 @@
           margin-right: $mp-b
           display: inline-block
       &--description
-        max-width: 1200px
         padding: 0 229px 0 0
         cursor: default
 

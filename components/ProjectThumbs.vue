@@ -41,23 +41,29 @@
     data () {
       return {
         slideHeight: 0,
+        windowHeight: 0,
       }
     },
     mounted () {
-      window.addEventListener('resize', this.setHeight)
-      this.setHeight ()
+      window.addEventListener('resize', this.getWindowHeight)
+      this.getWindowHeight ()
     },
     destroyed () {
-      window.removeEventListener('resize', this.setHeight)
+      window.removeEventListener('resize', this.getWindowHeight)
     },
     methods: {
       ...mapMutations([
         'setSlide'
       ]),
+      async getWindowHeight () {
+        let innerHeight = require('ios-inner-height')
+        this.windowHeight = await innerHeight()
+        this.setHeight()
+      },
       setHeight () {
         if(process.browser && this.$refs.thumb) {
           const windowWidth = window.innerWidth
-          const windowHeight = window.innerHeight
+          const windowHeight = this.windowHeight
           const ratio = windowHeight/windowWidth
           const thumbWidth = this.$refs.thumb[0].clientWidth
 
