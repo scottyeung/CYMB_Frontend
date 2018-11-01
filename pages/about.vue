@@ -32,7 +32,7 @@
         </div>
         <div class="information__legal information--block">
           <p>
-            <span>VAT identification number : {{ ustid }}</span>
+            <span>VAT identification number: {{ ustid }}</span>
             <span>Tax reference number: {{ taxno }}</span>
           </p>
           <p>{{ legalNotice }}</p>
@@ -101,6 +101,9 @@
     head() {
       return {
         titleTemplate: '%s: About',
+        meta: [
+          { name: 'format-detection', content: 'telephone=no' },
+        ]
       }
     }
   }
@@ -110,7 +113,7 @@
   .information
     &__inner
       width: 100%
-      padding: $mp-d + $mp-c 0 0 0
+      padding: $mp-d + $mp-c 0 $mp-c/2 0
       display: flex
     &__column
       max-width: 700px
@@ -141,6 +144,7 @@
           content: ", "
     &__legal
       padding: $lh-m 0 0 0
+      margin-bottom: 0
       @include fs-s()
       span
         display: block

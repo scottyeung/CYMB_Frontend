@@ -1,5 +1,6 @@
 <template>
   <div class="project__thumbs">
+    <div ref="height" class="helper__height"/>
     <nuxt-link
       v-for="(layout, index) in layouts"
       :key="index"
@@ -46,18 +47,19 @@
     },
     mounted () {
       window.addEventListener('resize', this.getWindowHeight)
+      window.addEventListener('orientationchange', this.getWindowHeight)
       this.getWindowHeight ()
     },
     destroyed () {
       window.removeEventListener('resize', this.getWindowHeight)
+      window.removeEventListener('orientationchange', this.getWindowHeight)
     },
     methods: {
       ...mapMutations([
         'setSlide'
       ]),
       async getWindowHeight () {
-        let innerHeight = require('ios-inner-height')
-        this.windowHeight = await innerHeight()
+        this.windowHeight = await this.$refs.height.clientHeight
         this.setHeight()
       },
       setHeight () {
@@ -75,6 +77,14 @@
 </script>
 
 <style lang="sass">
+
+  .helper
+    &__height
+      height: 100vh
+      position: fixed
+      top: 0
+      left: 0
+      z-index: -1
   .project
     &__thumbs
       width: calc(100% + 30px)
