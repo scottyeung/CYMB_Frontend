@@ -1,6 +1,6 @@
 <template>
   <div class="container information">
-    <keep-alive><Menu/></keep-alive>
+    <Menu/>
     <div class="information__inner">
       <div class="information__column">
         <div class="information__address information--block">
@@ -28,7 +28,7 @@
       <div class="information__column">
         <div class="information__clients information--block">
           <h2>Selected Clients</h2>
-          <span v-for="client in clients" :key="client.client">{{ client.client }}</span>
+          <li v-for="client in clients" :key="client.client">{{ client.client }}</li>
         </div>
         <div class="information__legal information--block">
           <p>
@@ -116,7 +116,7 @@
       padding: $mp-d + $mp-c 0 $mp-c/2 0
       display: flex
     &__column
-      max-width: 700px
+      max-width: 720px
       width: 50%
       padding: 0 $mp-c/2 0 $mp-c
       &:first-child
@@ -139,9 +139,15 @@
         a
           display: block
     &__clients
-      span
+      li
+        list-style: none
+        display: inline
+        @include nobr()
         &:after
           content: ", "
+          white-space: pre-line
+        &:last-child:after
+          content: ""
     &__legal
       padding: $lh-m 0 0 0
       margin-bottom: 0

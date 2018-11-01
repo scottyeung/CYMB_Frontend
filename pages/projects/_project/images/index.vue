@@ -1,8 +1,12 @@
 <template>
   <div class="container project">
-    <nuxt-link class="project__button" to="overview">&#215;</nuxt-link>
+    <div class="project__text">
+      <span class="project__caption">{{ loopLayouts[$store.state.currentSlide].caption }}</span>
+      <nuxt-link class="project__close" to="overview">Close</nuxt-link>
+    </div>
     <ProjectSlider
       :layouts="layouts"
+      :loop-layouts="loopLayouts"
     />
   </div>
 </template>
@@ -28,20 +32,36 @@
       },
       layouts () {
         return this.project.content.layouts
-      }
+      },
+      loopLayouts () {
+        const first = this.layouts[0]
+        const loopLayouts = this.layouts.concat(first)
+        return loopLayouts
+      },
     }
   }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
   .project
-    &__button
+    &__text
+      display: flex
       position: fixed
       top: 0
       right: 0
-      padding: 12px $mp-c/2
+      padding: $mp-a $mp-c/2
       z-index: 95
+    &__close
       cursor: pointer
       @include tap()
+    &__caption
+      margin-right: $mp-c
+
+  @media (max-width: $phone-pt)
+    .project
+      &__text
+        width: 100%
+      &__close
+        margin-left: auto
 
 </style>

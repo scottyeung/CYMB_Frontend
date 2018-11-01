@@ -37,7 +37,7 @@
 
   export default {
     name: 'ProjectSlider',
-    props: ['layouts'],
+    props: ['layouts', 'loopLayouts'],
     data () {
       return {
         pageHeight: 0,
@@ -46,11 +46,6 @@
       }
     },
     computed: {
-      loopLayouts () {
-        const first = this.layouts[0]
-        const loopLayouts = this.layouts.concat(first)
-        return loopLayouts
-      },
       slides () {
         return [].slice.call(document.getElementsByClassName("project__slide"))
       },
@@ -229,6 +224,7 @@
   @media (max-width: $tablet-pt)
     .project
       &__slide
+        padding: $mp-a 0
         &--inner
           padding: $mp-b
           &.triple
@@ -252,6 +248,7 @@
     @media (max-width: $phone-ls)
       .project
         &__slide
+          padding: $mp-c 0
           &--inner
             padding: $mp-a
           &--img
