@@ -10,8 +10,8 @@ module.exports = {
       { name: 'msapplication-TileColor', content: '#55b23e' },
       { name: 'msapplication-config', content: '/favicon/browserconfig.xml' },
       { name: 'theme-color', content: '#55b23e' },
-      { name: 'http-equiv="Cache-control"', content: 'public'},
-      { name: 'http-equiv="Cache-control"', content: 'max-age=31536000'}
+      { httpEquiv: 'Cache-control', content: 'public'},
+      { httpEquiv: 'Cache-control', content: 'max-age=31536000'}
     ],
     title: 'Constantin Mirbach',
     link: [
