@@ -2,7 +2,7 @@
   <nav class="menu__wrapper">
     <ol class="menu__list">
       <li class="menu__nav">
-        <a class="menu__nav--title">Constantin Mirbach</a>
+        <h1 class="menu__nav--title">Constantin Mirbach</h1>
       </li>
       <li class="menu__nav">
         <nuxt-link

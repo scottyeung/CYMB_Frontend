@@ -18,10 +18,11 @@
         :key="index"
         class="projects__block"
       >
-        <nuxt-link :to="{path: '/' + project.id }">
+        <nuxt-link :to="{path: '/' + project.id }" :name="project.title">
           <img
             v-if="project.randomImage"
             ref="image"
+            :alt="project.title"
             :src="project.randomImage.url"
             :style="{height: project.randomImage.height}"
             class="projects__img"

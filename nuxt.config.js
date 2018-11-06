@@ -4,6 +4,9 @@ require('dotenv').config()
 module.exports = {
   mode: 'universal',
   head: {
+    htmlAttrs: {
+      lang: 'en',
+    },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -33,7 +36,8 @@ module.exports = {
     ['nuxt-sass-resources-loader', './assets/sass/variables.sass']
   ],
   axios: {
-    baseURL: process.env.NODE_ENV !== 'production' ? 'http://127.0.0.1:8888/rest' : 'https://cms.constantinmirbach.com/rest',
+    // baseURL: process.env.NODE_ENV !== 'production' ? 'http://127.0.0.1:8888/rest' : 'https://cms.constantinmirbach.com/rest',
+    baseURL: 'https://cms.constantinmirbach.com/rest'
   },
   css: [
     '~/assets/sass/global.sass'
