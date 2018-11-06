@@ -5,10 +5,10 @@
   >
     <div class="project__info">
       <div class="project__info--title">
-        <span class="nobr">{{ project.title }}</span>
-        <span class="nobr italic">{{ project.content.client }}</span>
+        <h1 class="nobr">{{ project.title }}</h1>
+        <h2 v-if="project.content.client" class="nobr">{{ project.content.client }}</h2>
       </div>
-      <div class="project__info--description">
+      <div v-if="project.content.description" class="project__info--description">
         {{ project.content.description }}
       </div>
     </div>

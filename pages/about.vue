@@ -167,22 +167,20 @@
   @media (max-width: $tablet-ls)
     .information
       &__inner
-        padding-top: $mp-c*2
+        padding-top: $mp-d
         display: block
+      &__address
+        padding-top: 12px
       &__column
         width: 100%
         padding: 0 $mp-c/2
         &:first-child
           padding: 0 $mp-c/2 $lh-m $mp-c/2
 
-  @media (max-width: $phone-ls)
-    .information
-      &__inner
-        padding-top: $mp-d
-
   @media (max-width: $phone-pt)
     .information
       &__address
+        padding-top: $mp-a
         p
           margin-right: 0
           width: 100%

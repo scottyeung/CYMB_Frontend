@@ -139,9 +139,11 @@
 
   @media (max-width: $tablet-pt)
     .project
+      &__thumbs
+        margin-top: $mp-c/2
       &__thumb
         width: calc(100% / 4)
-        padding: $mp-a 9px 0 9px
+        padding: 6px 9px 6px 9px
         &--inner
           padding: 3px
           &.triple
