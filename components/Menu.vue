@@ -7,7 +7,7 @@
       <li class="menu__nav">
         <nuxt-link
           class="menu__nav--projects"
-          to="/projects"
+          to="/"
         >Projects</nuxt-link>
         <nuxt-link
           class="menu__nav--about"

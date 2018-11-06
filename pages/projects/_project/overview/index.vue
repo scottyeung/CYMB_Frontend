@@ -54,7 +54,7 @@
     methods: {
       keyListener (key) {
         if (key.keyCode === 27) {
-          this.$router.push({ path: '/projects' })
+          this.$router.push({ path: '/' })
         }
       },
     }

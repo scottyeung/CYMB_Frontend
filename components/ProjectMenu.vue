@@ -8,7 +8,7 @@
         <nuxt-link :to="'/' + nextProject.id + '/overview'" class="menu__list--next">Next</nuxt-link>
       </li>
       <li class="menu__list--item">
-        <nuxt-link class="menu__list--all" to="/projects">Close</nuxt-link>
+        <nuxt-link class="menu__list--all" to="/">Close</nuxt-link>
       </li>
     </ol>
   </nav>
