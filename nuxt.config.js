@@ -9,13 +9,11 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { name: 'msapplication-TileColor', content: '#55b23e' },
       { name: 'msapplication-config', content: '/favicon/browserconfig.xml' },
-      { name: 'theme-color', content: '#55b23e' }
+      { name: 'theme-color', content: '#55b23e' },
+      { name: 'http-equiv="Cache-control"', content: 'public'},
+      { name: 'http-equiv="Cache-control"', content: 'max-age=31536000'}
     ],
     title: 'Constantin Mirbach',
-    // script: [
-    //   { src: 'https://cdn.polyfill.io/v2/polyfill.min.js?features=IntersectionObserver' }
-    // ],
-
     link: [
       { rel: 'apple-touch-icon', sizes: '180x180', href: '/favicon/apple-touch-icon.png' },
       { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon/favicon-32x32.png' },
