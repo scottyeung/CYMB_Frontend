@@ -118,7 +118,7 @@
           this.pageHeight = this.pageHeight + itemHeight
         }
       },
-      scrollListener () {
+      scrollListener: _.throttle( function () {
         // Get scroll position
         this.scrollTop = window.pageYOffset || document.documentElement.scrollTop
 
@@ -134,7 +134,7 @@
         }
         let currentSlide = this.slidesOffset.indexOf(Math.min.apply(null, this.slidesOffset))
         this.setSlide(currentSlide)
-      },
+      }, 10),
       async initialScroll () {
         window.scrollTo(0, 0)
         const newSlide = this.$refs.slide[this.$store.state.currentSlide]
@@ -142,7 +142,7 @@
         window.scrollTo(0, top)
       },
       activeSlide (index) {
-        if(
+        if (
           index === this.currentSlide ||
           index === this.currentSlide + 1 ||
           index === this.currentSlide - 1 ||
@@ -150,6 +150,8 @@
           index === this.loopLayouts.length - 2
         ) {
           return true
+        } else {
+          return false
         }
       }
     }

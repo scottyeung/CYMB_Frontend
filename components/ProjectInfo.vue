@@ -67,7 +67,7 @@
         display: flex
         flex-wrap: nowrap
         cursor: default
-        span
+        h1, h2
           margin-right: $mp-b
           display: inline-block
       &--description

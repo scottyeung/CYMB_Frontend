@@ -4,7 +4,7 @@
       v-packery="layoutOptions"
       ref="packery"
       class="projects"
-      @layoutComplete="showImages(true)"
+      @layoutComplete="preloadImages(), showImages(true)"
     >
       <div
         v-packery-item
@@ -18,13 +18,17 @@
         :key="index"
         class="projects__block"
       >
-        <nuxt-link :to="{path: '/' + project.id }" :name="project.title">
+        <nuxt-link
+          ref="link"
+          :to="{path: '/' + project.id }"
+          :name="project.title"
+          :style="{height: project.randomImage.height}"
+        >
           <img
-            v-if="project.randomImage"
+            v-if="project.randomImage.load"
             ref="image"
             :alt="project.title"
             :src="project.randomImage.url"
-            :style="{height: project.randomImage.height}"
             class="projects__img"
           >
         </nuxt-link>
@@ -61,19 +65,22 @@
       }
     },
     created () {
-      this.randomImage ()
+      this.randomImage()
     },
     mounted () {
       this.$nextTick(() => {
         this.setHeight()
       })
       window.addEventListener('resize', this.setHeight)
+      window.addEventListener('scroll',  this.scrollListener)
     },
     destroyed () {
       window.removeEventListener('resize', this.setHeight)
+      window.removeEventListener('scroll', this.scrollListener)
     },
     methods: {
       randomImage () {
+        console.log('random')
         if(process.browser && !this.$store.state.projects[0].randomImage) {
           this.projects.forEach(project => {
 
@@ -95,11 +102,11 @@
         }
       },
       setHeight () {
-        const images = this.$refs.image
-        if (this.projects.length === images.length) {
+        const links = this.$refs.link
+        if (links.length > 0) {
           this.projects.forEach((project, index) => {
-            const img = images[index]
-            const width = img.clientWidth
+            const link = links[index].$el
+            const width = link.offsetWidth
             const ratio = project.randomImage.ratio
             const height = (width / ratio) + 'px'
             this.$set(project.randomImage, 'height', height)
@@ -108,7 +115,28 @@
       },
       showImages (boolean) {
         this.visible = boolean
-      }
+      },
+      preloadImages () {
+        const links = this.$refs.link
+        if (links.length > 0) {
+          this.projects.forEach((project, index) => {
+            const link = links[index].$el
+            const boundingBox = link.getBoundingClientRect()
+            if (boundingBox.height > 0) {
+              const top = parseFloat(boundingBox.top)
+              const bottom = boundingBox.bottom
+              if (top <= window.innerHeight * 2 && bottom >= window.innerHeight * - 1) {
+                this.$set(project.randomImage, 'load', true)
+              } else {
+                this.$set(project.randomImage, 'load', false)
+              }
+            }
+          })
+        }
+      },
+      scrollListener: _.throttle( function () {
+        this.preloadImages()
+      }, 300)
     }
   }
 </script>
