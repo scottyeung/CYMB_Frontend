@@ -1,5 +1,7 @@
 # 🌀Frontend for Constantin Mirbach
 
+Frontend built with Nuxt.js
+
 ## Setup
 
 ``` bash
