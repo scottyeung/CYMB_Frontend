@@ -53,7 +53,6 @@
       z-index: 95
     &__close
       cursor: pointer
-      @include tap()
     &__caption
       margin-right: $mp-c
 
