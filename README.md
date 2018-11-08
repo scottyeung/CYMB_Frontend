@@ -1,4 +1,4 @@
-# 🌀Frontend for Constantin Mirbach
+# 🌀 Frontend for Constantin Mirbach
 
 Frontend built with [Nuxt.js](https://github.com/nuxt/nuxt.js)
 
