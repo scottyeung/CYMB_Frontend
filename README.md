@@ -1,16 +1,22 @@
-# Website for Constantin Mirbach
+# 🌀Frontend for Constantin Mirbach
 
-## Build Setup
+## Setup
 
 ``` bash
 # install dependencies
-$ yarn install # Or npm install
+yarn install # Or npm install
 
 # serve with hot reload at localhost:8080
-$ yarn run dev
+yarn run dev
 
-# build for production and launch server with pm2
-$ yarn run build
-$ pm2 start npm --name "CYMB_Frontend" -- start
+# build for production
+yarn run build
 
+```
+
+## Deployment
+
+To run this app via pm2 on a server use:
+``` bash
+pm2 start npm --name "NAME" -- start
 ```
