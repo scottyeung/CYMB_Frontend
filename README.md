@@ -1,6 +1,6 @@
 # 🌀Frontend for Constantin Mirbach
 
-Frontend built with Nuxt.js
+Frontend built with [Nuxt.js](https://github.com/nuxt/nuxt.js)
 
 ## Setup
 
