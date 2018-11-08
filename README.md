@@ -4,15 +4,13 @@
 
 ``` bash
 # install dependencies
-$ npm install # Or yarn install
+$ yarn install # Or npm install
 
 # serve with hot reload at localhost:8080
-$ npm run dev
+$ yarn run dev
 
-# build for production and launch server
-$ npm run build
-$ npm start
+# build for production and launch server with pm2
+$ yarn run build
+$ pm2 start npm --name "CYMB_Frontend" -- start
 
-# generate static project
-$ npm run generate
 ```
