@@ -29,6 +29,7 @@
             ref="image"
             :alt="project.title"
             :src="project.randomImage.url"
+            :srcset="getSrcSet(project.randomImage)"
             class="projects__img"
           >
         </nuxt-link>
@@ -80,7 +81,6 @@
     },
     methods: {
       randomImage () {
-        console.log('random')
         if(process.browser && !this.$store.state.projects[0].randomImage) {
           this.projects.forEach(project => {
 
@@ -94,12 +94,20 @@
                 return img.id === project.randomImage.id
               })
 
-              // Set ratio and orientation
+              console.log(randomImage)
+
+              // Set ratio, orientation, width and sizes
               this.$set(project.randomImage, 'orientation', ogImage.dimensions.orientation)
               this.$set(project.randomImage, 'ratio', ogImage.dimensions.ratio)
+              this.$set(project.randomImage, 'width', ogImage.dimensions.width)
+              this.$set(project.randomImage, 'medium', ogImage.medium)
+              this.$set(project.randomImage, 'small', ogImage.small)
             }
           })
         }
+      },
+      getSrcSet (img) {
+        return img.small + ' 600w, ' + img.medium + ' 1200w, ' + img.url + ' ' + img.width + 'w'
       },
       setHeight () {
         const links = this.$refs.link
