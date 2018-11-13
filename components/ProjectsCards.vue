@@ -94,8 +94,6 @@
                 return img.id === project.randomImage.id
               })
 
-              console.log(randomImage)
-
               // Set ratio, orientation, width and sizes
               this.$set(project.randomImage, 'orientation', ogImage.dimensions.orientation)
               this.$set(project.randomImage, 'ratio', ogImage.dimensions.ratio)
