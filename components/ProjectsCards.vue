@@ -105,7 +105,7 @@
         }
       },
       getSrcSet (img) {
-        return img.small + ' 600w, ' + img.medium + ' 1200w, ' + img.url + ' ' + img.width + 'w'
+        return img.small + ' 600w, ' + img.medium + ' 900w, ' + img.large + ' 1200w, ' + img.url + ' ' + img.width + 'w'
       },
       setHeight () {
         const links = this.$refs.link
