@@ -12,3 +12,6 @@ dist
 
 # Env file
 .env
+
+# Fonts
+/static/fonts
