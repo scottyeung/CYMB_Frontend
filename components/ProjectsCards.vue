@@ -126,15 +126,15 @@
         const links = this.$refs.link
         if (links.length > 0) {
           this.projects.forEach((project, index) => {
-            const link = links[index].$el
-            const boundingBox = link.getBoundingClientRect()
-            if (boundingBox.height > 0) {
-              const top = parseFloat(boundingBox.top)
-              const bottom = boundingBox.bottom
-              if (top <= window.innerHeight * 2 && bottom >= window.innerHeight * - 1) {
-                this.$set(project.randomImage, 'load', true)
-              } else {
-                this.$set(project.randomImage, 'load', false)
+            if (index in links) {
+              const link = links[index].$el
+              const boundingBox = link.getBoundingClientRect()
+              if (boundingBox.height > 0) {
+                const top = parseFloat(boundingBox.top)
+                const bottom = boundingBox.bottom
+                if (top <= window.innerHeight * 2 && bottom >= window.innerHeight * - 1) {
+                  this.$set(project.randomImage, 'load', true)
+                }
               }
             }
           })
@@ -142,7 +142,7 @@
       },
       scrollListener: _.throttle( function () {
         this.preloadImages()
-      }, 300)
+      }, 500)
     }
   }
 </script>
