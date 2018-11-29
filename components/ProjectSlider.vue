@@ -138,7 +138,7 @@
         let currentSlide = this.slidesOffset.indexOf(Math.min.apply(null, this.slidesOffset))
         this.setSlide (currentSlide)
         if (this.loadCounter < this.layouts.length) {
-          this.activeSlide () // Show Slides
+          this.preloadSlides () // Show Slides
         }
       }, 25),
       async initialScroll () {
@@ -146,9 +146,9 @@
         const newSlide = this.$refs.slide[this.$store.state.currentSlide]
         const top = await newSlide.getBoundingClientRect().top
         window.scrollTo (0, top)
-        this.activeSlide ()
+        this.preloadSlides ()
       },
-      activeSlide () {
+      preloadSlides () {
         if (!this.loopLayouts[this.currentSlide].load) {
           this.$set(this.loopLayouts[this.currentSlide], 'load', true)
         } // Current
