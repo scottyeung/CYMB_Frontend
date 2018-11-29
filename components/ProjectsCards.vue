@@ -52,7 +52,6 @@
     data () {
       return {
         visible: false,
-        loadCounter: 0,
         layoutOptions: {
           initLayout: true,
           itemSelector: ".projects__block",
@@ -66,6 +65,9 @@
     computed: {
       projects () {
         return this.$store.state.projects
+      },
+      loadCounter () {
+        return _.filter(this.projects, { randomImage: { load: true } }).length
       }
     },
     created () {
@@ -76,7 +78,11 @@
         this.setHeight()
       })
       window.addEventListener('resize', this.setHeight)
-      window.addEventListener('scroll',  this.scrollListener)
+      const links = this.$refs.link
+      if (links.length > this.loadCounter) {
+        console.log()
+        window.addEventListener('scroll',  this.scrollListener)
+      }
     },
     destroyed () {
       window.removeEventListener('resize', this.setHeight)
@@ -130,18 +136,16 @@
         // Remove scrollListener after all images are loaded
         if(this.loadCounter === links.length) {
           window.removeEventListener('scroll', this.scrollListener)
-        }
-        if (links.length > 0) {
+        } else if (links.length > this.loadCounter) {
           this.projects.forEach((project, index) => {
             if (!('load' in project.randomImage)) {
               const link = links[index].$el
               const boundingBox = link.getBoundingClientRect()
               if (boundingBox.height > 0) {
                 const top = parseFloat(boundingBox.top)
-                const bottom = boundingBox.bottom
+                const bottom = parseFloat(boundingBox.bottom)
                 if (top <= window.innerHeight * 2 && bottom >= window.innerHeight * - 1) {
                   this.$set(project.randomImage, 'load', true)
-                  this.loadCounter = this.loadCounter + 1
                 }
               }
             }

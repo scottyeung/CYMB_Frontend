@@ -42,8 +42,7 @@
       return {
         pageHeight: 0,
         scrollTop: 0,
-        slidesOffset: [],
-        loadCounter: 0
+        slidesOffset: []
       }
     },
     computed: {
@@ -52,6 +51,9 @@
       },
       currentSlide () {
         return this.$store.state.currentSlide
+      },
+      loadCounter () {
+        return _.filter(this.loopLayouts, { load: true }).length
       }
     },
     mounted () {
@@ -61,12 +63,12 @@
       })
       window.addEventListener('resize', this.getDimensions)
       document.addEventListener('keyup', this.keyListener)
-      document.addEventListener('scroll',  this.scrollListener)
+      window.addEventListener('scroll',  this.scrollListener)
     },
     destroyed () {
       window.removeEventListener('resize', this.getDimensions)
       document.removeEventListener('keyup', this.keyListener)
-      document.removeEventListener('scroll', this.scrollListener)
+      window.removeEventListener('scroll', this.scrollListener)
     },
     methods: {
       ...mapMutations([
@@ -149,23 +151,18 @@
       activeSlide () {
         if (!this.loopLayouts[this.currentSlide].load) {
           this.$set(this.loopLayouts[this.currentSlide], 'load', true)
-          this.loadCounter = this.loadCounter + 1
         } // Current
         if (this.currentSlide - 1 > 0 && !this.loopLayouts[this.currentSlide - 1].load) {
           this.$set(this.loopLayouts[this.currentSlide - 1], 'load', true)
-          this.loadCounter = this.loadCounter + 1
         } // Next
         if (this.currentSlide + 1 < this.loopLayouts.length && !this.loopLayouts[this.currentSlide + 1].load) {
           this.$set(this.loopLayouts[this.currentSlide + 1], 'load', true)
-          this.loadCounter = this.loadCounter + 1
         } // Prev
         if (!this.loopLayouts[0].load) {
           this.$set(this.loopLayouts[0], 'load', true)
-          this.loadCounter = this.loadCounter + 1
         } // First
         if (this.currentSlide === 0 && !this.loopLayouts[this.loopLayouts.length - 2].load) {
           this.$set(this.loopLayouts[this.loopLayouts.length - 2], 'load', true)
-          this.loadCounter = this.loadCounter + 1
         } // Last
       }
     }

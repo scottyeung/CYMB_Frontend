@@ -59,6 +59,7 @@ module.exports = {
     plugins: [
       new webpack.ProvidePlugin({
         '_.find': ['lodash', 'find'],
+        '_.filter': ['lodash', 'filter'],
         '_.sample': ['lodash', 'sample'],
         '_.shuffle': ['lodash', 'shuffle'],
         '_.debounce': ['lodash', 'debounce'],
