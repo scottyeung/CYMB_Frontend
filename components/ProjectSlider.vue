@@ -10,8 +10,8 @@
         class="project__slide"
       >
         <div
-          v-if="activeSlide(index)"
-          :class="{'triple': layout.images.length === 3}"
+          v-if="layout.load"
+          :class="{'triple': layout.images.length === 3, 'loaded': layout.load}"
           class="project__slide--inner"
         >
           <div
@@ -43,6 +43,7 @@
         pageHeight: 0,
         scrollTop: 0,
         slidesOffset: [],
+        loadCounter: 0
       }
     },
     computed: {
@@ -133,26 +134,39 @@
           this.slidesOffset[s] = Math.abs(offsetTop)
         }
         let currentSlide = this.slidesOffset.indexOf(Math.min.apply(null, this.slidesOffset))
-        this.setSlide(currentSlide)
-      }, 10),
+        this.setSlide (currentSlide)
+        if (this.loadCounter < this.layouts.length) {
+          this.activeSlide () // Show Slides
+        }
+      }, 25),
       async initialScroll () {
-        window.scrollTo(0, 0)
+        window.scrollTo (0, 0)
         const newSlide = this.$refs.slide[this.$store.state.currentSlide]
         const top = await newSlide.getBoundingClientRect().top
-        window.scrollTo(0, top)
+        window.scrollTo (0, top)
+        this.activeSlide ()
       },
-      activeSlide (index) {
-        if (
-          index === this.currentSlide ||
-          index === this.currentSlide + 1 ||
-          index === this.currentSlide - 1 ||
-          index === 0 ||
-          index === this.loopLayouts.length - 2
-        ) {
-          return true
-        } else {
-          return false
-        }
+      activeSlide () {
+        if (!this.loopLayouts[this.currentSlide].load) {
+          this.$set(this.loopLayouts[this.currentSlide], 'load', true)
+          this.loadCounter = this.loadCounter + 1
+        } // Current
+        if (this.currentSlide - 1 > 0 && !this.loopLayouts[this.currentSlide - 1].load) {
+          this.$set(this.loopLayouts[this.currentSlide - 1], 'load', true)
+          this.loadCounter = this.loadCounter + 1
+        } // Next
+        if (this.currentSlide + 1 < this.loopLayouts.length && !this.loopLayouts[this.currentSlide + 1].load) {
+          this.$set(this.loopLayouts[this.currentSlide + 1], 'load', true)
+          this.loadCounter = this.loadCounter + 1
+        } // Prev
+        if (!this.loopLayouts[0].load) {
+          this.$set(this.loopLayouts[0], 'load', true)
+          this.loadCounter = this.loadCounter + 1
+        } // First
+        if (this.currentSlide === 0 && !this.loopLayouts[this.loopLayouts.length - 2].load) {
+          this.$set(this.loopLayouts[this.loopLayouts.length - 2], 'load', true)
+          this.loadCounter = this.loadCounter + 1
+        } // Last
       }
     }
   }
@@ -193,6 +207,9 @@
         width: 100%
         height: 100%
         padding: $mp-d
+        will-change: contents, scroll-position
+        &.loaded
+          will-change: auto
       &--img
         height: 100%;
         width: 50%;

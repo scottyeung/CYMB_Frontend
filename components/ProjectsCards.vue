@@ -23,6 +23,8 @@
           :to="{path: '/' + project.id }"
           :name="project.title"
           :style="{height: project.randomImage.height}"
+          :class="{loaded: project.randomImage.load}"
+          class="projects__block-img"
         >
           <img
             v-if="project.randomImage.load"
@@ -50,6 +52,7 @@
     data () {
       return {
         visible: false,
+        loadCounter: 0,
         layoutOptions: {
           initLayout: true,
           itemSelector: ".projects__block",
@@ -124,9 +127,13 @@
       },
       preloadImages () {
         const links = this.$refs.link
+        // Remove scrollListener after all images are loaded
+        if(this.loadCounter === links.length) {
+          window.removeEventListener('scroll', this.scrollListener)
+        }
         if (links.length > 0) {
           this.projects.forEach((project, index) => {
-            if (index in links) {
+            if (!('load' in project.randomImage)) {
               const link = links[index].$el
               const boundingBox = link.getBoundingClientRect()
               if (boundingBox.height > 0) {
@@ -134,6 +141,7 @@
                 const bottom = boundingBox.bottom
                 if (top <= window.innerHeight * 2 && bottom >= window.innerHeight * - 1) {
                   this.$set(project.randomImage, 'load', true)
+                  this.loadCounter = this.loadCounter + 1
                 }
               }
             }
@@ -142,7 +150,7 @@
       },
       scrollListener: _.throttle( function () {
         this.preloadImages()
-      }, 500)
+      }, 1500)
     }
   }
 </script>
@@ -166,6 +174,10 @@
       opacity: 0
       &.visible
         opacity: 1
+      &-img
+        will-change: contents, scroll-position
+        &.loaded
+          will-change: auto
       a
         display: block
       &.small.portrait
