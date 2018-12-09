@@ -1,6 +1,37 @@
 <template>
   <div class="container">
     <div
+      class="projects"
+    >
+      <div
+        v-for="(project, index) of projects"
+        v-if="project.randomImage"
+        :class="[
+          $store.state.widthClasses[index%$store.state.widthClasses.length],
+          project.randomImage.orientation,
+        ]"
+        :key="index"
+        class="projects__block"
+      >
+        <nuxt-link
+          ref="link"
+          :to="{path: '/' + project.id }"
+          :name="project.title"
+          :class="{loaded: project.randomImage.load}"
+          class="projects__block-img"
+        >
+          <img
+            ref="image"
+            :alt="project.title"
+            :src="project.randomImage.url"
+            :srcset="getSrcSet(project.randomImage)"
+            class="projects__img"
+          >
+        </nuxt-link>
+        <ProjectsCaption ref="caption" :project="project"/>
+      </div>
+    </div>
+    <!-- <div
       v-packery="layoutOptions"
       ref="packery"
       class="projects"
@@ -37,7 +68,7 @@
         </nuxt-link>
         <ProjectsCaption ref="caption" :project="project"/>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -75,7 +106,8 @@
     },
     mounted () {
       this.$nextTick(() => {
-        this.setHeight()
+        // this.setHeight()
+        this.preloadImages()
       })
       window.addEventListener('resize', this.setHeight)
       const links = this.$refs.link
@@ -162,22 +194,20 @@
 <style lang="sass" scoped>
   .projects
     @include center
-    padding: $mp-d 0 0 0
-    display: flex
-    align-items: flex-end
-    justify-content: flex-start
-    flex-wrap: wrap
+    padding: $mp-d $mp-c/2 0 $mp-c/2
+    display: grid
+    grid-auto-flow: dense
+    grid-template-columns: repeat(40, auto)
+    grid-auto-rows: minmax(2.5vw, auto)
+    grid-column-gap: $mp-c
     width: 100vw
-    width: calc(100vw + 30px)
-    margin-left: $mp-c/2 * -1
+    // width: calc(100vw + 30px)
+    // margin-left: $mp-c/2 * -1
     &__block
-      padding: $mp-c
+      padding: $mp-c 0
       display: inline-block
-      vertical-align: bottom
-      width: 30%
-      opacity: 0
-      &.visible
-        opacity: 1
+      grid-column: span 14;
+      grid-row: span auto;
       &-img
         will-change: contents, scroll-position
         &.loaded
@@ -185,17 +215,17 @@
       a
         display: block
       &.small.portrait
-        width: 22.5%
+        grid-column: span 9
       &.medium.portrait
-        width: 25%
+        grid-column: span 10
       &.large.portrait
-        width: 27.5%
+        grid-column: span 11
       &.small.landscape, &.small.square
-        width: 35%
+        grid-column: span 14
       &.medium.landscape, &.medium.square
-        width: 40%
+        grid-column: span 16
       &.large.landscape, &.large.square
-        width: 45%
+        grid-column: span 18
     &__img
       width: 100%
       vertical-align: top
@@ -209,33 +239,36 @@
       &__block
         padding: $mp-b
         &.small.portrait
-          width: 25%
+          grid-column: span 10
         &.medium.portrait
-          width: 30%
+          grid-column: span 12
         &.large.portrait
-          width: 32.5%
+          grid-column: span 13
         &.small.landscape, &.small.square
-          width: 40%
+          grid-column: span 16
         &.medium.landscape, &.medium.square
-          width: 45%
+          grid-column: span 18
         &.large.landscape, &.large.square
-          width: 50%
+          grid-column: span 20
 
   @media (max-width: $tablet-pt)
     .projects
+      display: block
+      columns: 2
+      column-gap: 0
       &__block
         &.small.portrait
-          width: 50%
+          grid-column: span 20
         &.medium.portrait
-          width: 50%
+          grid-column: span 20
         &.large.portrait
-          width: 50%
+          grid-column: span 20
         &.small.landscape, &.small.square
-          width: 50%
+          grid-column: span 20
         &.medium.landscape, &.medium.square
-          width: 50%
+          grid-column: span 20
         &.large.landscape, &.large.square
-          width: 50%
+          grid-column: span 20
 
     @media (max-width: $phone-ls)
       .projects
