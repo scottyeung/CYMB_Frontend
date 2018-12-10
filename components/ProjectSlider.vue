@@ -137,7 +137,7 @@
         }
         let currentSlide = this.slidesOffset.indexOf(Math.min.apply(null, this.slidesOffset))
         this.setSlide (currentSlide)
-        if (this.loadCounter < this.layouts.length) {
+        if (this.loadCounter <= this.layouts.length) {
           this.preloadSlides () // Show Slides
         }
       }, 25),
@@ -149,19 +149,19 @@
         this.preloadSlides ()
       },
       preloadSlides () {
-        if (!this.loopLayouts[this.currentSlide].load) {
+        if (!('load' in this.loopLayouts[this.currentSlide])) {
           this.$set(this.loopLayouts[this.currentSlide], 'load', true)
         } // Current
-        if (this.currentSlide - 1 > 0 && !this.loopLayouts[this.currentSlide - 1].load) {
+        if (this.currentSlide - 1 > 0 && !('load' in this.loopLayouts[this.currentSlide - 1])) {
           this.$set(this.loopLayouts[this.currentSlide - 1], 'load', true)
         } // Next
-        if (this.currentSlide + 1 < this.loopLayouts.length && !this.loopLayouts[this.currentSlide + 1].load) {
+        if (this.currentSlide + 1 <= this.loopLayouts.length && !('load' in this.loopLayouts[this.currentSlide + 1])) {
           this.$set(this.loopLayouts[this.currentSlide + 1], 'load', true)
         } // Prev
-        if (!this.loopLayouts[0].load) {
+        if (!('load' in this.loopLayouts[0])) {
           this.$set(this.loopLayouts[0], 'load', true)
         } // First
-        if (this.currentSlide === 0 && !this.loopLayouts[this.loopLayouts.length - 2].load) {
+        if (this.currentSlide === 0 && !('load' in this.loopLayouts[this.loopLayouts.length - 2])) {
           this.$set(this.loopLayouts[this.loopLayouts.length - 2], 'load', true)
         } // Last
       }
