@@ -1,4 +1,11 @@
 import Vuex from 'vuex'
+import Vue from 'vue';
+
+const axiosConfig = {
+  params: {
+    'select': ['content', 'children', 'files', 'id', 'slug']
+  }
+}
 
 const createStore = () => {
   return new Vuex.Store({
@@ -11,32 +18,14 @@ const createStore = () => {
     actions: {
       async getInfo ({ commit }) {
         const info = await this.$axios.$get('/site')
-        const about = await this.$axios.$get('/pages/about')
-        const images = await this.$axios.get('/pages/about/files')
+        const about = await this.$axios.$get('/pages/about', axiosConfig)
         commit('setSiteInfo', info)
         await commit('setAbout', about)
-        commit('SetAboutImage', images)
-      },
-
-      async getProjectImages({ commit }, payload) {
-        const images = await this.$axios.$get('/pages/' + payload.id + '/files')
-        commit('setProjectImages', { images: images, index: payload.index })
-      },
-
-      async getProjectDetails({ commit, state, dispatch }) {
-        for (let i = 0; i < state.projects.length; i++) {
-          let id = state.projects[i].id
-          id = id.replace("/", "+")
-          const details = await this.$axios.$get('/pages/' + id)
-          commit('setProjectDetails', details)
-          await dispatch('getProjectImages', { id: id, index: i })
-        }
       },
 
       async getProjects({ commit, dispatch }) {
-        const projects = await this.$axios.$get('/pages/projects/children')
+        const projects = await this.$axios.$get('/pages/projects/children', axiosConfig)
         await commit('setProjects', projects)
-        await dispatch ('getProjectDetails')
       },
 
       async nuxtServerInit ({ commit, dispatch }) {
@@ -53,22 +42,11 @@ const createStore = () => {
       // About
       setAbout: (state, info) => {
         state.about = info.data.content
-      },
-      // About image
-      SetAboutImage: (state, images) => {
-        state.about.images = images.data.data
+        Vue.set(state.about, 'files', info.data.files)
       },
       // Projects
       setProjects: (state, payload) => {
         state.projects = payload.data
-      },
-      // Project Details
-      setProjectDetails: (state, payload) => {
-        state.projects[payload.data.num - 1] = payload.data
-      },
-      // Project images
-      setProjectImages: (state, payload) => {
-        state.projects[payload.index]['images'] = payload.images.data
       },
       // Slide
       setSlide: (state, index) => {

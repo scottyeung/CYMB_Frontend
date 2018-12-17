@@ -16,7 +16,7 @@
     name: "ProjectOverview",
     head() {
       return {
-        titleTemplate: '%s: ' + this.project.title,
+        titleTemplate: '%s: ' + this.project.content.title,
       }
     },
     components: {

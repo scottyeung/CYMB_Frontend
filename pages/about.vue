@@ -56,7 +56,7 @@
         return this.$store.state.about
       },
       images () {
-        return this.about.images
+        return this.about.files
       },
       street () {
         return this.about.street

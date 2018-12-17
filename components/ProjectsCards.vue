@@ -21,7 +21,7 @@
         <nuxt-link
           ref="link"
           :to="{path: '/' + project.id }"
-          :name="project.title"
+          :name="project.content.title"
           :style="{height: project.randomImage.height}"
           :class="{loaded: project.randomImage.load}"
           class="projects__block-img"
@@ -29,7 +29,7 @@
           <img
             v-if="project.randomImage.load"
             ref="image"
-            :alt="project.title"
+            :alt="project.content.title"
             :src="project.randomImage.url"
             :srcset="getSrcSet(project.randomImage)"
             class="projects__img"
@@ -99,7 +99,7 @@
 
             // Match with original image
             if(randomImage) {
-              const ogImage = _.find(project.images, function(img) {
+              const ogImage = _.find(project.files, function(img) {
                 return img.id === project.randomImage.id
               })
 
