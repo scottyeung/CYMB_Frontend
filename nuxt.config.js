@@ -43,7 +43,7 @@ module.exports = {
     '~/assets/sass/global.sass'
   ],
   env: {
-    baseUrl: process.env.BASE_URL || 'https://cms.constantinmirbach.test'
+    baseUrl: process.env.BASE_URL || 'http://localhost:8080'
   },
   build: {
     extend(config, ctx) {
