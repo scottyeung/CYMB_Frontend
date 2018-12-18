@@ -4,7 +4,7 @@
       v-packery="layoutOptions"
       ref="packery"
       class="projects"
-      @layoutComplete="preloadImages(), showImages(true)"
+      @layoutComplete="preloadImages()"
     >
       <div
         v-packery-item
@@ -13,7 +13,6 @@
         :class="[
           $store.state.widthClasses[index%$store.state.widthClasses.length],
           project.randomImage.orientation,
-          {visible: visible}
         ]"
         :key="index"
         class="projects__block"
@@ -27,7 +26,7 @@
           class="projects__block-img"
         >
           <img
-            v-if="project.randomImage.load"
+            v-if="project.randomImage.load && project.randomImage.height"
             ref="image"
             :alt="project.content.title"
             :src="project.randomImage.url"
@@ -51,7 +50,6 @@
     },
     data () {
       return {
-        visible: false,
         layoutOptions: {
           initLayout: true,
           itemSelector: ".projects__block",
@@ -128,9 +126,6 @@
           })
         }
       },
-      showImages (boolean) {
-        this.visible = boolean
-      },
       preloadImages () {
         const links = this.$refs.link
         // Remove scrollListener after all images are loaded
@@ -172,12 +167,9 @@
     margin-left: $mp-c/2 * -1
     &__block
       padding: $mp-c
-      display: inline-block
+      display: block
       vertical-align: bottom
       width: 30%
-      opacity: 0
-      &.visible
-        opacity: 1
       &-img
         will-change: contents, scroll-position
         &.loaded

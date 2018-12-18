@@ -28,7 +28,8 @@ module.exports = {
   },
   loading: false,
   plugins: [
-    {src: '~/plugins/VuePackery.js', ssr: false }
+    {src: '~/plugins/VuePackery.js', ssr: false },
+    {src: '~/plugins/axios.js', ssr: true}
   ],
   modules: [
     '@nuxtjs/axios',
@@ -36,13 +37,13 @@ module.exports = {
     ['nuxt-sass-resources-loader', './assets/sass/variables.sass']
   ],
   axios: {
-    baseURL: process.env.NODE_ENV !== 'production' ? 'http://127.0.0.1:8888/rest' : 'https://cms.constantinmirbach.com/rest',
+    baseURL: process.env.NODE_ENV !== 'production' ? 'https://cms.constantinmirbach.test/api' : 'https://cms.constantinmirbach.com/api',
   },
   css: [
     '~/assets/sass/global.sass'
   ],
   env: {
-    baseUrl: process.env.BASE_URL || 'http://localhost:8080'
+    baseUrl: process.env.BASE_URL || 'https://cms.constantinmirbach.test'
   },
   build: {
     extend(config, ctx) {

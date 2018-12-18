@@ -3,7 +3,11 @@ import Vue from 'vue';
 
 const axiosConfig = {
   params: {
-    'select': ['content', 'children', 'files', 'id', 'slug']
+    auth: {
+      username: process.env.USER,
+      password: process.env.AUTH
+    },
+    select: ['content', 'children', 'files', 'id', 'slug'],
   }
 }
 
@@ -46,6 +50,7 @@ const createStore = () => {
       },
       // Projects
       setProjects: (state, payload) => {
+        console.log(payload)
         state.projects = payload.data
       },
       // Slide

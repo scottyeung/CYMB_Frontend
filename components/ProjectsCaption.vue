@@ -11,7 +11,7 @@
     props: ['project'],
     computed: {
       projectTitle () {
-        return this.project.title
+        return this.project.content.title
       },
       projectSecondary () {
         if(this.project.content.client && this.project.content.client !== this.project.title) {
