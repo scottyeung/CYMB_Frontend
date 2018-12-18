@@ -2,12 +2,12 @@ import Vuex from 'vuex'
 import Vue from 'vue';
 
 const axiosConfig = {
+  auth: {
+    username: process.env.USER,
+    password: process.env.AUTH,
+  },
   params: {
-    auth: {
-      username: process.env.USER,
-      password: process.env.AUTH
-    },
-    select: ['content', 'children', 'files', 'id', 'slug'],
+    select: 'content, children, files, id, slug'
   }
 }
 
@@ -21,7 +21,7 @@ const createStore = () => {
     },
     actions: {
       async getInfo ({ commit }) {
-        const info = await this.$axios.$get('/site')
+        const info = await this.$axios.$get('/site', axiosConfig)
         const about = await this.$axios.$get('/pages/about', axiosConfig)
         commit('setSiteInfo', info)
         await commit('setAbout', about)
@@ -41,6 +41,7 @@ const createStore = () => {
     mutations: {
       // Site info
       setSiteInfo: (state, info) => {
+        console.log(info)
         state.siteInfo = info.data
       },
       // About
