@@ -1,12 +1,16 @@
 import https from 'https';
 
-export default function ({ $axios, store }) {
-    const agent = new https.Agent({
-        rejectUnauthorized: false
-      });
-    $axios.onRequest(config => {
-        if (process.env.dev) {
-            config.httpsAgent = agent;
-        }
-    });
+const agent = new https.Agent({
+  rejectUnauthorized: false
+});
+
+export default function ({ $axios }) {
+  $axios.onRequest(config => {
+    console.log('Making request to ' + config.url)
+    if (process.env.NODE_ENV !== 'production') {
+      config.httpsAgent = agent;
+      console.log(config.httpsAgent)
+    }
+  });
+
 }
