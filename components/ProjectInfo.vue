@@ -5,7 +5,7 @@
   >
     <div class="project__info">
       <div class="project__info--title">
-        <h1 class="nobr">{{ project.content.title }}</h1>
+        <nuxt-link class="nobr" to="/">{{ project.content.title }}</nuxt-link>
         <h2 v-if="project.content.client" class="nobr">{{ project.content.client }}</h2>
       </div>
       <div v-if="project.content.description" class="project__info--description">
@@ -55,7 +55,6 @@
       @include nobr()
     &__info
       display: flex
-      pointer-events: none
       &--wrapper
         width: 100vw
         min-height: 100vh
@@ -67,10 +66,11 @@
         display: flex
         flex-wrap: nowrap
         cursor: default
-        h1, h2
+        a, h2
           margin-right: $mp-b
           display: inline-block
       &--description
+        pointer-events: none
         padding: 0 229px 0 0
         cursor: default
 
@@ -79,6 +79,8 @@
       &__info
         &--title
           flex-direction: column
+          a, h2
+            margin-right: 0
 
   @media (max-width: $tablet-ls)
     .project

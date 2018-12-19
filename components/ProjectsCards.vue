@@ -4,7 +4,7 @@
       v-packery="layoutOptions"
       ref="packery"
       class="projects"
-      @layoutComplete="preloadImages()"
+      @layoutComplete="preloadImages(), showImages(true)"
     >
       <div
         v-packery-item
@@ -13,6 +13,7 @@
         :class="[
           $store.state.widthClasses[index%$store.state.widthClasses.length],
           project.randomImage.orientation,
+          {transparent: !visible}
         ]"
         :key="index"
         class="projects__block"
@@ -22,11 +23,10 @@
           :to="{path: '/' + project.id }"
           :name="project.content.title"
           :style="{height: project.randomImage.height}"
-          :class="{loaded: project.randomImage.load}"
           class="projects__block-img"
         >
           <img
-            v-if="project.randomImage.load && project.randomImage.height"
+            v-if="'load' in project.randomImage && 'height' in project.randomImage"
             ref="image"
             :alt="project.content.title"
             :src="project.randomImage.url"
@@ -34,7 +34,11 @@
             class="projects__img"
           >
         </nuxt-link>
-        <ProjectsCaption ref="caption" :project="project"/>
+        <ProjectsCaption
+          v-if="'height' in project.randomImage"
+          ref="caption"
+          :project="project"
+        />
       </div>
     </div>
   </div>
@@ -57,7 +61,8 @@
           transitionDuration: 0,
           originTop: true,
           originLeft: true
-        }
+        },
+        visible: false
       }
     },
     computed: {
@@ -72,41 +77,40 @@
       this.randomImage()
     },
     mounted () {
-      this.$nextTick(() => {
-        this.setHeight()
-      })
-      window.addEventListener('resize', this.setHeight)
+      window.addEventListener('resize', this.resizeListener)
       const links = this.$refs.link
       if (links.length > this.loadCounter) {
-        console.log()
         window.addEventListener('scroll',  this.scrollListener)
       }
     },
     destroyed () {
-      window.removeEventListener('resize', this.setHeight)
+      window.removeEventListener('resize', this.resizeListener)
       window.removeEventListener('scroll', this.scrollListener)
     },
     methods: {
       randomImage () {
         if(process.browser && !this.$store.state.projects[0].randomImage) {
-          this.projects.forEach(project => {
+          this.projects.forEach( async (project, index) => {
 
             // Choose random image
             let randomImage = _.sample(project.content.cover)
             this.$set(project, 'randomImage', randomImage)
 
+            const auth = {
+              username: process.env.USER,
+              password: process.env.AUTH,
+            }
+
             // Match with original image
             if(randomImage) {
-              const ogImage = _.find(project.files, function(img) {
-                return img.id === project.randomImage.id
-              })
+              const ogImage = await this.$axios.$get(randomImage.link, {auth, params: {select: 'dimensions'}})
 
               // Set ratio, orientation, width and sizes
-              this.$set(project.randomImage, 'orientation', ogImage.dimensions.orientation)
-              this.$set(project.randomImage, 'ratio', ogImage.dimensions.ratio)
-              this.$set(project.randomImage, 'width', ogImage.dimensions.width)
-              this.$set(project.randomImage, 'medium', ogImage.medium)
-              this.$set(project.randomImage, 'small', ogImage.small)
+              await this.$set(project.randomImage, 'orientation', ogImage.data.dimensions.orientation)
+              await this.$set(project.randomImage, 'ratio', ogImage.data.dimensions.ratio)
+              await this.$set(project.randomImage, 'width', ogImage.data.dimensions.width)
+
+              this.setHeight(project.randomImage, index)
             }
           })
         }
@@ -114,24 +118,26 @@
       getSrcSet (img) {
         return img.small + ' 600w, ' + img.medium + ' 900w, ' + img.large + ' 1200w, ' + img.url + ' ' + img.width + 'w'
       },
-      setHeight () {
+      setHeight (randomImage, index) {
         const links = this.$refs.link
         if (links.length > 0) {
-          this.projects.forEach((project, index) => {
-            const link = links[index].$el
-            const width = link.offsetWidth
-            const ratio = project.randomImage.ratio
-            const height = (width / ratio) + 'px'
-            this.$set(project.randomImage, 'height', height)
-          })
+          const link = links[index].$el
+          const width = link.offsetWidth
+          const ratio = randomImage.ratio
+          const height = (width / ratio) + 'px'
+          this.$set(this.projects[index].randomImage, 'height', height)
         }
       },
       preloadImages () {
         const links = this.$refs.link
+
         // Remove scrollListener after all images are loaded
         if(this.loadCounter === links.length) {
+
           window.removeEventListener('scroll', this.scrollListener)
+
         } else if (links.length > this.loadCounter) {
+
           this.projects.forEach((project, index) => {
             if (!('load' in project.randomImage)) {
               const link = links[index].$el
@@ -145,7 +151,16 @@
               }
             }
           })
+
         }
+      },
+      showImages (boolean) {
+        this.visible = boolean
+      },
+      resizeListener () {
+        this.projects.forEach( (project, index) => {
+          this.setHeight(project.randomImage, index)
+        })
       },
       scrollListener: _.throttle( function () {
         this.preloadImages()

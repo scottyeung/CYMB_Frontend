@@ -19,7 +19,7 @@ export default {
   },
   head() {
     return {
-      title: this.$store.state.siteInfo.title,
+      title: this.$store.state.siteInfo.content.title,
       meta: [
         { hid: 'description', name: 'description', content: this.$store.state.siteInfo.content.metadescription },
         { hid: 'keywords', name: 'keywords', content: this.tags }

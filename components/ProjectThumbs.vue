@@ -25,7 +25,7 @@
           class="project__thumb--img"
         >
           <img
-            :src="image.thumb"
+            :src="image.image.url"
           >
         </div>
       </div>

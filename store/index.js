@@ -1,14 +1,9 @@
 import Vuex from 'vuex'
 import Vue from 'vue';
 
-const axiosConfig = {
-  auth: {
+const auth = {
     username: process.env.USER,
     password: process.env.AUTH,
-  },
-  params: {
-    select: 'content, children, files, id, slug'
-  }
 }
 
 const createStore = () => {
@@ -16,24 +11,25 @@ const createStore = () => {
     state: {
       siteInfo: [],
       projects: [],
+      cover: [],
       currentSlide: 0,
       widthClasses: ['small', 'small', 'medium', 'large'],
     },
     actions: {
       async getInfo ({ commit }) {
-        const info = await this.$axios.$get('/site', axiosConfig)
-        const about = await this.$axios.$get('/pages/about', axiosConfig)
+        const info = await this.$axios.$get('/site', {auth, params: { select: 'content, id, slug'}})
+        const about = await this.$axios.$get('/pages/about', {auth, params: { select: 'content, id, files, slug'}})
         commit('setSiteInfo', info)
         await commit('setAbout', about)
       },
 
-      async getProjects({ commit, dispatch }) {
-        const projects = await this.$axios.$get('/pages/projects/children', axiosConfig)
-        await commit('setProjects', projects)
+      async getProjects ({ commit, dispatch }) {
+        const projects = await this.$axios.$get('/pages/projects/children', {auth, params: { select: 'content, files, id, slug'}})
+        commit('setProjects', projects)
       },
 
       async nuxtServerInit ({ commit, dispatch }) {
-        await dispatch ('getInfo')
+        dispatch ('getInfo')
         await dispatch ('getProjects')
         commit('shuffleClasses')
       }
@@ -41,7 +37,6 @@ const createStore = () => {
     mutations: {
       // Site info
       setSiteInfo: (state, info) => {
-        console.log(info)
         state.siteInfo = info.data
       },
       // About
@@ -51,7 +46,6 @@ const createStore = () => {
       },
       // Projects
       setProjects: (state, payload) => {
-        console.log(payload)
         state.projects = payload.data
       },
       // Slide

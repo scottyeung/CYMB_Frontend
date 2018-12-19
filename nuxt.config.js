@@ -37,7 +37,7 @@ module.exports = {
     ['nuxt-sass-resources-loader', './assets/sass/variables.sass']
   ],
   axios: {
-    baseURL: process.env.NODE_ENV !== 'production' ? 'https://cms.constantinmirbach.test/api' : 'https://cms.constantinmirbach.com/api',
+    baseURL: process.env.NODE_ENV !== 'production' ? 'https://cms.constantinmirbach.test/rest' : 'https://cms.constantinmirbach.com/rest',
   },
   css: [
     '~/assets/sass/global.sass'
