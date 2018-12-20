@@ -24,7 +24,7 @@ const createStore = () => {
       },
 
       async getProjects ({ commit, dispatch }) {
-        const projects = await this.$axios.$get('/pages/projects/children', {auth, params: { select: 'content, files, id, slug'}})
+        const projects = await this.$axios.$get('/pages/projects/children', {auth, params: { select: 'content, id, slug'}})
         commit('setProjects', projects)
       },
 

@@ -93,25 +93,9 @@
           this.projects.forEach( async (project, index) => {
 
             // Choose random image
-            let randomImage = _.sample(project.content.cover)
-            this.$set(project, 'randomImage', randomImage)
-
-            const auth = {
-              username: process.env.USER,
-              password: process.env.AUTH,
-            }
-
-            // Match with original image
-            if(randomImage) {
-              const ogImage = await this.$axios.$get(randomImage.link, {auth, params: {select: 'dimensions'}})
-
-              // Set ratio, orientation, width and sizes
-              await this.$set(project.randomImage, 'orientation', ogImage.data.dimensions.orientation)
-              await this.$set(project.randomImage, 'ratio', ogImage.data.dimensions.ratio)
-              await this.$set(project.randomImage, 'width', ogImage.data.dimensions.width)
-
-              this.setHeight(project.randomImage, index)
-            }
+            let randomImage = project.content.cover[0]
+            await this.$set(project, 'randomImage', randomImage)
+            this.setHeight(project.randomImage, index)
           })
         }
       },
@@ -120,7 +104,7 @@
       },
       setHeight (randomImage, index) {
         const links = this.$refs.link
-        if (links.length > 0) {
+        if (links) {
           const link = links[index].$el
           const width = link.offsetWidth
           const ratio = randomImage.ratio
