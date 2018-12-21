@@ -148,7 +148,7 @@
       },
       scrollListener: _.throttle( function () {
         this.preloadImages()
-      }, 1500)
+      }, 500)
     }
   }
 </script>

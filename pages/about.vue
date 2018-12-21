@@ -27,8 +27,12 @@
       </div>
       <div class="information__column">
         <div class="information__clients information--block">
-          <h2>Selected Clients</h2>
-          <li v-for="client in clients" :key="client.client">{{ client.client }}</li>
+          <h2>Selected Editorial Clients</h2>
+          <li v-for="client in editorial" :key="client.client">{{ client.client }}</li>
+        </div>
+        <div class="information__clients information--block">
+          <h2>Selected Commercial Clients</h2>
+          <li v-for="client in commercial" :key="client.client">{{ client.client }}</li>
         </div>
         <div class="information__legal information--block">
           <p>
@@ -82,8 +86,11 @@
       taxno () {
         return this.about.taxno
       },
-      clients () {
-        return this.about.clients
+      commercial () {
+        return this.about.commercial
+      },
+      editorial () {
+        return this.about.editorial
       },
       legalNotice () {
         return this.$store.state.siteInfo.content.legal
