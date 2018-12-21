@@ -13,7 +13,7 @@
           <p>
             <a :href="'tel:' + phone ">{{ phone }}</a>
             <a :href="'mailto:' + email ">{{ email }}</a>
-            <a :href="'https://www.instagram.com/' + instagram" target="_blank">@{{ instagram }}</a>
+            <a :href="'https://www.instagram.com/' + instagram" target="_blank">Instagram (@{{ instagram }})</a>
           </p>
         </div>
         <img
@@ -27,12 +27,12 @@
       </div>
       <div class="information__column">
         <div class="information__clients information--block">
-          <h2>Selected Editorial Clients</h2>
-          <li v-for="client in editorial" :key="client.client">{{ client.client }}</li>
+          <h2>Commercial Clients</h2>
+          <li v-for="client in commercial" :key="client.client">{{ client.client }}</li>
         </div>
         <div class="information__clients information--block">
-          <h2>Selected Commercial Clients</h2>
-          <li v-for="client in commercial" :key="client.client">{{ client.client }}</li>
+          <h2>Editorial Clients</h2>
+          <li v-for="client in editorial" :key="client.client">{{ client.client }}</li>
         </div>
         <div class="information__legal information--block">
           <p>
