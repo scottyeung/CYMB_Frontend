@@ -20,7 +20,7 @@ const createStore = () => {
         const info = await this.$axios.$get('/site', {auth, params: { select: 'content, id, slug'}})
         const about = await this.$axios.$get('/pages/about', {auth, params: { select: 'content, id, files, slug'}})
         commit('setSiteInfo', info)
-        await commit('setAbout', about)
+        commit('setAbout', about)
       },
 
       async getProjects ({ commit, dispatch }) {
