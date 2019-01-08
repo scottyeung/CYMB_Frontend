@@ -16,3 +16,6 @@ dist
 
 # Fonts
 /static/fonts
+
+# Yarn
+yarn-error.log
