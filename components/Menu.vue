@@ -1,21 +1,24 @@
 <template>
-  <nav class="menu__wrapper">
-    <ol class="menu__list">
-      <li class="menu__nav">
-        <h1 class="menu__nav--title">Constantin Mirbach</h1>
-      </li>
-      <li class="menu__nav">
-        <nuxt-link
-          class="menu__nav--projects"
-          to="/"
-        >Projects</nuxt-link>
-        <nuxt-link
-          class="menu__nav--about"
-          to="/about"
-        >About</nuxt-link>
-      </li>
-    </ol>
-  </nav>
+  <div>
+    <div class="packery-fix"/>
+    <nav class="menu__wrapper">
+      <ol class="menu__list">
+        <li class="menu__nav">
+          <h1 class="menu__nav--title">Constantin Mirbach</h1>
+        </li>
+        <li class="menu__nav">
+          <nuxt-link
+            class="menu__nav--projects"
+            to="/"
+          >Projects</nuxt-link>
+          <nuxt-link
+            class="menu__nav--about"
+            to="/about"
+          >About</nuxt-link>
+        </li>
+      </ol>
+    </nav>
+  </div>
 </template>
 
 <script>
@@ -33,6 +36,14 @@
 </script>
 
 <style lang="sass" scoped>
+
+  .packery-fix
+    position: absolute
+    top: 0
+    height: 45px
+    width: 100%
+    background: $white
+    z-index: 50
   .menu
     &__wrapper
       width: 100vw

@@ -4,7 +4,7 @@
       v-packery="layoutOptions"
       ref="packery"
       class="projects"
-      @layoutComplete="preloadImages(), showImages(true)"
+      @layoutComplete="preloadImages()"
     >
       <div
         v-packery-item
@@ -12,8 +12,7 @@
         v-if="project.randomImage"
         :class="[
           $store.state.widthClasses[index%$store.state.widthClasses.length],
-          project.randomImage.orientation,
-          {transparent: !visible}
+          project.randomImage.orientation
         ]"
         :key="index"
         class="projects__block"
@@ -61,8 +60,7 @@
           transitionDuration: 0,
           originTop: true,
           originLeft: true
-        },
-        visible: false
+        }
       }
     },
     computed: {
@@ -137,9 +135,6 @@
           })
 
         }
-      },
-      showImages (boolean) {
-        this.visible = boolean
       },
       resizeListener () {
         this.projects.forEach( (project, index) => {
