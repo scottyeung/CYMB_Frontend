@@ -20,5 +20,5 @@ yarn run build
 
 To run this app via pm2 on a server use:
 ``` bash
-pm2 start npm --name "NAME" -- start
+pm2 start npm --name "CYMB_Frontend" -- start
 ```
